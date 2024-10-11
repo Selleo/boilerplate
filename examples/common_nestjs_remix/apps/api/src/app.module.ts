@@ -14,7 +14,8 @@ import { JwtAuthGuard } from "./common/guards/jwt-auth.guard";
 import { EmailModule } from "./common/emails/emails.module";
 import { TestConfigModule } from "./test-config/test-config.module";
 import { StagingGuard } from "./common/guards/staging.guard";
-import { HealthModule } from './health/health.module';
+import { HealthModule } from "./health/health.module";
+import { LoggerModule } from "nestjs-pino";
 
 @Module({
   imports: [
@@ -48,6 +49,20 @@ import { HealthModule } from './health/health.module';
       inject: [ConfigService],
       global: true,
     }),
+    LoggerModule.forRoot(
+      process.env.NODE_ENV === "production"
+        ? {}
+        : {
+            pinoHttp: {
+              transport: {
+                target: "pino-pretty",
+                options: {
+                  colorize: true,
+                },
+              },
+            },
+          },
+    ),
     AuthModule,
     UsersModule,
     EmailModule,
