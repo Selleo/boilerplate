@@ -1,7 +1,7 @@
 // INFO: This file is not used, but It's already preconfigured if you want to switch into fullstack/bff apporach
 // Currently it is using express but for production probably we will use HONO
 
-import { createRequestHandler } from "@remix-run/express";
+import { createRequestHandler } from "@react-router/express";
 import compression from "compression";
 import express from "express";
 import morgan from "morgan";
@@ -17,7 +17,7 @@ const viteDevServer =
 
 const remixHandler = createRequestHandler({
   build: viteDevServer
-    ? () => viteDevServer.ssrLoadModule("virtual:remix/server-build")
+    ? () => viteDevServer.ssrLoadModule("virtual:react-router/server-build")
     : await import("./build/server/index.js"),
 });
 

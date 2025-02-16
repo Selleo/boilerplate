@@ -1,4 +1,4 @@
-import { Link, Outlet } from "@remix-run/react";
+import { Link, Outlet } from "react-router";
 import { Menu } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import {

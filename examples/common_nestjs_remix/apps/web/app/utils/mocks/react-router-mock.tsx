@@ -3,9 +3,9 @@ import { vi } from "vitest";
 
 export const mockedUseNavigate = vi.fn();
 
-export function mockRemixReact() {
-  return vi.mock("@remix-run/react", async (importOriginal) => {
-    const original = await importOriginal<typeof import("@remix-run/react")>();
+export function mockReactRouter() {
+  return vi.mock("react-router", async (importOriginal) => {
+    const original = await importOriginal<typeof import("react-router")>();
     return {
       ...original,
       useNavigate: () => mockedUseNavigate,

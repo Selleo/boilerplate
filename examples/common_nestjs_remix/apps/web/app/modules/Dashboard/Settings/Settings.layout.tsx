@@ -1,4 +1,4 @@
-import { Link, Outlet, useLocation } from "@remix-run/react";
+import { Link, Outlet, useLocation } from "react-router";
 import { replace } from "lodash-es";
 import { cn } from "~/lib/utils";
 
