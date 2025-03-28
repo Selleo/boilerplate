@@ -4,14 +4,10 @@ import tsconfigPaths from "vite-tsconfig-paths";
 import path from "path";
 
 export default defineConfig({
-  plugins: [
-    reactRouter(),
-    tsconfigPaths(),
-  ],
+  plugins: [reactRouter(), tsconfigPaths()],
   resolve: {
     alias: {
       "~": path.resolve(__dirname, "./app"),
     },
   },
-
 });
