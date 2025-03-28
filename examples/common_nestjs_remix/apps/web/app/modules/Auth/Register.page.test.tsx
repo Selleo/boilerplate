@@ -1,24 +1,19 @@
-import { createRemixStub } from "@remix-run/testing";
+import { createRoutesStub } from "react-router";
 import { screen, waitFor } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import {
-  mockRemixReact,
   mockedUseNavigate,
-} from "~/utils/mocks/remix-run-mock";
+} from "~/utils/mocks/react-router-mock";
 import { renderWith } from "~/utils/testUtils";
 import RegisterPage from "./Register.page";
-
-vi.mock("../../../api/api-client");
-
-mockRemixReact();
 
 describe("Register page", () => {
   beforeEach(() => {
     vi.resetAllMocks();
   });
 
-  const RemixStub = createRemixStub([
+  const RemixStub = createRoutesStub([
     {
       path: "/",
       Component: RegisterPage,

@@ -1,4 +1,4 @@
-import { Link } from "@remix-run/react";
+import { Link } from "react-router";
 import { useRegisterUser } from "~/api/mutations/useRegisterUser";
 import { Button } from "~/components/ui/button";
 import {

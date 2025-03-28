@@ -5,7 +5,7 @@ import {
   isRouteErrorResponse,
   useParams,
   useRouteError,
-} from "@remix-run/react";
+} from "react-router";
 import { useState } from "react";
 import {
   invalidatePokemonQueries,

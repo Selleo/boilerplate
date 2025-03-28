@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAuthStore } from "./authStore";
-import { useNavigate } from "@remix-run/react";
+import { useNavigate } from "react-router";
 
 /**
  * @returns void
