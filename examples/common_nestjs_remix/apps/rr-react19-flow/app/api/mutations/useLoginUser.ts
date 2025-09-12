@@ -2,11 +2,13 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useAuthStore } from "~/modules/Auth/authStore";
-import { ApiClient } from "../api-client";
-import { LoginBody } from "../generated-api";
+import { authClient } from "~/modules/Auth/auth.client";
 
 type LoginUserOptions = {
-  data: LoginBody;
+  data: {
+    email: string;
+    password: string;
+  };
 };
 
 export function useLoginUser() {
@@ -14,16 +16,23 @@ export function useLoginUser() {
 
   return useMutation({
     mutationFn: async (options: LoginUserOptions) => {
-      const response = await ApiClient.auth.authControllerLogin(options.data);
+      const response = await authClient.signIn.email({
+        email: options.data.email,
+        password: options.data.password,
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message, {
+          cause: response.error,
+        });
+      }
+
       return response.data;
     },
     onSuccess: () => {
       setLoggedIn(true);
     },
     onError: (error) => {
-      if (error instanceof AxiosError) {
-        return toast.error(error.response?.data.message);
-      }
       toast.error(error.message);
     },
   });
