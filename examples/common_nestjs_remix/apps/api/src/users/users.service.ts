@@ -1,93 +1,54 @@
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from "@nestjs/common";
-import * as bcrypt from "bcrypt";
+import { Inject, Injectable, NotFoundException } from "@nestjs/common";
 import { eq } from "drizzle-orm";
 import { DatabasePg } from "src/common";
-// @ts-expect-error - TODO: fix user tests
-import { credentials, users } from "../storage/schema";
-import hashPassword from "src/common/helpers/hashPassword";
+import { user } from "src/storage/schema";
 
 @Injectable()
 export class UsersService {
   constructor(@Inject("DB") private readonly db: DatabasePg) {}
 
   public async getUsers() {
-    const allUsers = await this.db.select().from(users);
+    const allUsers = await this.db.select().from(user);
 
     return allUsers;
   }
 
   public async getUserById(id: string) {
-    const [user] = await this.db.select().from(users).where(eq(users.id, id));
+    const [existingUser] = await this.db
+      .select()
+      .from(user)
+      .where(eq(user.id, id));
 
-    if (!user) {
+    if (!existingUser) {
       throw new NotFoundException("User not found");
     }
 
-    return user;
+    return existingUser;
   }
 
   public async updateUser(id: string, data: { email?: string }) {
     const [existingUser] = await this.db
       .select()
-      .from(users)
-      .where(eq(users.id, id));
+      .from(user)
+      .where(eq(user.id, id));
 
     if (!existingUser) {
       throw new NotFoundException("User not found");
     }
 
     const [updatedUser] = await this.db
-      .update(users)
+      .update(user)
       .set(data)
-      .where(eq(users.id, id))
+      .where(eq(user.id, id))
       .returning();
 
     return updatedUser;
   }
 
-  async changePassword(id: string, oldPassword: string, newPassword: string) {
-    const [existingUser] = await this.db
-      .select()
-      .from(users)
-      .where(eq(users.id, id));
-
-    if (!existingUser) {
-      throw new NotFoundException("User not found");
-    }
-
-    const [userCredentials] = await this.db
-      .select()
-      .from(credentials)
-      .where(eq(credentials.userId, id));
-
-    if (!userCredentials) {
-      throw new NotFoundException("User credentials not found");
-    }
-
-    const isOldPasswordValid = await bcrypt.compare(
-      oldPassword,
-      userCredentials.password,
-    );
-    if (!isOldPasswordValid) {
-      throw new UnauthorizedException("Invalid old password");
-    }
-
-    const hashedNewPassword = await hashPassword(newPassword);
-    await this.db
-      .update(credentials)
-      .set({ password: hashedNewPassword })
-      .where(eq(credentials.userId, id));
-  }
-
   public async deleteUser(id: string) {
     const [deletedUser] = await this.db
-      .delete(users)
-      .where(eq(users.id, id))
+      .delete(user)
+      .where(eq(user.id, id))
       .returning();
 
     if (!deletedUser) {

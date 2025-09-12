@@ -1,6 +1,7 @@
-import { useThemeStore } from "../../modules/Theme/themeStore";
-import { Button, ButtonProps } from "../ui/button";
-import { LucideProps, Moon, Sun } from "lucide-react";
+import { useThemeStore } from "~/modules/Theme/themeStore";
+import { Button, type ButtonProps } from "../ui/button";
+
+import { type LucideProps, Moon, Sun } from "lucide-react";
 
 type ThemeToggleProps = {
   variant?: ButtonProps["variant"];
@@ -20,7 +21,7 @@ export default function ThemeToggle({
       case "dark":
         return <Moon aria-label="Switch to darkmode" {...props} />;
       default:
-        return null;
+        return <Sun aria-label="Switch to lightmode" {...props} />;
     }
   };
 

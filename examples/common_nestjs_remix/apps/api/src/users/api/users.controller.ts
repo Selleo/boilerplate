@@ -33,10 +33,16 @@ import {
   CommonUser,
   commonUserSchema,
 } from "src/common/schemas/common-user.schema";
+import { Session, UserSession } from "@thallesp/nestjs-better-auth";
 
 @Controller("users")
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Get("me")
+  async getProfile(@Session() session: UserSession) {
+    return session;
+  }
 
   @Get()
   @Validate({
@@ -70,10 +76,10 @@ export class UsersController {
   async updateUser(
     id: string,
     @Body() data: UpdateUserBody,
-    @CurrentUser() currentUser: { userId: CommonUser["id"] },
+    @Session() session: UserSession,
   ): Promise<BaseResponse<Static<typeof commonUserSchema>>> {
     {
-      if (currentUser.userId !== id) {
+      if (session.user.id !== id) {
         throw new ForbiddenException("You can only update your own account");
       }
 
@@ -83,41 +89,13 @@ export class UsersController {
     }
   }
 
-  @Patch(":id/change-password")
-  @Validate({
-    response: nullResponse(),
-    request: [
-      { type: "param", name: "id", schema: UUIDSchema },
-      { type: "body", schema: changePasswordSchema },
-    ],
-  })
-  async changePassword(
-    id: string,
-    @Body() data: ChangePasswordBody,
-    @CurrentUser() currentUser: { userId: string },
-  ): Promise<null> {
-    if (currentUser.userId !== id) {
-      throw new ForbiddenException("You can only update your own account");
-    }
-    await this.usersService.changePassword(
-      id,
-      data.oldPassword,
-      data.newPassword,
-    );
-
-    return null;
-  }
-
   @Delete(":id")
   @Validate({
     response: nullResponse(),
     request: [{ type: "param", name: "id", schema: UUIDSchema }],
   })
-  async deleteUser(
-    id: string,
-    @CurrentUser() currentUser: { userId: string },
-  ): Promise<null> {
-    if (currentUser.userId !== id) {
+  async deleteUser(id: string, @Session() session: UserSession): Promise<null> {
+    if (session.user.id !== id) {
       throw new ForbiddenException("You can only delete your own account");
     }
 

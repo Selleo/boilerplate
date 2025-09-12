@@ -1,6 +1,20 @@
 {
   "openapi": "3.0.0",
   "paths": {
+    "/users/me": {
+      "get": {
+        "operationId": "UsersController_getProfile",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
     "/users": {
       "get": {
         "operationId": "UsersController_getUsers",
@@ -107,46 +121,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DeleteUserResponse"
-                }
-              }
-            }
-          }
-        },
-        "tags": [
-          "Users"
-        ]
-      }
-    },
-    "/users/{id}/change-password": {
-      "patch": {
-        "operationId": "UsersController_changePassword",
-        "parameters": [
-          {
-            "name": "id",
-            "required": true,
-            "in": "path",
-            "schema": {
-              "format": "uuid",
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ChangePasswordBody"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ChangePasswordResponse"
                 }
               }
             }
@@ -525,28 +499,6 @@
         "required": [
           "data"
         ]
-      },
-      "ChangePasswordBody": {
-        "type": "object",
-        "properties": {
-          "newPassword": {
-            "minLength": 8,
-            "maxLength": 64,
-            "type": "string"
-          },
-          "oldPassword": {
-            "minLength": 8,
-            "maxLength": 64,
-            "type": "string"
-          }
-        },
-        "required": [
-          "newPassword",
-          "oldPassword"
-        ]
-      },
-      "ChangePasswordResponse": {
-        "type": "null"
       },
       "DeleteUserResponse": {
         "type": "null"
