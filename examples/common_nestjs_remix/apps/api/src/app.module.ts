@@ -3,7 +3,6 @@ import { DrizzlePostgresModule } from "@knaadh/nestjs-drizzle-postgres";
 import database from "./common/configuration/database";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as schema from "./storage/schema";
-import { AuthModule } from "./auth/auth.module";
 import { UsersModule } from "./users/users.module";
 import { JwtModule } from "@nestjs/jwt";
 import jwtConfig from "./common/configuration/jwt";
@@ -16,6 +15,8 @@ import { TestConfigModule } from "./test-config/test-config.module";
 import { StagingGuard } from "./common/guards/staging.guard";
 import { HealthModule } from "./health/health.module";
 import { LoggerModule } from "nestjs-pino";
+import { AuthModule } from "@thallesp/nestjs-better-auth";
+import { auth } from "./lib/auth";
 
 @Module({
   imports: [
@@ -63,7 +64,7 @@ import { LoggerModule } from "nestjs-pino";
             },
           },
     ),
-    AuthModule,
+    AuthModule.forRoot(auth),
     UsersModule,
     EmailModule,
     TestConfigModule,

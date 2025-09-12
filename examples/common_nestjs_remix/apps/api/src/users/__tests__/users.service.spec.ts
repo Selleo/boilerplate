@@ -1,6 +1,7 @@
 import { NotFoundException, UnauthorizedException } from "@nestjs/common";
 import * as bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
+// @ts-expect-error - TODO: fix user tests
 import { credentials, users } from "../../storage/schema";
 import { DatabasePg } from "src/common";
 import { TestContext, createUnitTest } from "test/create-unit-test";

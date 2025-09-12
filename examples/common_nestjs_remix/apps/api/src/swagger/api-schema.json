@@ -1,111 +1,6 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/auth/register": {
-      "post": {
-        "operationId": "AuthController_register",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RegisterBody"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RegisterResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/login": {
-      "post": {
-        "operationId": "AuthController_login",
-        "parameters": [],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/LoginBody"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LoginResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/logout": {
-      "post": {
-        "operationId": "AuthController_logout",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/LogoutResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/refresh": {
-      "post": {
-        "operationId": "AuthController_refreshTokens",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/RefreshTokensResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/auth/current-user": {
-      "get": {
-        "operationId": "AuthController_currentUser",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CurrentUserResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/users": {
       "get": {
         "operationId": "UsersController_getUsers",
@@ -120,7 +15,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/users/{id}": {
@@ -147,7 +45,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       },
       "patch": {
         "operationId": "UsersController_updateUser",
@@ -182,7 +83,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       },
       "delete": {
         "operationId": "UsersController_deleteUser",
@@ -207,7 +111,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/users/{id}/change-password": {
@@ -244,7 +151,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Users"
+        ]
       }
     },
     "/test-config/setup": {
@@ -255,7 +165,10 @@
           "201": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "TestConfig"
+        ]
       }
     },
     "/test-config/teardown": {
@@ -266,7 +179,10 @@
           "201": {
             "description": ""
           }
-        }
+        },
+        "tags": [
+          "TestConfig"
+        ]
       }
     },
     "/health": {
@@ -431,7 +347,10 @@
               }
             }
           }
-        }
+        },
+        "tags": [
+          "Health"
+        ]
       }
     }
   },
@@ -445,141 +364,6 @@
   "servers": [],
   "components": {
     "schemas": {
-      "RegisterBody": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "format": "email",
-            "type": "string"
-          },
-          "password": {
-            "minLength": 8,
-            "maxLength": 64,
-            "type": "string"
-          }
-        },
-        "required": [
-          "email",
-          "password"
-        ]
-      },
-      "RegisterResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "createdAt",
-              "updatedAt",
-              "email"
-            ]
-          }
-        },
-        "required": [
-          "data"
-        ]
-      },
-      "LoginBody": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "format": "email",
-            "type": "string"
-          },
-          "password": {
-            "minLength": 8,
-            "maxLength": 64,
-            "type": "string"
-          }
-        },
-        "required": [
-          "email",
-          "password"
-        ]
-      },
-      "LoginResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "createdAt",
-              "updatedAt",
-              "email"
-            ]
-          }
-        },
-        "required": [
-          "data"
-        ]
-      },
-      "LogoutResponse": {
-        "type": "null"
-      },
-      "RefreshTokensResponse": {
-        "type": "null"
-      },
-      "CurrentUserResponse": {
-        "type": "object",
-        "properties": {
-          "data": {
-            "type": "object",
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              }
-            },
-            "required": [
-              "id",
-              "createdAt",
-              "updatedAt",
-              "email"
-            ]
-          }
-        },
-        "required": [
-          "data"
-        ]
-      },
       "GetUsersResponse": {
         "type": "object",
         "properties": {
@@ -591,21 +375,40 @@
                 "id": {
                   "type": "string"
                 },
-                "createdAt": {
-                  "type": "string"
-                },
-                "updatedAt": {
+                "name": {
                   "type": "string"
                 },
                 "email": {
                   "type": "string"
+                },
+                "emailVerified": {
+                  "type": "boolean"
+                },
+                "image": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "createdAt": {
+                  "type": "Date"
+                },
+                "updatedAt": {
+                  "type": "Date"
                 }
               },
               "required": [
                 "id",
+                "name",
+                "email",
+                "emailVerified",
+                "image",
                 "createdAt",
-                "updatedAt",
-                "email"
+                "updatedAt"
               ]
             }
           }
@@ -623,21 +426,40 @@
               "id": {
                 "type": "string"
               },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
+              "name": {
                 "type": "string"
               },
               "email": {
                 "type": "string"
+              },
+              "emailVerified": {
+                "type": "boolean"
+              },
+              "image": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "createdAt": {
+                "type": "Date"
+              },
+              "updatedAt": {
+                "type": "Date"
               }
             },
             "required": [
               "id",
+              "name",
+              "email",
+              "emailVerified",
+              "image",
               "createdAt",
-              "updatedAt",
-              "email"
+              "updatedAt"
             ]
           }
         },
@@ -663,21 +485,40 @@
               "id": {
                 "type": "string"
               },
-              "createdAt": {
-                "type": "string"
-              },
-              "updatedAt": {
+              "name": {
                 "type": "string"
               },
               "email": {
                 "type": "string"
+              },
+              "emailVerified": {
+                "type": "boolean"
+              },
+              "image": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "createdAt": {
+                "type": "Date"
+              },
+              "updatedAt": {
+                "type": "Date"
               }
             },
             "required": [
               "id",
+              "name",
+              "email",
+              "emailVerified",
+              "image",
               "createdAt",
-              "updatedAt",
-              "email"
+              "updatedAt"
             ]
           }
         },

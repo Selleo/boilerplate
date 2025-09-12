@@ -1,17 +1,24 @@
 import { NestFactory } from "@nestjs/core";
 import { AppModule } from "./app.module";
-import { patchNestJsSwagger, applyFormats } from "nestjs-typebox";
+import { configureNestJsTypebox } from "nestjs-typebox";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { exportSchemaToFile } from "./utils/save-swagger-to-file";
 import { setupValidation } from "./utils/setup-validation";
 import cookieParser from "cookie-parser";
 import { Logger } from "nestjs-pino";
+import { auth } from "./lib/auth";
 
-patchNestJsSwagger();
-applyFormats();
+configureNestJsTypebox({
+  patchSwagger: true,
+  setFormats: true,
+});
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  const app = await NestFactory.create(AppModule, {
+    bufferLogs: true,
+    bodyParser: false,
+  });
+
   app.useLogger(app.get(Logger));
 
   setupValidation();

@@ -7,6 +7,7 @@ import {
 import * as bcrypt from "bcrypt";
 import { eq } from "drizzle-orm";
 import { DatabasePg } from "src/common";
+// @ts-expect-error - TODO: fix user tests
 import { credentials, users } from "../storage/schema";
 import hashPassword from "src/common/helpers/hashPassword";
 

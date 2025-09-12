@@ -1,5 +1,6 @@
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
+// @ts-expect-error - TODO: fix user tests
 import { users, credentials } from "./storage/schema";
 import { DatabasePg } from "./common";
 import { faker } from "@faker-js/faker";

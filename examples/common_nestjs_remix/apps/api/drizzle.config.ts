@@ -7,6 +7,7 @@ export default defineConfig({
   dbCredentials: {
     url: "postgres://postgres:guidebook@localhost:5432/guidebook",
   },
+  casing: "snake_case",
   verbose: true,
   strict: true,
 });
