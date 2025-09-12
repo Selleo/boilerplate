@@ -7,9 +7,9 @@
   "types": "./dist/index.d.cts",
   "private": true,
   "scripts": {
-    "build": "tsup",
+    "build2": "tsup",
     "clean": "rm -rf dist",
-    "dev": "email dev -p 3001 --dir ./src/templates",
+    "dev2": "email dev -p 3001 --dir ./src/templates",
     "export": "email export --dir ./src/templates"
   },
   "dependencies": {

@@ -38,17 +38,17 @@ After running caddy proceed with the on screen instructions.
 
 The final setup step is to configure both the `api` and `web` applications.
 
-First, from the `examples/common_nestjs_remix` directory, navigate to `apps/api` and run the following to set up the backend:
+To set up the backend envs and database:
 
 ```sh
-cp .env.example .env
+cp ./apps/api/.env.example ./apps/api/.env
 docker-compose up -d
 ```
 
-Next, navigate to `apps/web` and copy the environment variables for the frontend:
+Next, setup the env variables for frontend:
 
 ```sh
-cp .env.example .env
+cp ./apps/web/.env.example ./apps/web/.env
 ```
 
 ### Migrations
