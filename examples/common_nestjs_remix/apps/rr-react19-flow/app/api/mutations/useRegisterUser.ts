@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
-import { ApiClient } from "../api-client";
 import { toast } from "sonner";
-import { AxiosError } from "axios";
 import { authClient } from "~/modules/Auth/auth.client";
 
 type RegisterUserOptions = {

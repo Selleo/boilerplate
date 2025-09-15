@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import { screen, fireEvent } from "@testing-library/react";
 
-import ThemeToggle from "../ThemeToggle";
-import { renderWith } from "../../../utils/testUtils";
+import ThemeToggle from "./ThemeToggle";
+import { renderWith } from "~/tests/test-renderers";
+import userEvent from "@testing-library/user-event";
 
 describe("ThemeToggle", () => {
   it("renders without crashing", () => {
@@ -20,11 +21,13 @@ describe("ThemeToggle", () => {
 
     const button = screen.getByRole("button");
 
+    const user = userEvent.setup();
+
     expect(button).toBeInTheDocument();
 
-    fireEvent.click(button);
+    await user.click(button);
     expect(await screen.findByLabelText(/dark/)).toBeInTheDocument();
-    fireEvent.click(button);
+    await user.click(button);
     expect(await screen.findByLabelText(/light/)).toBeInTheDocument();
   });
 });
