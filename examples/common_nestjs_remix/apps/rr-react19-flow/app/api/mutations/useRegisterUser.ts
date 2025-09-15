@@ -1,31 +1,40 @@
 import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { ApiClient } from "../api-client";
-import { RegisterBody } from "../generated-api";
 import { toast } from "sonner";
 import { AxiosError } from "axios";
+import { authClient } from "~/modules/Auth/auth.client";
 
 type RegisterUserOptions = {
-  data: RegisterBody;
+  data: {
+    email: string;
+    password: string;
+    name: string;
+  };
 };
 
 export function useRegisterUser() {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: async (options: RegisterUserOptions) => {
-      const response = await ApiClient.auth.authControllerRegister(
-        options.data
-      );
+      const response = await authClient.signUp.email({
+        email: options.data.email,
+        password: options.data.password,
+        name: options.data.name,
+      });
+
+      if (response.error) {
+        throw new Error(response.error.message, {
+          cause: response.error,
+        });
+      }
 
       return response.data;
     },
     onSuccess: () => {
-      navigate("/auth/login");
+      navigate("/dashboard");
     },
     onError: (error) => {
-      if (error instanceof AxiosError) {
-        return toast.error(error.response?.data.message);
-      }
       toast.error(error.message);
     },
   });

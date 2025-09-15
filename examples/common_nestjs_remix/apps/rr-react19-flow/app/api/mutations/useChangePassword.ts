@@ -1,24 +1,29 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { ApiClient } from "../api-client";
-import { type ChangePasswordBody } from "../generated-api";
 import { useCurrentUserSuspense } from "../queries/useCurrentUser";
+import { authClient } from "~/modules/Auth/auth.client";
 
 type ChangePasswordOptions = {
-  data: ChangePasswordBody;
+  data: {
+    currentPassword: string;
+    newPassword: string;
+  };
 };
 
 export function useChangePassword() {
-  const { data: currentUser } = useCurrentUserSuspense();
-
   return useMutation({
     mutationFn: async (options: ChangePasswordOptions) => {
-      const response = await ApiClient.users.usersControllerChangePassword(
-        currentUser.id,
-        options.data
-      );
+      const response = await authClient.changePassword({
+        currentPassword: options.data.currentPassword,
+        newPassword: options.data.newPassword,
+      });
 
+      if (response.error) {
+        throw new Error(response.error.message, {
+          cause: response.error,
+        });
+      }
       return response.data;
     },
     onSuccess: () => {

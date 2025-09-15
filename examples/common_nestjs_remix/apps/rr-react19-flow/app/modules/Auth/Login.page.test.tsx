@@ -6,7 +6,7 @@ import {
   mockedUseNavigate,
 } from "~/utils/mocks/react-router-mock";
 import { renderWith } from "~/utils/testUtils";
-import LoginPage from "./Login.page";
+import LoginPage from "./Auth.page";
 
 
 
