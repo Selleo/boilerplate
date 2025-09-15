@@ -26,7 +26,12 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.enableCors({
-    origin: process.env.CORS_ORIGIN,
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:5174",
+      "https://app.guidebook.localhost",
+      "http://localhost:3000",
+    ],
     credentials: true,
   });
 

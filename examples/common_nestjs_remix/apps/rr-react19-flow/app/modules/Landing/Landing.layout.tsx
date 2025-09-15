@@ -27,7 +27,7 @@ export default function LandingLayout() {
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link to="/auth/login" className={navigationMenuTriggerStyle()}>
+              <Link to="/auth" className={navigationMenuTriggerStyle()}>
                 Login
               </Link>
             </NavigationMenuItem>

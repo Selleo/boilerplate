@@ -13,6 +13,9 @@ export default [
   layout("modules/Auth/Auth.layout.tsx", [
     route("auth", "modules/Auth/Auth.page.tsx"),
   ]),
+  layout("modules/dashboard/dashboard.layout.tsx", [
+    route("dashboard", "modules/dashboard/dashboard.page.tsx", { index: true }),
+  ]),
   route(
     "/.well-known/appspecific/com.chrome.devtools.json",
     "modules/dev/dev-null.tsx"

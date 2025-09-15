@@ -26,6 +26,13 @@
         "@repo/email-templates#build"
       ]
     },
+    "dev-social": {
+      "cache": false,
+      "persistent": true,
+      "dependsOn": [
+        "@repo/email-templates#build"
+      ]
+    },
     "@repo/email-templates#build": {
       "cache": false,
       "outputs": [
