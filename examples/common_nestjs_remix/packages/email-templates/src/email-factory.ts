@@ -1,5 +1,5 @@
-import { render } from "@react-email/components";
-import { EmailContent } from "./email-content";
+import { render, toPlainText } from "@react-email/components";
+import { EmailContent } from "./email-content.js";
 
 export function emailTemplateFactory<T extends unknown[]>(
   template: (...args: T) => Parameters<typeof render>[0]
@@ -15,11 +15,13 @@ export function emailTemplateFactory<T extends unknown[]>(
       return this.args;
     }
 
-    get text(): string {
-      return render(template(...this.props), { plainText: true });
+    async getText(): Promise<string> {
+      const html = await render(template(...this.props));
+      const plainText = toPlainText(html);
+      return plainText;
     }
 
-    get html(): string {
+    async getHtml(): Promise<string> {
       return render(template(...this.props));
     }
   };

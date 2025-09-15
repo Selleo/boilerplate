@@ -6,6 +6,7 @@ import {
 } from "@nestjs/terminus";
 import { Public } from "src/common/decorators/public.decorator";
 import { DrizzleOrmHealthIndicator } from "./indicator/database/drizzleorm.health";
+import { WelcomeEmail } from "@repo/email-templates";
 
 @Controller("health")
 export class HealthController {
@@ -18,7 +19,8 @@ export class HealthController {
   @Get()
   @Public()
   @HealthCheck()
-  check() {
+  async check() {
+    console.log("Health check");
     return this.health.check([
       () => this.http.pingCheck("google", "https://google.com"),
       () => this.db.pingCheck("guidebook"),

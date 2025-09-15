@@ -4,7 +4,7 @@
   "exclude": ["dist", "build", "node_modules"],
   "compilerOptions": {
     "strict": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "allowJs": true,
     "moduleResolution": "Node",
     "target": "ES2020",

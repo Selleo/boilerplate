@@ -1,43 +1,36 @@
 {
   "$schema": "https://turbo.build/schema.json",
-  "globalDependencies": [
-    "**/.env.*local"
-  ],
+  "globalDependencies": ["**/.env.*local"],
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": [
-        "^build"
-      ],
-      "outputs": [
-        ".next/**",
-        "!.next/cache/**"
-      ]
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "build-email": {
+      "dependsOn": ["^build"],
+      "outputs": [".dist/**"]
     },
     "lint": {
-      "dependsOn": [
-        "^lint"
-      ]
+      "dependsOn": ["^lint"]
     },
     "dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": [
-        "@repo/email-templates#build"
-      ]
+      "dependsOn": ["@repo/email-templates#build-email"]
     },
     "dev-social": {
       "cache": false,
       "persistent": true,
-      "dependsOn": [
-        "@repo/email-templates#build"
-      ]
+      "dependsOn": ["@repo/email-templates#build-email"]
+    },
+    "dev-mail": {
+      "cache": false,
+      "persistent": true
     },
     "@repo/email-templates#build": {
       "cache": false,
-      "outputs": [
-        "dist/**"
-      ]
+      "outputs": ["dist/**"]
     }
   }
 }

@@ -4,3 +4,5 @@ packages:
 
 onlyBuiltDependencies:
   - '@nestjs/core'
+  - '@scarf/scarf'
+  - unrs-resolver

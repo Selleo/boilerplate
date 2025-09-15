@@ -1,4 +1,5 @@
-import { Button, Html } from "@react-email/components";
+import React from "react";
+import { Button, Html, Tailwind } from "@react-email/components";
 
 export type WelcomeEmailProps = {
   email: string;
@@ -7,15 +8,22 @@ export type WelcomeEmailProps = {
 
 export const WelcomeEmail = ({ email, name }: WelcomeEmailProps) => {
   return (
-    <Html>
-      <Button
-        href="https://selleo.com"
-        style={{ background: "#000", color: "#fff", padding: "12px 20px" }}
-      >
-        Hello there! {name}({email})
-      </Button>
-    </Html>
+    <Tailwind>
+      <Html>
+        <Button
+          href="https://selleo.com"
+          className="bg-orange-500 text-white px-5 py-3"
+        >
+          Hello there! {name}({email})
+        </Button>
+      </Html>
+    </Tailwind>
   );
+};
+
+WelcomeEmail.PreviewProps = {
+  email: "john.doe@selleo.com",
+  name: "John Doe",
 };
 
 export default WelcomeEmail;
