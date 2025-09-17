@@ -5,8 +5,8 @@ import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { exportSchemaToFile } from "./utils/save-swagger-to-file";
 import { setupValidation } from "./utils/setup-validation";
 import cookieParser from "cookie-parser";
-import { Logger } from "nestjs-pino";
-import { auth } from "./lib/auth";
+
+import "dotenv/config";
 
 configureNestJsTypebox({
   patchSwagger: true,
@@ -14,12 +14,18 @@ configureNestJsTypebox({
 });
 
 async function bootstrap() {
+  console.log(process.env.NODE_ENV);
+
+  const environment = process.env.NODE_ENV || "production";
+
   const app = await NestFactory.create(AppModule, {
     bufferLogs: true,
     bodyParser: false,
+    logger:
+      environment === "production"
+        ? ["error", "warn", "log"]
+        : ["log", "error", "warn", "debug", "verbose"],
   });
-
-  app.useLogger(app.get(Logger));
 
   setupValidation();
 

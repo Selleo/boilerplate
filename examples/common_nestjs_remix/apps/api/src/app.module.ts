@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import { MiddlewareConsumer, Module } from "@nestjs/common";
 import { DrizzlePostgresModule } from "@knaadh/nestjs-drizzle-postgres";
 import database from "./common/configuration/database";
 import { ConfigModule, ConfigService } from "@nestjs/config";
@@ -14,9 +14,9 @@ import { EmailModule } from "./common/emails/emails.module";
 import { TestConfigModule } from "./test-config/test-config.module";
 import { StagingGuard } from "./common/guards/staging.guard";
 import { HealthModule } from "./health/health.module";
-import { LoggerModule } from "nestjs-pino";
 import { AuthModule } from "@thallesp/nestjs-better-auth";
 import { auth } from "./lib/auth";
+import { LoggerMiddleware } from "./logger/logger.middleware";
 
 @Module({
   imports: [
@@ -50,20 +50,6 @@ import { auth } from "./lib/auth";
       inject: [ConfigService],
       global: true,
     }),
-    LoggerModule.forRoot(
-      process.env.NODE_ENV === "production"
-        ? {}
-        : {
-            pinoHttp: {
-              transport: {
-                target: "pino-pretty",
-                options: {
-                  colorize: true,
-                },
-              },
-            },
-          },
-    ),
     AuthModule.forRoot(auth),
     UsersModule,
     EmailModule,
@@ -82,4 +68,8 @@ import { auth } from "./lib/auth";
     },
   ],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(LoggerMiddleware).forRoutes("*");
+  }
+}

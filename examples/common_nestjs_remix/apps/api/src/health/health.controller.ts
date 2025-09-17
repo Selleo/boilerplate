@@ -1,4 +1,4 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller, Get, Logger } from "@nestjs/common";
 import {
   HealthCheckService,
   HttpHealthIndicator,
@@ -6,10 +6,10 @@ import {
 } from "@nestjs/terminus";
 import { Public } from "src/common/decorators/public.decorator";
 import { DrizzleOrmHealthIndicator } from "./indicator/database/drizzleorm.health";
-import { WelcomeEmail } from "@repo/email-templates";
 
 @Controller("health")
 export class HealthController {
+  private readonly logger = new Logger(HealthController.name);
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
@@ -20,7 +20,8 @@ export class HealthController {
   @Public()
   @HealthCheck()
   async check() {
-    console.log("Health check");
+    this.logger.log("HealthCheck pinged");
+
     return this.health.check([
       () => this.http.pingCheck("google", "https://google.com"),
       () => this.db.pingCheck("guidebook"),
