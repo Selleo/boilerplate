@@ -5,9 +5,12 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import postgres from "postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
 
+import { WelcomeEmail } from "@repo/email-templates";
+
 import * as schema from "../storage/schema/index";
 
 import "dotenv/config";
+import { ExternalEmailAdapterFactory } from "src/common/emails/factory/email-external.factory";
 
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL not found on .env");
@@ -29,6 +32,8 @@ if (!googleClientSecret) {
 }
 
 const DEV_SOCIAL = process.env.DEV_SOCIAL === "true";
+
+const emailAdapter = new ExternalEmailAdapterFactory().createAdapter();
 
 // In dev mode allow localhost:5173 and localhost:5174 as trusted origins
 
@@ -53,6 +58,24 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    requireEmailVerification: true,
+  },
+  emailVerification: {
+    sendOnSignUp: true,
+    autoSignInAfterVerification: true,
+    async sendVerificationEmail(data) {
+      const email = await new WelcomeEmail({
+        email: data.user.email,
+        name: data.user.name || "User",
+        redirectUrl: data.url,
+      }).getHtml();
+      await emailAdapter.sendMail({
+        from: "guidebook@selleo.com",
+        to: data.user.email,
+        subject: "Verify your email address",
+        html: email,
+      });
+    },
   },
   socialProviders: {
     google: {

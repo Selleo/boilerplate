@@ -19,6 +19,7 @@ export function useRegisterUser() {
         email: options.data.email,
         password: options.data.password,
         name: options.data.name,
+        callbackURL: `${window.location.origin}/auth?verified=true`,
       });
 
       if (response.error) {

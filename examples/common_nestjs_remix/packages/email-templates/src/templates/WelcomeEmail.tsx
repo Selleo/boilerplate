@@ -4,17 +4,26 @@ import { Button, Html, Tailwind } from "@react-email/components";
 export type WelcomeEmailProps = {
   email: string;
   name: string;
+  redirectUrl: string;
 };
 
-export const WelcomeEmail = ({ email, name }: WelcomeEmailProps) => {
+export const WelcomeEmail = ({
+  email,
+  name,
+  redirectUrl,
+}: WelcomeEmailProps) => {
   return (
     <Tailwind>
       <Html>
+        <p>
+          Welcome to our app {name} ({email})!
+        </p>
+        <p>If you did not create an account, please ignore this email.</p>
         <Button
-          href="https://selleo.com"
+          href={redirectUrl}
           className="bg-orange-500 text-white px-5 py-3"
         >
-          Hello there! {name}({email})
+          Verify your email
         </Button>
       </Html>
     </Tailwind>

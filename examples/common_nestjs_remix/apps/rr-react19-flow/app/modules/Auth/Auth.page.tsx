@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect, useNavigate } from "react-router";
+import { redirect, useNavigate, useSearchParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { useLoginUser } from "~/api/mutations/useLoginUser";
@@ -12,6 +12,7 @@ import { Label } from "~/components/ui/label";
 import { cn } from "~/lib/utils";
 import { authClient } from "./auth.client";
 import { useLoginGoogle } from "~/api/mutations/useLoginGoogle";
+import { toast } from "sonner";
 
 const loginSchema = z.object({
   email: z.string().email({ message: "Invalid email" }),
@@ -55,6 +56,9 @@ export default function LoginPage() {
   const { mutateAsync: loginGoogle } = useLoginGoogle();
   const { mutateAsync: registerUser } = useRegisterUser();
   const [isSignUp, setIsSignUp] = React.useState(false);
+  const [searchParams] = useSearchParams();
+
+  const verified = searchParams.get("verified");
 
   const resolver = React.useMemo(
     () => zodResolver(isSignUp ? registerSchema : loginSchema),
@@ -84,6 +88,16 @@ export default function LoginPage() {
       );
     }
   };
+
+  useEffect(() => {
+    if (verified === "true") {
+      toast("Your email has been verified", {
+        description: "You can now log in to your account",
+        position: "top-center",
+      });
+      navigate("/auth");
+    }
+  }, [verified, navigate]);
 
   return (
     <div className={cn("flex flex-col gap-6")}>

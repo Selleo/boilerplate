@@ -17,7 +17,7 @@ export class EmailAdapterFactory {
     private configService: ConfigService,
   ) {}
 
-  async createAdapter(): Promise<EmailAdapter> {
+  async createAdapter() {
     const adapterType = this.configService.get<AdapterType>("EMAIL_ADAPTER");
     const adapter = match(adapterType)
       .with("mailhog", () => LocalAdapter)
