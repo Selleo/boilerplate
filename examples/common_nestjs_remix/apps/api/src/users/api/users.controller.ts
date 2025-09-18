@@ -12,6 +12,7 @@ import {
   baseResponse,
   BaseResponse,
   nullResponse,
+  StringSchema,
   UUIDSchema,
 } from "src/common";
 import { CurrentUser } from "src/common/decorators/user.decorator";
@@ -56,7 +57,7 @@ export class UsersController {
 
   @Get(":id")
   @Validate({
-    request: [{ type: "param", name: "id", schema: UUIDSchema }],
+    request: [{ type: "param", name: "id", schema: StringSchema }],
     response: baseResponse(commonUserSchema),
   })
   async getUserById(id: string): Promise<BaseResponse<UserResponse>> {

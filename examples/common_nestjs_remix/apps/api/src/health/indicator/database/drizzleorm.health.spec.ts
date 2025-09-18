@@ -1,7 +1,8 @@
 import { DatabasePg } from "src/common";
-import { TestContext, createUnitTest } from "test/create-unit-test";
+import { TestContext, createUnitTest } from "../../../../test/create-unit-test";
 import { DrizzleOrmHealthIndicator } from "./drizzleorm.health";
 import { HealthCheckError } from "@nestjs/terminus";
+import { vi } from "vitest";
 
 describe("DrizzleOrmHealthIndicator", () => {
   let testContext: TestContext;
@@ -29,7 +30,7 @@ describe("DrizzleOrmHealthIndicator", () => {
   });
 
   it("should return status when failure", async () => {
-    db.execute = jest.fn().mockImplementation(() => {
+    db.execute = vi.fn().mockImplementation(() => {
       throw new Error();
     });
 
@@ -37,7 +38,9 @@ describe("DrizzleOrmHealthIndicator", () => {
       await drizzleOrmHealthIndicator.pingCheck("test-database");
     } catch (error) {
       expect(error).toStrictEqual(
-        new HealthCheckError("Database check failed", {}),
+        new HealthCheckError("Database check failed", {
+          "test-database": { status: "down" },
+        }),
       );
     }
   });

@@ -60,10 +60,6 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
   providers: [
     {
       provide: APP_GUARD,
-      useClass: JwtAuthGuard,
-    },
-    {
-      provide: APP_GUARD,
       useClass: StagingGuard,
     },
   ],

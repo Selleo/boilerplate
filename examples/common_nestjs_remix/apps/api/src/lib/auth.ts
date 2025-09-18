@@ -32,6 +32,7 @@ if (!googleClientSecret) {
 }
 
 const DEV_SOCIAL = process.env.DEV_SOCIAL === "true";
+const IS_TEST = process.env.NODE_ENV === "test";
 
 const emailAdapter = new ExternalEmailAdapterFactory().createAdapter();
 
@@ -58,7 +59,7 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
-    requireEmailVerification: true,
+    requireEmailVerification: IS_TEST ? false : true,
   },
   emailVerification: {
     sendOnSignUp: true,

@@ -15,6 +15,9 @@ export class BaseResponse<T> {
 export const UUIDSchema = Type.String({ format: "uuid" });
 export type UUIDType = Static<typeof UUIDSchema>;
 
+export const StringSchema = Type.String();
+export type StringType = Static<typeof StringSchema>;
+
 export function baseResponse(data: TSchema) {
   if (data.type === "array") {
     return Type.Object({

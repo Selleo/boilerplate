@@ -5,6 +5,7 @@ import * as schema from "../src/storage/schema";
 import { migrate } from "drizzle-orm/postgres-js/migrator";
 import { DatabasePg } from "../src/common";
 import path from "path";
+import { sql as sqlRaw } from 'drizzle-orm' 
 
 let container: StartedTestContainer;
 let sql: ReturnType<typeof postgres>;
@@ -32,6 +33,8 @@ export async function setupTestDatabase(): Promise<{
   await migrate(db, {
     migrationsFolder: path.join(__dirname, "../src/storage/migrations"),
   });
+
+  db.execute(sqlRaw`select table_name from information_schema.tables where table_schema='public'`);
 
   return { db, container, connectionString };
 }
