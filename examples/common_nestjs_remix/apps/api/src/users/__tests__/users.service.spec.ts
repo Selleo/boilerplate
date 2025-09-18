@@ -5,6 +5,7 @@ import { UsersService } from "../users.service";
 import { createUserFactory } from "test/factory/user.factory";
 import { truncateTables } from "test/helpers/test-helpers";
 import { NotFoundException } from "@nestjs/common";
+import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
 
 describe("UsersService", () => {
   let testContext: TestContext;
