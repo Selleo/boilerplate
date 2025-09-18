@@ -12,7 +12,7 @@
 ### Install
 
 To start with the setup make sure you have the correct NodeJS version stated in [.tool-versions](./.tool-versions).
-For the node versioning we recommend [asdf](https://asdf-vm.com/). At the time of writing this readme the version is `20.15.0`
+For the node versioning we recommend [asdf](https://asdf-vm.com/). At the time of writing this readme the version is `24.8.0`
 
 After these steps, run the following command
 
@@ -42,7 +42,7 @@ To set up the backend envs and database:
 
 ```sh
 cp ./apps/api/.env.example ./apps/api/.env
-docker-compose up -d
+docker-compose up
 ```
 
 Next, setup the env variables for frontend:
@@ -77,7 +77,7 @@ You should be able to access your app at the following addresses:
   - generate migration
 
     ```sh
-    pnpm db:generate
+    pnpm db:generate -- --name your_migration_name
     ```
 
   - run migrations
@@ -85,10 +85,6 @@ You should be able to access your app at the following addresses:
     ```sh
     pnpm db:migrate
     ```
-
-> [!IMPORTANT]
-> Once migration is generated chagne its name to something more descriptive.
-> Also make sure to change the migration name in [\_journal.json](apps/api/src/storage/migrations/meta/_journal.json) file under the `tag` key.
 
 - #### HTTP Client
 

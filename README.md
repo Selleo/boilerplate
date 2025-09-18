@@ -1,11 +1,19 @@
 # Guidebook
 
+This repository consists of docs available in `docs` folder and hosted below:
+
 See https://guidebook.selleo.dev/.
 
+This repository also contains project starters.
 
-## Project starter
 
-This repo contains [project starter](./examples/common_nestjs_remix) that speeds up development. 
+## Project starters
+
+[NestJS + React](./examples/common_nestjs_remix) Starter
+[NestJS + React + React Native (expo)](./examples/common_nestjs_remix) Starter (soon)
+[Bun Script](#) Starter (soon)
+[Bun Backend](#) Starter (soon)
+
 
 ## LICENSE
 
