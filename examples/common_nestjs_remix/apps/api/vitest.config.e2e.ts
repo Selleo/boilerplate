@@ -7,6 +7,7 @@ export default defineConfig({
     globals: true,
     root: "./",
     include: ["**/*.e2e-spec.ts"],
+    setupFiles: ["./test/test-e2e-setup.ts"],
   },
   plugins: [
     // This is required to build the test files with SWC

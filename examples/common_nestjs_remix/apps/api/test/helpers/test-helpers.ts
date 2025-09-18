@@ -1,6 +1,7 @@
 import { DatabasePg } from "../../src/common";
 import { JwtService } from "@nestjs/jwt";
 import { sql } from "drizzle-orm";
+import { vi } from "vitest";
 
 type CamelToSnake<T extends string, P extends string = ""> = string extends T
   ? string
@@ -15,7 +16,7 @@ type StringKeys<T> = Extract<keyof T, string>;
 
 export function environmentVariablesFactory() {
   return {
-    get: jest.fn((key: string) => {
+    get: vi.fn((key: string) => {
       switch (key) {
         case "JWT_SECRET":
           return "secret";
