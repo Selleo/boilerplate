@@ -1,5 +1,6 @@
 /* eslint-disable */
 /* tslint:disable */
+// @ts-nocheck
 /*
  * ---------------------------------------------------------------
  * ## THIS FILE WAS GENERATED VIA SWAGGER-TYPESCRIPT-API        ##
@@ -9,72 +10,27 @@
  * ---------------------------------------------------------------
  */
 
-export interface RegisterBody {
-  /** @format email */
-  email: string;
-  /**
-   * @minLength 8
-   * @maxLength 64
-   */
-  password: string;
-}
-
-export interface RegisterResponse {
-  data: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    email: string;
-  };
-}
-
-export interface LoginBody {
-  /** @format email */
-  email: string;
-  /**
-   * @minLength 8
-   * @maxLength 64
-   */
-  password: string;
-}
-
-export interface LoginResponse {
-  data: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    email: string;
-  };
-}
-
-export type LogoutResponse = null;
-
-export type RefreshTokensResponse = null;
-
-export interface CurrentUserResponse {
-  data: {
-    id: string;
-    createdAt: string;
-    updatedAt: string;
-    email: string;
-  };
-}
-
 export interface GetUsersResponse {
   data: {
     id: string;
-    createdAt: string;
-    updatedAt: string;
+    name: string;
     email: string;
+    emailVerified: boolean;
+    image: string | null;
+    createdAt: date;
+    updatedAt: date;
   }[];
 }
 
 export interface GetUserByIdResponse {
   data: {
     id: string;
-    createdAt: string;
-    updatedAt: string;
+    name: string;
     email: string;
+    emailVerified: boolean;
+    image: string | null;
+    createdAt: date;
+    updatedAt: date;
   };
 }
 
@@ -86,35 +42,30 @@ export interface UpdateUserBody {
 export interface UpdateUserResponse {
   data: {
     id: string;
-    createdAt: string;
-    updatedAt: string;
+    name: string;
     email: string;
+    emailVerified: boolean;
+    image: string | null;
+    createdAt: date;
+    updatedAt: date;
   };
 }
 
-export interface ChangePasswordBody {
-  /**
-   * @minLength 8
-   * @maxLength 64
-   */
-  newPassword: string;
-  /**
-   * @minLength 8
-   * @maxLength 64
-   */
-  oldPassword: string;
-}
-
-export type ChangePasswordResponse = null;
-
 export type DeleteUserResponse = null;
 
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
+import type {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+  HeadersDefaults,
+  ResponseType,
+} from "axios";
 import axios from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 
-export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
+export interface FullRequestParams
+  extends Omit<AxiosRequestConfig, "data" | "params" | "url" | "responseType"> {
   /** set parameter to `true` for call `securityWorker` for this request */
   secure?: boolean;
   /** request path */
@@ -129,9 +80,13 @@ export interface FullRequestParams extends Omit<AxiosRequestConfig, "data" | "pa
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<
+  FullRequestParams,
+  "body" | "method" | "query" | "path"
+>;
 
-export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
+export interface ApiConfig<SecurityDataType = unknown>
+  extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (
     securityData: SecurityDataType | null,
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
@@ -141,6 +96,7 @@ export interface ApiConfig<SecurityDataType = unknown> extends Omit<AxiosRequest
 
 export enum ContentType {
   Json = "application/json",
+  JsonApi = "application/vnd.api+json",
   FormData = "multipart/form-data",
   UrlEncoded = "application/x-www-form-urlencoded",
   Text = "text/plain",
@@ -153,8 +109,16 @@ export class HttpClient<SecurityDataType = unknown> {
   private secure?: boolean;
   private format?: ResponseType;
 
-  constructor({ securityWorker, secure, format, ...axiosConfig }: ApiConfig<SecurityDataType> = {}) {
-    this.instance = axios.create({ ...axiosConfig, baseURL: axiosConfig.baseURL || "" });
+  constructor({
+    securityWorker,
+    secure,
+    format,
+    ...axiosConfig
+  }: ApiConfig<SecurityDataType> = {}) {
+    this.instance = axios.create({
+      ...axiosConfig,
+      baseURL: axiosConfig.baseURL || "",
+    });
     this.secure = secure;
     this.format = format;
     this.securityWorker = securityWorker;
@@ -164,7 +128,10 @@ export class HttpClient<SecurityDataType = unknown> {
     this.securityData = data;
   };
 
-  protected mergeRequestParams(params1: AxiosRequestConfig, params2?: AxiosRequestConfig): AxiosRequestConfig {
+  protected mergeRequestParams(
+    params1: AxiosRequestConfig,
+    params2?: AxiosRequestConfig,
+  ): AxiosRequestConfig {
     const method = params1.method || (params2 && params2.method);
 
     return {
@@ -172,7 +139,11 @@ export class HttpClient<SecurityDataType = unknown> {
       ...params1,
       ...(params2 || {}),
       headers: {
-        ...((method && this.instance.defaults.headers[method.toLowerCase() as keyof HeadersDefaults]) || {}),
+        ...((method &&
+          this.instance.defaults.headers[
+            method.toLowerCase() as keyof HeadersDefaults
+          ]) ||
+          {}),
         ...(params1.headers || {}),
         ...((params2 && params2.headers) || {}),
       },
@@ -193,11 +164,15 @@ export class HttpClient<SecurityDataType = unknown> {
     }
     return Object.keys(input || {}).reduce((formData, key) => {
       const property = input[key];
-      const propertyContent: any[] = property instanceof Array ? property : [property];
+      const propertyContent: any[] =
+        property instanceof Array ? property : [property];
 
       for (const formItem of propertyContent) {
         const isFileType = formItem instanceof Blob || formItem instanceof File;
-        formData.append(key, isFileType ? formItem : this.stringifyFormItem(formItem));
+        formData.append(
+          key,
+          isFileType ? formItem : this.stringifyFormItem(formItem),
+        );
       }
 
       return formData;
@@ -221,11 +196,21 @@ export class HttpClient<SecurityDataType = unknown> {
     const requestParams = this.mergeRequestParams(params, secureParams);
     const responseFormat = format || this.format || undefined;
 
-    if (type === ContentType.FormData && body && body !== null && typeof body === "object") {
+    if (
+      type === ContentType.FormData &&
+      body &&
+      body !== null &&
+      typeof body === "object"
+    ) {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
-    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
+    if (
+      type === ContentType.Text &&
+      body &&
+      body !== null &&
+      typeof body !== "string"
+    ) {
       body = JSON.stringify(body);
     }
 
@@ -233,7 +218,7 @@ export class HttpClient<SecurityDataType = unknown> {
       ...requestParams,
       headers: {
         ...(requestParams.headers || {}),
-        ...(type && type !== ContentType.FormData ? { "Content-Type": type } : {}),
+        ...(type ? { "Content-Type": type } : {}),
       },
       params: query,
       responseType: responseFormat,
@@ -250,86 +235,28 @@ export class HttpClient<SecurityDataType = unknown> {
  *
  * Example usage of Swagger with Typebox
  */
-export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  auth = {
-    /**
-     * No description
-     *
-     * @name AuthControllerRegister
-     * @request POST:/auth/register
-     */
-    authControllerRegister: (data: RegisterBody, params: RequestParams = {}) =>
-      this.request<RegisterResponse, any>({
-        path: `/auth/register`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name AuthControllerLogin
-     * @request POST:/auth/login
-     */
-    authControllerLogin: (data: LoginBody, params: RequestParams = {}) =>
-      this.request<LoginResponse, any>({
-        path: `/auth/login`,
-        method: "POST",
-        body: data,
-        type: ContentType.Json,
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name AuthControllerLogout
-     * @request POST:/auth/logout
-     */
-    authControllerLogout: (params: RequestParams = {}) =>
-      this.request<LogoutResponse, any>({
-        path: `/auth/logout`,
-        method: "POST",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name AuthControllerRefreshTokens
-     * @request POST:/auth/refresh
-     */
-    authControllerRefreshTokens: (params: RequestParams = {}) =>
-      this.request<RefreshTokensResponse, any>({
-        path: `/auth/refresh`,
-        method: "POST",
-        format: "json",
-        ...params,
-      }),
-
-    /**
-     * No description
-     *
-     * @name AuthControllerCurrentUser
-     * @request GET:/auth/current-user
-     */
-    authControllerCurrentUser: (params: RequestParams = {}) =>
-      this.request<CurrentUserResponse, any>({
-        path: `/auth/current-user`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-  };
+export class API<
+  SecurityDataType extends unknown,
+> extends HttpClient<SecurityDataType> {
   users = {
     /**
      * No description
      *
+     * @tags Users
+     * @name UsersControllerGetProfile
+     * @request GET:/users/me
+     */
+    usersControllerGetProfile: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/users/me`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Users
      * @name UsersControllerGetUsers
      * @request GET:/users
      */
@@ -344,6 +271,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Users
      * @name UsersControllerGetUserById
      * @request GET:/users/{id}
      */
@@ -358,10 +286,15 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Users
      * @name UsersControllerUpdateUser
      * @request PATCH:/users/{id}
      */
-    usersControllerUpdateUser: (id: string, data: UpdateUserBody, params: RequestParams = {}) =>
+    usersControllerUpdateUser: (
+      id: string,
+      data: UpdateUserBody,
+      params: RequestParams = {},
+    ) =>
       this.request<UpdateUserResponse, any>({
         path: `/users/${id}`,
         method: "PATCH",
@@ -374,6 +307,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     /**
      * No description
      *
+     * @tags Users
      * @name UsersControllerDeleteUser
      * @request DELETE:/users/{id}
      */
@@ -384,19 +318,105 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         format: "json",
         ...params,
       }),
+  };
+  testConfig = {
+    /**
+     * No description
+     *
+     * @tags TestConfig
+     * @name TestConfigControllerSetup
+     * @request POST:/test-config/setup
+     */
+    testConfigControllerSetup: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/test-config/setup`,
+        method: "POST",
+        ...params,
+      }),
 
     /**
      * No description
      *
-     * @name UsersControllerChangePassword
-     * @request PATCH:/users/{id}/change-password
+     * @tags TestConfig
+     * @name TestConfigControllerTeardown
+     * @request POST:/test-config/teardown
      */
-    usersControllerChangePassword: (id: string, data: ChangePasswordBody, params: RequestParams = {}) =>
-      this.request<ChangePasswordResponse, any>({
-        path: `/users/${id}/change-password`,
-        method: "PATCH",
-        body: data,
-        type: ContentType.Json,
+    testConfigControllerTeardown: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/test-config/teardown`,
+        method: "POST",
+        ...params,
+      }),
+  };
+  health = {
+    /**
+     * No description
+     *
+     * @tags Health
+     * @name HealthControllerCheck
+     * @request GET:/health
+     */
+    healthControllerCheck: (params: RequestParams = {}) =>
+      this.request<
+        {
+          /** @example "ok" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {} */
+          error?: Record<
+            string,
+            {
+              status: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"}} */
+          details?: Record<
+            string,
+            {
+              status: string;
+              [key: string]: any;
+            }
+          >;
+        },
+        {
+          /** @example "error" */
+          status?: string;
+          /** @example {"database":{"status":"up"}} */
+          info?: Record<
+            string,
+            {
+              status: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"redis":{"status":"down","message":"Could not connect"}} */
+          error?: Record<
+            string,
+            {
+              status: string;
+              [key: string]: any;
+            }
+          >;
+          /** @example {"database":{"status":"up"},"redis":{"status":"down","message":"Could not connect"}} */
+          details?: Record<
+            string,
+            {
+              status: string;
+              [key: string]: any;
+            }
+          >;
+        }
+      >({
+        path: `/health`,
+        method: "GET",
         format: "json",
         ...params,
       }),
