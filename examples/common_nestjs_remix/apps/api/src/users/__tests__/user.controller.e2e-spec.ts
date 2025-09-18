@@ -4,7 +4,16 @@ import { castArray, omit } from "lodash";
 import { createE2ETest } from "../../../test/create-e2e-test";
 import { createUserFactory, User } from "../../../test/factory/user.factory";
 import { DatabasePg } from "../../../src/common";
-import { afterAll, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  expect,
+  it,
+} from "vitest";
+import { truncateTables } from "test/helpers/test-helpers";
 
 describe("UsersController (e2e)", () => {
   let app: INestApplication;
@@ -15,18 +24,18 @@ describe("UsersController (e2e)", () => {
   let userFactory: ReturnType<typeof createUserFactory>;
 
   beforeAll(async () => {
-    const { app: testApp } = await createE2ETest();
+    const { app: testApp, db: testDb } = await createE2ETest();
     app = testApp;
-    db = app.get("DB");
+    db = testDb;
     userFactory = createUserFactory(db);
   });
 
   afterAll(async () => {
-    await app.close();
+    await app?.close();
   });
 
   beforeEach(async () => {
-    testUser = await userFactory.create();
+    testUser = userFactory.build();
 
     const registerResponse = await request(app.getHttpServer())
       .post("/api/auth/sign-up/email")
@@ -36,9 +45,15 @@ describe("UsersController (e2e)", () => {
         name: testUser.name,
       });
 
-    const userId = registerResponse.body.user.id;
+    testUser.id = registerResponse.body.user.id;
+
+    console.log("register-response", registerResponse);
 
     cookies = registerResponse.headers["set-cookie"];
+  });
+
+  afterEach(async () => {
+    await truncateTables(db, ["user"]);
   });
 
   describe("GET /users", () => {

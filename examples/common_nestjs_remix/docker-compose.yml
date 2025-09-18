@@ -7,6 +7,7 @@ services:
       POSTGRES_DB: guidebook 
     volumes:
       - guidebook-db-data:/var/lib/postgresql/data
+      - ./database-init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
   mailhog:

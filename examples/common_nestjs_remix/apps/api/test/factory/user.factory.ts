@@ -26,7 +26,7 @@ export const createUserFactory = (db: DatabasePg) => {
 
     return {
       id: faker.string.uuid(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       emailVerified: false,
       image: null,
       name: faker.person.fullName(),

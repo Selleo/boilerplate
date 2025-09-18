@@ -12,11 +12,17 @@ import * as schema from "../storage/schema/index";
 import "dotenv/config";
 import { ExternalEmailAdapterFactory } from "src/common/emails/factory/email-external.factory";
 
+const IS_TEST = process.env.NODE_ENV === "test";
+
 if (!process.env.DATABASE_URL) {
   throw new Error("DATABASE_URL not found on .env");
 }
 
-const queryClient = postgres(process.env.DATABASE_URL!);
+const databaseUrl = IS_TEST
+  ? process.env.DATABASE_TEST_URL
+  : process.env.DATABASE_URL;
+
+const queryClient = postgres(databaseUrl!);
 
 const db = drizzle({ client: queryClient });
 
@@ -32,7 +38,6 @@ if (!googleClientSecret) {
 }
 
 const DEV_SOCIAL = process.env.DEV_SOCIAL === "true";
-const IS_TEST = process.env.NODE_ENV === "test";
 
 const emailAdapter = new ExternalEmailAdapterFactory().createAdapter();
 
