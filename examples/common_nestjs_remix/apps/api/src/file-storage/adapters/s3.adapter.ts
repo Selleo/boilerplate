@@ -9,7 +9,7 @@ import { FileStorageAdapter } from "./file-storage.adapter";
 import { UploadFileInput, UploadFileResult } from "../file-storage.types";
 
 @Injectable()
-export class StandardAdapter extends FileStorageAdapter {
+export class S3Adapter extends FileStorageAdapter {
   private readonly bucket: string;
   private readonly client: S3Client;
 
