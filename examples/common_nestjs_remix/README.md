@@ -48,7 +48,7 @@ docker-compose up
 Next, setup the env variables for frontend:
 
 ```sh
-cp ./apps/web/.env.example ./apps/web/.env
+cp ./apps/web-app/.env.example ./apps/web-app/.env
 ```
 
 ### Migrations
