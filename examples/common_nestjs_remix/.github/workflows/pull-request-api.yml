@@ -1,0 +1,86 @@
+name: Pull Request API
+
+on:
+  pull_request:
+    paths:
+      - 'apps/api/**'
+      - '.github/workflows/pull-request-api.yml'
+      - 'packages/**'
+      - 'pnpm-lock.yaml'
+
+jobs:
+  api:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/guidebook
+      DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/guidebook_test
+      AWS_REGION: eu-central-1
+      AWS_ACCESS_KEY_ID: test
+      AWS_SECRET_ACCESS_KEY: test
+      FILE_STORAGE_ADAPTER: s3
+      S3_BUCKET: test-bucket
+      BETTER_AUTH_SECRET: test-secret
+      BETTER_AUTH_URL: http://localhost:3000
+      GOOGLE_CLIENT_ID: test-client-id
+      GOOGLE_CLIENT_SECRET: test-client
+      EMAIL_ADAPTER: ci
+      CORS_ORIGIN: http://localhost:3000
+      NODE_ENV: test
+    services:
+      postgres:
+        image: postgres:17
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.15.1
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.8.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build email
+        run: pnpm run build-email
+
+      - name: Install project deps
+        run: pnpm install --frozen-lockfile
+
+      - name: Prepare databases
+        run: |
+          psql -h localhost -U postgres -c "CREATE DATABASE guidebook;"
+          psql -h localhost -U postgres -c "CREATE DATABASE guidebook_test;"
+        env:
+          PGPASSWORD: postgres
+
+      - name: Run lint
+        run: pnpm lint
+
+      - name: Run TypeScript check
+        run: pnpm run typecheck:api
+
+      - name: Build
+        run: pnpm run --filter=api build
+
+      - name: Run API tests
+        run: pnpm test:api
+
+      - name: Run API E2E tests
+        run: pnpm test:api:e2e

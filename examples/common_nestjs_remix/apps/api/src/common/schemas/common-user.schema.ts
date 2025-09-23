@@ -1,5 +1,4 @@
-// @ts-expect-error - TODO: fix user tests
-import { user, users } from "src/storage/schema";
+import { user } from "src/storage/schema";
 import { createSelectSchema } from "drizzle-typebox";
 import { Static } from "@sinclair/typebox";
 
