@@ -21,7 +21,7 @@
 
 ## Testing Guidelines
 - API unit tests: `pnpm test:api`; coverage: `pnpm --filter api test:cov`. Prefer colocated `*.spec.ts` inside feature folders.
-- API e2e: `pnpm test:api:e2e` (uses the Testcontainers helpers in `apps/api/test`).
+- API e2e: `pnpm test:api:e2e`.
 - Frontend unit tests: `pnpm test:web`; browser-style e2e via `pnpm test:web:e2e`. Snapshot assertions belong under `app/tests`.
 
 ## Commit & Pull Request Guidelines

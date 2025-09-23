@@ -18,7 +18,6 @@ import {
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
-import { cn } from "~/lib/utils";
 import { Separator } from "~/components/ui/separator";
 import { SidebarTrigger } from "~/components/ui/sidebar";
 
@@ -147,32 +146,6 @@ export default function AdminUsersPage() {
       </header>
       <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{pageCard}</div>
     </>
-  );
-}
-
-function TabTrigger({
-  label,
-  isActive,
-  onClick,
-}: {
-  label: string;
-  isActive: boolean;
-  onClick?: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={cn(
-        "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
-        isActive
-          ? "bg-secondary text-secondary-foreground shadow-sm"
-          : "text-muted-foreground hover:text-foreground"
-      )}
-      disabled
-    >
-      {label}
-    </button>
   );
 }
 

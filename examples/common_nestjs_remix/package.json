@@ -3,6 +3,7 @@
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "build-email": "turbo build-email",
     "dev": "turbo dev",
     "dev-social": "turbo dev-social",
     "lint": "turbo lint",
@@ -13,13 +14,14 @@
     "test:web": "pnpm run --filter=guidebook-web-app test",
     "test:api": "pnpm run --filter=api test",
     "test:web:e2e": "pnpm run --filter=guidebook-web-app test:e2e",
-    "test:api:e2e": "pnpm run --filter=api test:e2e"
+    "test:api:e2e": "pnpm run --filter=api test:e2e",
+    "typecheck:api": "pnpm run --filter=primehouse-api typecheck"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
-    "prettier": "^3.2.5",
-    "turbo": "^2.0.6"
+    "prettier": "^3.6.0",
+    "turbo": "^2.5.6"
   },
   "packageManager": "pnpm@10.15.1",
   "engines": {

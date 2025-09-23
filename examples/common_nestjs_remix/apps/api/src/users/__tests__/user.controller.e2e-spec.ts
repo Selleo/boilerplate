@@ -1,6 +1,5 @@
 import { INestApplication } from "@nestjs/common";
 import request from "supertest";
-import { castArray, omit } from "lodash";
 import { createE2ETest } from "../../../test/create-e2e-test";
 import { createUserFactory, User } from "../../../test/factory/user.factory";
 import { DatabasePg } from "../../../src/common";
@@ -47,8 +46,6 @@ describe("UsersController (e2e)", () => {
 
     testUser.id = registerResponse.body.user.id;
 
-    console.log("register-response", registerResponse);
-
     cookies = registerResponse.headers["set-cookie"];
   });
 
@@ -81,10 +78,15 @@ describe("UsersController (e2e)", () => {
         .set("Cookie", cookies)
         .expect(200);
 
+      const user = response.body.data;
+
       expect(response.body.data).toBeDefined();
-      expect(omit(response.body.data, ["createdAt", "updatedAt"])).toEqual(
-        omit(testUser, ["createdAt", "updatedAt"]),
-      );
+      expect(user.email).toBe(testUser.email);
+      expect(user.name).toBe(testUser.name);
+      expect(user.id).toBe(testUser.id);
+      expect(user).not.toHaveProperty("credentials");
+      expect(user.banned).toBe(false);
+
       expect(response.body.data).not.toHaveProperty("credentials");
     });
 

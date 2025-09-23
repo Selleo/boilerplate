@@ -2,7 +2,7 @@ import { DatabasePg } from "src/common";
 import { TestContext, createUnitTest } from "../../../../test/create-unit-test";
 import { DrizzleOrmHealthIndicator } from "./drizzleorm.health";
 import { HealthCheckError } from "@nestjs/terminus";
-import { vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 
 describe("DrizzleOrmHealthIndicator", () => {
   let testContext: TestContext;

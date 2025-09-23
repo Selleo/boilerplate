@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { ApiClient } from "../api-client";
-import { UpdateUserBody } from "../generated-api";
+import { type UpdateUserBody } from "../generated-api";
 import { queryClient } from "../queryClient";
 import {
   currentUserQueryOptions,
@@ -19,7 +19,7 @@ export function useUpdateUser() {
   return useMutation({
     mutationFn: async (options: UpdateUserOptions) => {
       const response = await ApiClient.users.usersControllerUpdateUser(
-        currentUser.id,
+        currentUser!.id,
         options.data
       );
 

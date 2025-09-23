@@ -5,7 +5,6 @@ import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as schema from "./storage/schema";
 import { UsersModule } from "./users/users.module";
 import { JwtModule } from "@nestjs/jwt";
-import jwtConfig from "./common/configuration/jwt";
 import emailConfig from "./common/configuration/email";
 import awsConfig from "./common/configuration/aws";
 import fileStorageConfig from "./common/configuration/file-storage";
@@ -24,7 +23,7 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [database, jwtConfig, emailConfig, awsConfig, fileStorageConfig],
+      load: [database, emailConfig, awsConfig, fileStorageConfig],
       isGlobal: true,
     }),
     DrizzlePostgresModule.registerAsync({

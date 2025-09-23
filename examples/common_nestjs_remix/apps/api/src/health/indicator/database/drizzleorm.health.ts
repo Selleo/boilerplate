@@ -18,7 +18,8 @@ export class DrizzleOrmHealthIndicator extends HealthIndicator {
       await this.db.execute(sql`SELECT 1`);
 
       return this.getStatus(key, true);
-    } catch (error) {
+      // eslint-disable-next-line
+    } catch (error: any) {
       const result = this.getStatus(key, false);
       throw new HealthCheckError("Database check failed", result);
     }

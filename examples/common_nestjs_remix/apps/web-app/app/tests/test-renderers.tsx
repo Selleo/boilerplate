@@ -6,7 +6,7 @@ const MockThemeProvider = ({ children }: { children: React.ReactNode }) => (
   <>{children}</>
 );
 
-const QueryProvider = ({ children }: PropsWithChildren<{}>) => {
+const QueryProvider = ({ children }: PropsWithChildren) => {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
@@ -32,7 +32,7 @@ class TestRenderer {
   }
 
   render(ui: ReactElement, options?: Omit<RenderOptions, "wrapper">) {
-    const AllProviders = ({ children }: { children: React.ReactNode }) => (
+    const AllProviders = ({ children }: PropsWithChildren) => (
       <>
         {this.providers.reduceRight(
           (acc, Provider) => (

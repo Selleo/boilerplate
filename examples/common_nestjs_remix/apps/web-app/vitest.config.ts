@@ -1,9 +1,10 @@
 /// <reference types="vitest" />
 import path from "path";
-import { defineConfig } from "vite";
+import { defineConfig } from "vitest/config";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig({
+    // @ts-expect-error plugin types are broken
   plugins: [tsconfigPaths()],
   resolve: {
     alias: {

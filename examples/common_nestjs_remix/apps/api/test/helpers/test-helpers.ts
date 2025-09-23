@@ -18,8 +18,6 @@ export function environmentVariablesFactory() {
   return {
     get: vi.fn((key: string) => {
       switch (key) {
-        case "JWT_SECRET":
-          return "secret";
         case "DEBUG":
           return "false";
       }

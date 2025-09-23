@@ -16,6 +16,10 @@ export const createUserFactory = (db: DatabasePg) => {
       updatedAt: Date;
       image: string | null;
       emailVerified: boolean;
+      banned: boolean | null;
+      banReason: string | null;
+      banExpires: Date | null;
+      role: "user" | "admin" | null | string;
     },
     {}
   >(({ onCreate }) => {
@@ -32,6 +36,10 @@ export const createUserFactory = (db: DatabasePg) => {
       name: faker.person.fullName(),
       createdAt: new Date(),
       updatedAt: new Date(),
+      banned: null,
+      banReason: null,
+      banExpires: null,
+      role: "user",
     };
   });
 };
