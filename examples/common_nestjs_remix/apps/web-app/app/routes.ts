@@ -12,6 +12,8 @@ export default [
   ]),
   layout("modules/Auth/Auth.layout.tsx", [
     route("auth", "modules/Auth/Auth.page.tsx"),
+    route("forgot-password", "modules/Auth/ForgotPassword.page.tsx"),
+    route("new-password", "modules/Auth/NewPassword.page.tsx"),
   ]),
   layout("modules/dashboard/dashboard.layout.tsx", [
     route("dashboard", "modules/dashboard/dashboard.page.tsx", { index: true }),

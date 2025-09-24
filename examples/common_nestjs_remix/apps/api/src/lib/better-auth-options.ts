@@ -2,7 +2,7 @@ import { betterAuth, BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, createAuthMiddleware, openAPI } from "better-auth/plugins";
 import type { DatabasePg } from "src/common";
-import { WelcomeEmail } from "@repo/email-templates";
+import { WelcomeEmail, ResetPasswordEmail } from "@repo/email-templates";
 import * as schema from "../storage/schema";
 
 export type EnvGetter = (key: string) => string | undefined;
@@ -77,6 +77,19 @@ export const buildBetterAuthInstance = ({
     emailAndPassword: {
       enabled: true,
       requireEmailVerification: !isTest,
+      async sendResetPassword(data) {
+        const email = await new ResetPasswordEmail({
+          name: data.user.name || "User",
+          url: data.url,
+        }).getHtml();
+
+        await emailSender({
+          from: "test@primetest.com",
+          to: data.user.email,
+          subject: "Reset your password",
+          html: email,
+        });
+      },
     },
     emailVerification: {
       sendOnSignUp: true,
