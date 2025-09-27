@@ -1,22 +1,28 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
+import { ConfigModule, ConfigService } from "@nestjs/config";
 import { FileStorageAdapter } from "./adapters/file-storage.adapter";
-import { StandardAdapter } from "./adapters/standard.adapter";
-import { DevAdapter } from "./adapters/dev.adapter";
-import { FileStorageAdapterFactory } from "./factory/file-storage-adapter.factory";
+import { S3Adapter } from "./adapters/s3.adapter";
 import { FileStorageService } from "./file-storage.service";
 
 @Module({
   imports: [ConfigModule],
   providers: [
     FileStorageService,
-    FileStorageAdapterFactory,
-    DevAdapter,
-    StandardAdapter,
+    S3Adapter,
     {
       provide: FileStorageAdapter,
-      useFactory: (factory: FileStorageAdapterFactory) => factory.createAdapter(),
-      inject: [FileStorageAdapterFactory],
+      useFactory: (configService: ConfigService) => {
+        const adapter = configService.get<string>(
+          "fileStorage.FILE_STORAGE_ADAPTER",
+        );
+
+        if (adapter === "s3") {
+          return new S3Adapter(configService);
+        }
+
+        throw new Error(`Unknown file storage adapter: ${adapter}`);
+      },
+      inject: [ConfigService],
     },
   ],
   exports: [FileStorageService],

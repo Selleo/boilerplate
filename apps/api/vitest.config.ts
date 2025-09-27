@@ -11,6 +11,7 @@ export default defineConfig({
   },
   plugins: [
     // This is required to build the test files with SWC
+    // @ts-expect-error unplugin-swc types are broken
     swc.vite(),
   ],
   resolve: {
