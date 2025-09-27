@@ -1,15 +1,16 @@
 import { Boxes, CheckCircle2, Gauge, Sparkles } from "lucide-react";
 import type { MetaFunction } from "react-router";
 import { Link, useLoaderData } from "react-router";
+import { useTranslation } from "react-i18next";
 import { Button } from "~/components/ui/button";
+import i18next from "~/lib/i18n";
 
 export const meta: MetaFunction = () => {
   return [
-    { title: "Guidebook | React + NestJS starter" },
+    { title: i18next.t("landing.meta.title") },
     {
       name: "description",
-      content:
-        "Launch your next SaaS faster with a production-ready React + NestJS starter from Selleo.",
+      content: i18next.t("landing.meta.description"),
     },
   ];
 };
@@ -20,26 +21,21 @@ export const clientLoader = async () => {
 
 const FEATURES = [
   {
-    title: "Auth & security done",
-    description:
-      "Email login, passwordless, Google OAuth, roles and permissions already wired up.",
+    key: "authSecurity" as const,
     icon: CheckCircle2,
   },
   {
-    title: "Dashboard foundation",
-    description:
-      "Responsive layout, data fetching patterns, and UI primitives to build from day one.",
+    key: "dashboardFoundation" as const,
     icon: Gauge,
   },
   {
-    title: "Developer ergonomics",
-    description:
-      "Clean architecture, typed APIs, testing setup and DX improvements baked in.",
+    key: "developerErgonomics" as const,
     icon: Boxes,
   },
 ];
 
 export default function LandingPage() {
+  const { t } = useTranslation();
   const data = useLoaderData<typeof clientLoader>();
 
   return (
@@ -52,30 +48,30 @@ export default function LandingPage() {
           <div className="flex-1 space-y-6 text-center md:text-left">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
               <Sparkles className="size-4" />
-              Launch faster with confidence
+              {t("landing.hero.badge")}
             </span>
             <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl md:text-6xl">
-              A production-ready fullstack template, crafted by Selleo
+              {t("landing.hero.title")}
             </h1>
             <p className="text-pretty text-base text-muted-foreground sm:text-lg md:text-xl">
-              Guidebook gives your team a modern front-end, a secure backend, and opinionated patterns so you can focus on building your product, not wiring boilerplate.
+              {t("landing.hero.description")}
             </p>
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-start">
               <Button size="lg" asChild>
-                <Link to="/auth">Create your account</Link>
+                <Link to="/auth">{t("landing.hero.primaryCta")}</Link>
               </Button>
               <Button variant="ghost" size="lg" asChild>
-                <Link to="/dashboard">Explore the demo</Link>
+                <Link to="/dashboard">{t("landing.hero.secondaryCta")}</Link>
               </Button>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground md:justify-start">
               <span className="flex items-center gap-2">
                 <CheckCircle2 className="size-4 text-primary" />
-                Auth, dashboard & CLI-ready
+                {t("landing.hero.highlights.auth")}
               </span>
               <span className="flex items-center gap-2">
                 <CheckCircle2 className="size-4 text-primary" />
-                Typesafe React + NestJS stack
+                {t("landing.hero.highlights.stack")}
               </span>
             </div>
           </div>
@@ -94,23 +90,29 @@ export default function LandingPage() {
 
       <section id="features" className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 md:px-6">
         <div className="space-y-4 text-center md:max-w-2xl md:self-center md:text-center">
-          <h2 className="text-3xl font-semibold sm:text-4xl">Everything teams need to start shipping</h2>
+          <h2 className="text-3xl font-semibold sm:text-4xl">
+            {t("landing.features.title")}
+          </h2>
           <p className="text-base text-muted-foreground sm:text-lg">
-            Build on a stack that scales. We ship production decisions, so your team can focus on customer value from day one.
+            {t("landing.features.description")}
           </p>
         </div>
         <div className="grid gap-6 md:grid-cols-3">
-          {FEATURES.map(({ title, description, icon: Icon }) => (
+          {FEATURES.map(({ key, icon: Icon }) => (
             <article
-              key={title}
+              key={key}
               className="flex flex-col gap-4 rounded-2xl border border-border/80 bg-card p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
               <div className="flex size-12 items-center justify-center rounded-full bg-primary/10 text-primary">
                 <Icon className="size-6" />
               </div>
               <div className="space-y-2 text-left">
-                <h3 className="text-xl font-semibold">{title}</h3>
-                <p className="text-sm text-muted-foreground">{description}</p>
+                <h3 className="text-xl font-semibold">
+                  {t(`landing.features.items.${key}.title`)}
+                </h3>
+                <p className="text-sm text-muted-foreground">
+                  {t(`landing.features.items.${key}.description`)}
+                </p>
               </div>
             </article>
           ))}
@@ -122,21 +124,26 @@ export default function LandingPage() {
         className="mx-auto w-full max-w-6xl px-4 md:px-6"
       >
         <div className="flex flex-col gap-6 rounded-3xl border border-dashed border-primary/40 bg-primary/5 px-6 py-12 text-center shadow-sm sm:px-12">
-          <h2 className="text-3xl font-semibold sm:text-4xl">Simple pricing to get started</h2>
+          <h2 className="text-3xl font-semibold sm:text-4xl">
+            {t("landing.pricing.title")}
+          </h2>
           <p className="text-base text-muted-foreground sm:text-lg">
-            The starter template is open source. Self-host for free or work with Selleo for implementation support, custom features, and product strategy.
+            {t("landing.pricing.description")}
           </p>
           <div className="flex flex-col items-center gap-2 text-center">
             <p className="text-4xl font-semibold">
-              $0 <span className="text-base font-normal text-muted-foreground">for the template</span>
+              {t("landing.pricing.amount")}{" "}
+              <span className="text-base font-normal text-muted-foreground">
+                {t("landing.pricing.amountNote")}
+              </span>
             </p>
             <p className="text-sm text-muted-foreground">
-              Need a dedicated team? Reach out to tailor the stack for your next product.
+              {t("landing.pricing.additional")}
             </p>
           </div>
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
             <Button asChild size="lg">
-              <a href="mailto:hello@selleo.com">Talk to Selleo</a>
+              <a href="mailto:hello@selleo.com">{t("landing.pricing.contactCta")}</a>
             </Button>
             <Button variant="ghost" size="lg" asChild>
               <a
@@ -144,7 +151,7 @@ export default function LandingPage() {
                 target="_blank"
                 rel="noreferrer"
               >
-                Browse the codebase
+                {t("landing.pricing.codebaseCta")}
               </a>
             </Button>
           </div>
@@ -152,7 +159,7 @@ export default function LandingPage() {
       </section>
 
       <p className="text-center text-xs text-muted-foreground">
-        Last rendered at {data.date.toLocaleString()}
+        {t("landing.footer.renderedAt", { date: data.date.toLocaleString() })}
       </p>
     </div>
   );

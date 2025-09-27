@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { redirect, useNavigate, useSearchParams } from "react-router";
+import { Link, redirect, useNavigate, useSearchParams } from "react-router";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import type { TFunction } from "i18next";
+import { useTranslation } from "react-i18next";
 import { useLoginUser } from "~/api/mutations/useLoginUser";
 import { useRegisterUser } from "~/api/mutations/useRegisterUser";
 import { Button } from "~/components/ui/button";
@@ -14,26 +16,28 @@ import { authClient } from "./auth.client";
 import { useLoginGoogle } from "~/api/mutations/useLoginGoogle";
 import { toast } from "sonner";
 
-const loginSchema = z.object({
-  email: z.string().email({ message: "Invalid email" }),
-  password: z
-    .string()
-    .min(8, { message: "Password must be at least 8 characters" }),
-});
-
-const registerSchema = loginSchema
-  .extend({
-    name: z
+const createLoginSchema = (t: TFunction) =>
+  z.object({
+    email: z.email({ message: t("auth.fields.email.errors.invalid") }),
+    password: z
       .string()
-      .min(3, { message: "Username must be at least 3 characters" }),
-    confirmPassword: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters" }),
-  })
-  .refine((val) => val.password === val.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+      .min(8, { message: t("auth.fields.password.errors.minLength") }),
   });
+
+const createRegisterSchema = (t: TFunction) =>
+  createLoginSchema(t)
+    .extend({
+      name: z
+        .string()
+        .min(3, { message: t("auth.fields.name.errors.minLength") }),
+      confirmPassword: z.string().min(8, {
+        message: t("auth.fields.confirmPassword.errors.minLength"),
+      }),
+    })
+    .refine((val) => val.password === val.confirmPassword, {
+      message: t("auth.fields.confirmPassword.errors.mismatch"),
+      path: ["confirmPassword"],
+    });
 
 type LoginFormValues = {
   email: string;
@@ -52,17 +56,19 @@ export async function clientLoader() {
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { mutateAsync: loginUser } = useLoginUser();
   const { mutateAsync: loginGoogle } = useLoginGoogle();
   const { mutateAsync: registerUser } = useRegisterUser();
   const [isSignUp, setIsSignUp] = React.useState(false);
   const [searchParams] = useSearchParams();
 
-  const verified = searchParams.get("verified");
+  const loginSchema = React.useMemo(() => createLoginSchema(t), [t]);
+  const registerSchema = React.useMemo(() => createRegisterSchema(t), [t]);
 
   const resolver = React.useMemo(
     () => zodResolver(isSignUp ? registerSchema : loginSchema),
-    [isSignUp]
+    [isSignUp, loginSchema, registerSchema]
   );
 
   const {
@@ -89,17 +95,19 @@ export default function LoginPage() {
     }
   };
 
+  const verified = searchParams.get("verified");
+
   useEffect(() => {
     if (verified === "true") {
-      toast("Your email has been verified", {
-        description: "You can now log in to your account",
+      toast(t("auth.toast.verified.title"), {
+        description: t("auth.toast.verified.description"),
         position: "top-center",
       });
       navigate("/auth", {
         replace: true,
       });
     }
-  }, [verified, navigate]);
+  }, [verified, navigate, t]);
 
   return (
     <div className={cn("flex flex-col gap-6")}>
@@ -109,21 +117,19 @@ export default function LoginPage() {
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">
-                  {isSignUp ? "Create your account" : "Welcome back"}
+                  {t(`auth.headings.${isSignUp ? "register" : "login"}`)}
                 </h1>
                 <p className="text-muted-foreground text-balance">
-                  {isSignUp
-                    ? "Enter your details to get started"
-                    : "Login to your Guidebook account"}
+                  {t(`auth.subheadings.${isSignUp ? "register" : "login"}`)}
                 </p>
               </div>
               <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email">{t("auth.fields.email.label")}</Label>
                 <div>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="m@example.com"
+                    placeholder={t("auth.fields.email.placeholder")}
                     className={cn({ "border-red-500": errors.email })}
                     {...register("email")}
                     required
@@ -137,12 +143,12 @@ export default function LoginPage() {
               </div>
               {isSignUp && (
                 <div className="grid gap-2">
-                  <Label htmlFor="name">Username</Label>
+                  <Label htmlFor="name">{t("auth.fields.name.label")}</Label>
                   <div>
                     <Input
                       id="name"
                       type="text"
-                      placeholder="your_username"
+                      placeholder={t("auth.fields.name.placeholder")}
                       className={cn({ "border-red-500": errors.name })}
                       {...register("name")}
                       required={isSignUp}
@@ -157,7 +163,9 @@ export default function LoginPage() {
               )}
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">Password</Label>
+                  <Label htmlFor="password">
+                    {t("auth.fields.password.label")}
+                  </Label>
                 </div>
                 <div>
                   <Input
@@ -176,7 +184,9 @@ export default function LoginPage() {
               </div>
               {isSignUp && (
                 <div className="grid gap-2">
-                  <Label htmlFor="confirmPassword">Confirm password</Label>
+                  <Label htmlFor="confirmPassword">
+                    {t("auth.fields.confirmPassword.label")}
+                  </Label>
                   <div>
                     <Input
                       id="confirmPassword"
@@ -196,17 +206,17 @@ export default function LoginPage() {
                 </div>
               )}
               <Button type="submit" className="w-full">
-                {isSignUp ? "Create account" : "Login"}
+                {t(`auth.buttons.primary.${isSignUp ? "register" : "login"}`)}
               </Button>
-              <a
-                href="#"
+              <Link
+                to="/forgot-password"
                 className="text-center text-sm underline-offset-2 hover:underline"
               >
-                Forgot your password?
-              </a>
+                {t("auth.links.forgotPassword")}
+              </Link>
               <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
                 <span className="bg-card text-muted-foreground relative z-10 px-2">
-                  Or continue with
+                  {t("auth.continueWith")}
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -224,10 +234,9 @@ export default function LoginPage() {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Login with Google</span>
+                  <span className="sr-only">{t("auth.buttons.google")}</span>
                 </Button>
                 <Button variant="outline" type="button" className="w-full">
-                  {/* Microsoft logo: four squares */}
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <rect
                       x="1"
@@ -258,30 +267,30 @@ export default function LoginPage() {
                       fill="currentColor"
                     />
                   </svg>
-                  <span className="sr-only">Login with Microsoft</span>
+                  <span className="sr-only">{t("auth.buttons.microsoft")}</span>
                 </Button>
               </div>
               <div className="text-center text-sm">
                 {isSignUp ? (
                   <>
-                    Already have an account?{" "}
+                    {t("auth.links.toggle.hasAccount")}{" "}
                     <button
                       type="button"
                       className="underline underline-offset-4"
                       onClick={() => setIsSignUp(false)}
                     >
-                      Sign in
+                      {t("auth.links.toggle.signIn")}
                     </button>
                   </>
                 ) : (
                   <>
-                    Don&apos;t have an account?{" "}
+                    {t("auth.links.toggle.noAccount")}{" "}
                     <button
                       type="button"
                       className="underline underline-offset-4"
                       onClick={() => setIsSignUp(true)}
                     >
-                      Sign up
+                      {t("auth.links.toggle.signUp")}
                     </button>
                   </>
                 )}
@@ -298,8 +307,10 @@ export default function LoginPage() {
         </CardContent>
       </Card>
       <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        {t("auth.links.agreement.prefix")}{" "}
+        <a href="#">{t("auth.links.agreement.terms")}</a>{" "}
+        {t("auth.links.agreement.and")}{" "}
+        <a href="#">{t("auth.links.agreement.privacy")}</a>.
       </div>
     </div>
   );

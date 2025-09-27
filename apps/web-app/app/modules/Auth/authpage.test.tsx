@@ -21,7 +21,9 @@ describe("Auth Page", () => {
   );
 
   it("renders without crashing", () => {
-    renderWith({ withQuery: true }).render(<Stub initialEntries={["/auth"]} />);
+    renderWith({ withQuery: true, withi18n: true }).render(
+      <Stub initialEntries={["/auth"]} />
+    );
 
     expect(screen.getByRole("heading", { name: "Welcome back" })).toBeDefined();
     expect(screen.getByLabelText("Email")).toBeDefined();
@@ -30,14 +32,18 @@ describe("Auth Page", () => {
   });
 
   it("shows login form and is typable", async () => {
-    renderWith({ withQuery: true }).render(<Stub initialEntries={["/auth"]} />);
+    renderWith({ withQuery: true, withi18n: true }).render(
+      <Stub initialEntries={["/auth"]} />
+    );
 
     const user = userEvent.setup();
     await user.type(screen.getByLabelText("Email"), "test@example.com");
     await user.type(screen.getByLabelText("Password"), "password123");
   });
   it("switches to sign up form", async () => {
-    renderWith({ withQuery: true }).render(<Stub initialEntries={["/auth"]} />);
+    renderWith({ withQuery: true, withi18n: true }).render(
+      <Stub initialEntries={["/auth"]} />
+    );
 
     const user = userEvent.setup();
 

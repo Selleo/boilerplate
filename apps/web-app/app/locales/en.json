@@ -1,0 +1,191 @@
+{
+  "auth": {
+    "headings": {
+      "login": "Welcome back",
+      "register": "Create your account"
+    },
+    "subheadings": {
+      "login": "Login to your Guidebook account",
+      "register": "Enter your details to get started"
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "m@example.com",
+        "errors": {
+          "invalid": "Invalid email"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "errors": {
+          "minLength": "Password must be at least 8 characters"
+        }
+      },
+      "name": {
+        "label": "Username",
+        "placeholder": "your_username",
+        "errors": {
+          "minLength": "Username must be at least 3 characters"
+        }
+      },
+      "confirmPassword": {
+        "label": "Confirm password",
+        "errors": {
+          "minLength": "Password must be at least 8 characters",
+          "mismatch": "Passwords do not match"
+        }
+      }
+    },
+    "buttons": {
+      "primary": {
+        "login": "Login",
+        "register": "Create account"
+      },
+      "google": "Login with Google",
+      "microsoft": "Login with Microsoft"
+    },
+    "links": {
+      "forgotPassword": "Forgot your password?",
+      "toggle": {
+        "hasAccount": "Already have an account?",
+        "noAccount": "Don't have an account?",
+        "signIn": "Sign in",
+        "signUp": "Sign up"
+      },
+      "agreement": {
+        "prefix": "By clicking continue, you agree to our",
+        "terms": "Terms of Service",
+        "and": "and",
+        "privacy": "Privacy Policy"
+      }
+    },
+    "continueWith": "Or continue with",
+    "toast": {
+      "verified": {
+        "title": "Your email has been verified",
+        "description": "You can now log in to your account"
+      }
+    }
+  },
+  "forgotPassword": {
+    "title": "Odzyskaj dostęp",
+    "description": "Podaj adres email powiązany z Twoim kontem. Jeśli konto istnieje, wyślemy instrukcję resetu hasła.",
+    "fields": {
+      "email": {
+        "label": "Email",
+        "errors": {
+          "invalid": "Nieprawidłowy adres email"
+        }
+      }
+    },
+    "buttons": {
+      "submit": "Wyślij link resetujący",
+      "submitting": "Wysyłanie..."
+    },
+    "links": {
+      "remember": "Pamiętasz hasło?",
+      "backToLogin": "Wróć do logowania"
+    }
+  },
+  "newPassword": {
+    "title": "Ustaw nowe hasło",
+    "description": "Wpisz nowe hasło do konta, aby odzyskać dostęp. Hasło powinno mieć co najmniej 8 znaków.",
+    "fields": {
+      "newPassword": {
+        "label": "Nowe hasło",
+        "errors": {
+          "minLength": "Hasło musi mieć co najmniej 8 znaków"
+        }
+      },
+      "confirmPassword": {
+        "label": "Powtórz hasło",
+        "errors": {
+          "minLength": "Hasło musi mieć co najmniej 8 znaków",
+          "mismatch": "Hasła muszą być takie same"
+        }
+      }
+    },
+    "buttons": {
+      "submit": "Zapisz nowe hasło",
+      "submitting": "Zapisywanie...",
+      "backToForgot": "Wróć do resetu hasła"
+    },
+    "messages": {
+      "invalidLink": "Link do resetu hasła wygasł lub jest nieprawidłowy.",
+      "tokenIssue": "Link resetujący jest nieprawidłowy lub wygasł. Poproś o nowy link.",
+      "backToLoginPrompt": "Wróć do logowania?",
+      "backToLogin": "Zaloguj się"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "Guidebook | React + NestJS starter",
+      "description": "Launch your next SaaS faster with a production-ready React + NestJS starter from Selleo."
+    },
+    "layout": {
+      "nav": {
+        "product": "Product",
+        "features": "Features",
+        "pricing": "Pricing",
+        "about": "About"
+      },
+      "cta": {
+        "signIn": "Sign in",
+        "dashboard": "Open dashboard"
+      },
+      "footer": {
+        "madeWith": "Made with ❤️ by the Selleo team.",
+        "product": "Product",
+        "features": "Features",
+        "pricing": "Pricing",
+        "about": "About"
+      }
+    },
+    "hero": {
+      "badge": "Launch faster with confidence",
+      "title": "A production-ready fullstack template, crafted by Selleo",
+      "description": "Guidebook gives your team a modern front-end, a secure backend, and opinionated patterns so you can focus on building your product, not wiring boilerplate.",
+      "primaryCta": "Create your account",
+      "secondaryCta": "Explore the demo",
+      "highlights": {
+        "auth": "Auth, dashboard & CLI-ready",
+        "stack": "Typesafe React + NestJS stack"
+      }
+    },
+    "features": {
+      "title": "Everything teams need to start shipping",
+      "description": "Build on a stack that scales. We ship production decisions, so your team can focus on customer value from day one.",
+      "items": {
+        "authSecurity": {
+          "title": "Auth & security done",
+          "description": "Email login, passwordless, Google OAuth, roles and permissions already wired up."
+        },
+        "dashboardFoundation": {
+          "title": "Dashboard foundation",
+          "description": "Responsive layout, data fetching patterns, and UI primitives to build from day one."
+        },
+        "developerErgonomics": {
+          "title": "Developer ergonomics",
+          "description": "Clean architecture, typed APIs, testing setup and DX improvements baked in."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Simple pricing to get started",
+      "description": "The starter template is open source. Self-host for free or work with Selleo for implementation support, custom features, and product strategy.",
+      "amount": "$0",
+      "amountNote": "for the template",
+      "additional": "Need a dedicated team? Reach out to tailor the stack for your next product.",
+      "contactCta": "Talk to Selleo",
+      "codebaseCta": "Browse the codebase"
+    },
+    "footer": {
+      "renderedAt": "Last rendered at {{date}}"
+    }
+  },
+  "about": {
+    "metaTitle": "About page",
+    "heading": "About page"
+  }
+}
