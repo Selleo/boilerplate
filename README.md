@@ -122,6 +122,28 @@ You should be able to access your app at the following addresses:
     pnpm test:api:e2e
     ```
 
+#### CI Actions
+
+CI is set up to run on:
+- Test/Lint - on PRs
+- Deploy - on Push Main (need to be configured for own aws)
+
+#### Infrastructure
+
+The terraform folder structure should be copied from examples in https://github.com/Selleo/terraform-aws-modules
+
+The structure should be as follows
+
+Root
+├── terraform
+│   ├── modules (here copy all modules)
+│   |── environments
+|   |    |----production
+|   |    |----dev
+|   |    |----staging
+
+
+
 ## Legal notice
 
 This project was generated using [Selleo Boilerplate](https://github.com/Selleo/boilerplate) which is licensed under the MIT license.
