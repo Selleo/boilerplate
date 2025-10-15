@@ -25,7 +25,7 @@ COPY packages/shared /app/packages/shared
 RUN pnpm build-email --filter=@repo/email-templates
 RUN pnpm build-shared --filter=@repo/shared
 RUN pnpm install
-RUN pnpm build --filter=guidebook-api
+RUN pnpm build --filter=boilerplate-api
 
 FROM node:24-alpine AS production
 

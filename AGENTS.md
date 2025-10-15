@@ -11,7 +11,7 @@
 
 - Install deps: `pnpm install` (Node 24+, pnpm 10).
 - Start everything: `pnpm dev`; build all workspaces: `pnpm build`.
-- Focused dev: `pnpm --filter guidebook-api dev` for the API, `pnpm --filter guidebook-web-app dev` for the frontend, `pnpm --filter reverse-proxy dev` when reloading Caddy.
+- Focused dev: `pnpm --filter boilerplate-api dev` for the API, `pnpm --filter boilerplate-web-app dev` for the frontend, `pnpm --filter reverse-proxy dev` when reloading Caddy.
 - Database: `pnpm db:generate -- --name your_migration_name`.
 - Tooling extras: `pnpm generate:client` refreshes the Swagger client, `pnpm lint` and `pnpm format` keep standards aligned.
 
@@ -25,7 +25,7 @@
 
 ## Testing Guidelines
 
-- API unit tests: `pnpm test:api`; coverage: `pnpm --filter guidebook-api test:cov`. Prefer colocated `*.spec.ts` inside feature folders.
+- API unit tests: `pnpm test:api`; coverage: `pnpm --filter boilerplate-api test:cov`. Prefer colocated `*.spec.ts` inside feature folders.
 - API e2e: `pnpm test:api:e2e`.
 - Frontend unit tests: `pnpm test:web`; browser-style e2e via `pnpm test:web:e2e`. Snapshot assertions belong under `app/tests`.
 

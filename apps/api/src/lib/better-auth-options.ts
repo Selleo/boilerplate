@@ -102,7 +102,7 @@ export const buildBetterAuthInstance = ({
         }).getHtml();
 
         await emailSender({
-          from: "guidebook@selleo.com",
+          from: "boilerplate@selleo.com",
           to: user.email,
           subject: "Verify your email address",
           html: email,
@@ -120,14 +120,14 @@ export const buildBetterAuthInstance = ({
       : {
           crossSubDomainCookies: {
             enabled: true,
-            domain: "guidebook.localhost",
+            domain: "boilerplate.localhost",
           },
         },
     trustedOrigins: [
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:3000",
-      "https://app.guidebook.localhost",
+      "https://app.boilerplate.localhost",
     ],
     logger: {
       level: "debug",

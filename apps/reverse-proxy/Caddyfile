@@ -1,15 +1,15 @@
-api.guidebook.localhost {
+api.boilerplate.localhost {
 	reverse_proxy localhost:3000
 }
 
-app.guidebook.localhost {
+app.boilerplate.localhost {
 	reverse_proxy localhost:5173
 }
 
-mailbox.guidebook.localhost {
+mailbox.boilerplate.localhost {
 	reverse_proxy localhost:8025
 }
 
-storage.guidebook.localhost {
+storage.boilerplate.localhost {
 	reverse_proxy localhost:8069
 }

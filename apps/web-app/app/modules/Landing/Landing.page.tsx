@@ -80,7 +80,7 @@ export default function LandingPage() {
             <div className="relative flex size-52 items-center justify-center rounded-3xl border border-primary/30 bg-background/80 shadow-2xl backdrop-blur md:size-64">
               <img
                 src="/brand.svg"
-                alt="Guidebook brand"
+                alt="Boilerplate brand"
                 className="h-24 w-24 md:h-28 md:w-28"
               />
             </div>
@@ -147,7 +147,7 @@ export default function LandingPage() {
             </Button>
             <Button variant="ghost" size="lg" asChild>
               <a
-                href="https://github.com/Selleo/guidebook/examples/common_nestjs_remix"
+                href="https://github.com/Selleo/boilerplate"
                 target="_blank"
                 rel="noreferrer"
               >

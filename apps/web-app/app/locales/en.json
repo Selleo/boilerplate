@@ -5,7 +5,7 @@
       "register": "Create your account"
     },
     "subheadings": {
-      "login": "Login to your Guidebook account",
+      "login": "Login to your Boilerplate account",
       "register": "Enter your details to get started"
     },
     "fields": {
@@ -120,7 +120,7 @@
   },
   "landing": {
     "meta": {
-      "title": "Guidebook | React + NestJS starter",
+      "title": "Boilerplate | React + NestJS starter",
       "description": "Launch your next SaaS faster with a production-ready React + NestJS starter from Selleo."
     },
     "layout": {
@@ -145,7 +145,7 @@
     "hero": {
       "badge": "Launch faster with confidence",
       "title": "A production-ready fullstack template, crafted by Selleo",
-      "description": "Guidebook gives your team a modern front-end, a secure backend, and opinionated patterns so you can focus on building your product, not wiring boilerplate.",
+      "description": "Boilerplate gives your team a modern front-end, a secure backend, and opinionated patterns so you can focus on building your product, not wiring boilerplate.",
       "primaryCta": "Create your account",
       "secondaryCta": "Explore the demo",
       "highlights": {

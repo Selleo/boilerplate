@@ -64,11 +64,11 @@ pnpm db:migrate
 Now, from the root of the `examples/common_nestjs_remix` directory, run `pnpm dev` to start all applications in parallel.
 You should be able to access your app at the following addresses:
 
-| Service | URL                                                                          |
-| ------- | ---------------------------------------------------------------------------- |
-| Web app | [`https://app.guidebook.localhost`](https://app.guidebook.localhost)         |
-| Api     | [`https://api.guidebook.localhost`](https://api.guidebook.localhost)          |
-| Swagger | [`https://api.guidebook.localhost/api`](https://api.guidebook.localhost/api) |
+| Service | URL                                                                               |
+| ------- | --------------------------------------------------------------------------------- |
+| Web app | [`https://app.boilerplate.localhost`](https://app.boilerplate.localhost)          |
+| Api     | [`https://api.boilerplate.localhost`](https://api.boilerplate.localhost)          |
+| Swagger | [`https://api.boilerplate.localhost/api`](https://api.boilerplate.localhost/api)  |
 
 ### Commands
 
@@ -104,7 +104,7 @@ You should be able to access your app at the following addresses:
   pnpm build
   ```
 
-  The mailhog service is available at [mailbox.guidebook.localhost](https://mailbox.guidebook.localhost)
+  The mailhog service is available at [mailbox.boilerplate.localhost](https://mailbox.boilerplate.localhost)
 
 - #### Testing
   - **Frontend**:
@@ -124,4 +124,4 @@ You should be able to access your app at the following addresses:
 
 ## Legal notice
 
-This project was generated using [Selleo Guidebook](https://github.com/Selleo/guidebook) which is licensed under the MIT license.
+This project was generated using [Selleo Boilerplate](https://github.com/Selleo/boilerplate) which is licensed under the MIT license.

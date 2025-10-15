@@ -40,7 +40,7 @@ jobs:
         run: pnpm install
 
       - name: Build app
-        run: pnpm build --filter guidebook-web-app
+        run: pnpm build --filter boilerplate-web-app
         env:
           VITE_API_URL: ${{ vars.VITE_API_URL }}
 

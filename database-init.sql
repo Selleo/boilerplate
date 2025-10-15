@@ -1,1 +1,1 @@
-CREATE DATABASE guidebook_test;
+CREATE DATABASE boilerplate_test;

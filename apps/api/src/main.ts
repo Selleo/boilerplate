@@ -35,14 +35,14 @@ async function bootstrap() {
     origin: [
       "http://localhost:5173",
       "http://localhost:5174",
-      "https://app.guidebook.localhost",
+      "https://app.boilerplate.localhost",
       "http://localhost:3000",
     ],
     credentials: true,
   });
 
   const config = new DocumentBuilder()
-    .setTitle("Guidebook API")
+    .setTitle("Boilerplate API")
     .setDescription("Example usage of Swagger with Typebox")
     .setVersion("1.0")
     .build();

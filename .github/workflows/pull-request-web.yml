@@ -34,13 +34,13 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Typegen React Router
-        run: pnpm --filter guidebook-web-app typegen
+        run: pnpm --filter boilerplate-web-app typegen
 
       - name: Lint
-        run: pnpm --filter guidebook-web-app lint
+        run: pnpm --filter boilerplate-web-app lint
 
       - name: Type check
-        run: pnpm --filter guidebook-web-app typecheck
+        run: pnpm --filter boilerplate-web-app typecheck
 
       - name: Test
-        run: pnpm --filter guidebook-web-app test
+        run: pnpm --filter boilerplate-web-app test

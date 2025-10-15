@@ -357,7 +357,7 @@
     }
   },
   "info": {
-    "title": "Guidebook API",
+    "title": "Boilerplate API",
     "description": "Example usage of Swagger with Typebox",
     "version": "1.0",
     "contact": {}

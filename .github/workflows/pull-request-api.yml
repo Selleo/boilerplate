@@ -13,8 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       CI: true
-      DATABASE_URL: postgres://postgres:postgres@localhost:5432/guidebook
-      DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/guidebook_test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/boilerplate
+      DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/boilerplate_test
       AWS_REGION: eu-central-1
       AWS_ACCESS_KEY_ID: test
       AWS_SECRET_ACCESS_KEY: test
@@ -68,8 +68,8 @@ jobs:
 
       - name: Prepare databases
         run: |
-          psql -h localhost -U postgres -c "CREATE DATABASE guidebook;"
-          psql -h localhost -U postgres -c "CREATE DATABASE guidebook_test;"
+          psql -h localhost -U postgres -c "CREATE DATABASE boilerplate;"
+          psql -h localhost -U postgres -c "CREATE DATABASE boilerplate_test;"
         env:
           PGPASSWORD: postgres
 
@@ -80,7 +80,7 @@ jobs:
         run: pnpm run typecheck:api
 
       - name: Build
-        run: pnpm run --filter=guidebook-api build
+        run: pnpm run --filter=boilerplate-api build
 
       - name: Run API tests
         run: pnpm test:api

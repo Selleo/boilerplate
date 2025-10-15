@@ -3,10 +3,10 @@ services:
     image: postgres:16-alpine
     restart: always
     environment:
-      POSTGRES_PASSWORD: guidebook 
-      POSTGRES_DB: guidebook 
+      POSTGRES_PASSWORD: boilerplate 
+      POSTGRES_DB: boilerplate 
     volumes:
-      - guidebook-db-data:/var/lib/postgresql/data
+      - boilerplate-db-data:/var/lib/postgresql/data
       - ./database-init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
@@ -17,5 +17,5 @@ services:
       - 8025:8025
 
 volumes:
-  guidebook-db-data:
+  boilerplate-db-data:
     driver: local
