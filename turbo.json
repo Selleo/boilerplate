@@ -7,6 +7,10 @@
       "dependsOn": ["^build"],
       "outputs": [".next/**", "!.next/cache/**"]
     },
+    "build-shared": {
+      "dependsOn": ["^build"],
+      "outputs": [".dist/**"]
+    },
     "build-email": {
       "dependsOn": ["^build"],
       "outputs": [".dist/**"]
@@ -17,12 +21,18 @@
     "dev": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["@repo/email-templates#build-email"]
+      "dependsOn": [
+        "@repo/email-templates#build-email",
+        "@repo/shared#build-shared"
+      ]
     },
     "dev-social": {
       "cache": false,
       "persistent": true,
-      "dependsOn": ["@repo/email-templates#build-email"]
+      "dependsOn": [
+        "@repo/email-templates#build-email",
+        "@repo/shared#build-shared"
+      ]
     },
     "dev-mail": {
       "cache": false,

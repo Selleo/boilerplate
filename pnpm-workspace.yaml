@@ -1,6 +1,11 @@
 packages:
-  - apps/*
-  - packages/*
+  - apps/api
+  - apps/web-app
+  - apps/reverse-proxy
+  - packages/config-eslint
+  - packages/email-templates
+  - packages/shared
+  - packages/typescript-config
 
 onlyBuiltDependencies:
   - '@nestjs/core'
