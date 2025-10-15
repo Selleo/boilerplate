@@ -19,6 +19,10 @@ export interface GetUsersResponse {
     image: string | null;
     createdAt: date;
     updatedAt: date;
+    role: string | null;
+    banned: boolean | null;
+    banReason: string | null;
+    banExpires: date | null;
   }[];
 }
 
@@ -31,6 +35,10 @@ export interface GetUserByIdResponse {
     image: string | null;
     createdAt: date;
     updatedAt: date;
+    role: string | null;
+    banned: boolean | null;
+    banReason: string | null;
+    banExpires: date | null;
   };
 }
 
@@ -43,6 +51,10 @@ export interface UploadUserImageResponse {
     image: string | null;
     createdAt: date;
     updatedAt: date;
+    role: string | null;
+    banned: boolean | null;
+    banReason: string | null;
+    banExpires: date | null;
   };
 }
 
@@ -60,6 +72,10 @@ export interface UpdateUserResponse {
     image: string | null;
     createdAt: date;
     updatedAt: date;
+    role: string | null;
+    banned: boolean | null;
+    banReason: string | null;
+    banExpires: date | null;
   };
 }
 
@@ -70,7 +86,7 @@ import type {
   AxiosRequestConfig,
   AxiosResponse,
   HeadersDefaults,
-  ResponseType
+  ResponseType,
 } from "axios";
 import axios from "axios";
 
@@ -92,12 +108,15 @@ export interface FullRequestParams
   body?: unknown;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<
+  FullRequestParams,
+  "body" | "method" | "query" | "path"
+>;
 
 export interface ApiConfig<SecurityDataType = unknown>
   extends Omit<AxiosRequestConfig, "data" | "cancelToken"> {
   securityWorker?: (
-    securityData: SecurityDataType | null
+    securityData: SecurityDataType | null,
   ) => Promise<AxiosRequestConfig | void> | AxiosRequestConfig | void;
   secure?: boolean;
   format?: ResponseType;
@@ -108,7 +127,7 @@ export enum ContentType {
   JsonApi = "application/vnd.api+json",
   FormData = "multipart/form-data",
   UrlEncoded = "application/x-www-form-urlencoded",
-  Text = "text/plain"
+  Text = "text/plain",
 }
 
 export class HttpClient<SecurityDataType = unknown> {
@@ -126,7 +145,7 @@ export class HttpClient<SecurityDataType = unknown> {
   }: ApiConfig<SecurityDataType> = {}) {
     this.instance = axios.create({
       ...axiosConfig,
-      baseURL: axiosConfig.baseURL || ""
+      baseURL: axiosConfig.baseURL || "",
     });
     this.secure = secure;
     this.format = format;
@@ -139,7 +158,7 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected mergeRequestParams(
     params1: AxiosRequestConfig,
-    params2?: AxiosRequestConfig
+    params2?: AxiosRequestConfig,
   ): AxiosRequestConfig {
     const method = params1.method || (params2 && params2.method);
 
@@ -154,8 +173,8 @@ export class HttpClient<SecurityDataType = unknown> {
           ]) ||
           {}),
         ...(params1.headers || {}),
-        ...((params2 && params2.headers) || {})
-      }
+        ...((params2 && params2.headers) || {}),
+      },
     };
   }
 
@@ -173,11 +192,15 @@ export class HttpClient<SecurityDataType = unknown> {
     }
     return Object.keys(input || {}).reduce((formData, key) => {
       const property = input[key];
-      const propertyContent: any[] = property instanceof Array ? property : [property];
+      const propertyContent: any[] =
+        property instanceof Array ? property : [property];
 
       for (const formItem of propertyContent) {
         const isFileType = formItem instanceof Blob || formItem instanceof File;
-        formData.append(key, isFileType ? formItem : this.stringifyFormItem(formItem));
+        formData.append(
+          key,
+          isFileType ? formItem : this.stringifyFormItem(formItem),
+        );
       }
 
       return formData;
@@ -210,7 +233,12 @@ export class HttpClient<SecurityDataType = unknown> {
       body = this.createFormData(body as Record<string, unknown>);
     }
 
-    if (type === ContentType.Text && body && body !== null && typeof body !== "string") {
+    if (
+      type === ContentType.Text &&
+      body &&
+      body !== null &&
+      typeof body !== "string"
+    ) {
       body = JSON.stringify(body);
     }
 
@@ -218,24 +246,26 @@ export class HttpClient<SecurityDataType = unknown> {
       ...requestParams,
       headers: {
         ...(requestParams.headers || {}),
-        ...(type ? { "Content-Type": type } : {})
+        ...(type ? { "Content-Type": type } : {}),
       },
       params: query,
       responseType: responseFormat,
       data: body,
-      url: path
+      url: path,
     });
   };
 }
 
 /**
- * @title Guidebook API
+ * @title Boilerplate API
  * @version 1.0
  * @contact
  *
  * Example usage of Swagger with Typebox
  */
-export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+export class API<
+  SecurityDataType extends unknown,
+> extends HttpClient<SecurityDataType> {
   users = {
     /**
      * No description
@@ -248,7 +278,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<void, any>({
         path: `/users/me`,
         method: "GET",
-        ...params
+        ...params,
       }),
 
     /**
@@ -263,7 +293,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/users`,
         method: "GET",
         format: "json",
-        ...params
+        ...params,
       }),
 
     /**
@@ -278,7 +308,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/users/${id}`,
         method: "GET",
         format: "json",
-        ...params
+        ...params,
       }),
 
     /**
@@ -291,7 +321,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     usersControllerUpdateUser: (
       id: string,
       data: UpdateUserBody,
-      params: RequestParams = {}
+      params: RequestParams = {},
     ) =>
       this.request<UpdateUserResponse, any>({
         path: `/users/${id}`,
@@ -299,7 +329,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         body: data,
         type: ContentType.Json,
         format: "json",
-        ...params
+        ...params,
       }),
 
     /**
@@ -314,7 +344,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/users/${id}`,
         method: "DELETE",
         format: "json",
-        ...params
+        ...params,
       }),
 
     /**
@@ -329,8 +359,8 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/users/${id}/image`,
         method: "POST",
         format: "json",
-        ...params
-      })
+        ...params,
+      }),
   };
   testConfig = {
     /**
@@ -344,7 +374,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<void, any>({
         path: `/test-config/setup`,
         method: "POST",
-        ...params
+        ...params,
       }),
 
     /**
@@ -358,8 +388,8 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       this.request<void, any>({
         path: `/test-config/teardown`,
         method: "POST",
-        ...params
-      })
+        ...params,
+      }),
   };
   health = {
     /**
@@ -431,7 +461,7 @@ export class API<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         path: `/health`,
         method: "GET",
         format: "json",
-        ...params
-      })
+        ...params,
+      }),
   };
 }
