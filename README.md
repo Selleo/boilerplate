@@ -134,6 +134,7 @@ The terraform folder structure should be copied from examples in https://github.
 
 The structure should be as follows
 
+```
 Root
 ├── terraform
 │   ├── modules (here copy all modules)
@@ -141,7 +142,7 @@ Root
 |   |    |----production
 |   |    |----dev
 |   |    |----staging
-
+```
 
 
 ## Legal notice
