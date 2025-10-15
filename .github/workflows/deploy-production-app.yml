@@ -1,0 +1,66 @@
+name: Prodcution - Deploy App
+
+on:
+  push:
+    branches:
+      - main
+      - deploy-production-app/**
+    paths:
+      - apps/web-app/**
+      - packages/shared/**
+      - .github/workflows/deploy-production-app.yml
+
+jobs:
+  deploy_web:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.15.1
+          run_install: false
+
+      - name: Set up Node.js Version
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.8.0
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages/shared/**
+        run: pnpm build-shared
+
+      - name: Update packages
+        run: pnpm install
+
+      - name: Build app
+        run: pnpm build --filter guidebook-web-app
+        env:
+          VITE_API_URL: ${{ vars.VITE_API_URL }}
+
+      - name: Synchronize S3 Bucket
+        uses: jakejarvis/s3-sync-action@master
+        with:
+          args: --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_APPS_S3_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          SOURCE_DIR: ./apps/web-app/build/client
+          DEST_DIR: apps/app
+
+      - name: Invalidate CloudFront
+        uses: chetan/invalidate-cloudfront-action@v2
+        env:
+          DISTRIBUTION: ${{ secrets.AWS_CDN_APP_ID }}
+          PATHS: "/*"
+          AWS_REGION: "eu-central-1"
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}

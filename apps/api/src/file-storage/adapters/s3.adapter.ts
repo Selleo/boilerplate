@@ -15,10 +15,10 @@ export class S3Adapter extends FileStorageAdapter {
 
   constructor(private readonly configService: ConfigService) {
     super();
-    const bucket = this.configService.get<string>("fileStorage.S3_BUCKET");
+    const bucket = this.configService.get<string>("fileStorage.AWS_BUCKET_NAME");
 
     if (!bucket) {
-      throw new Error("Missing S3_BUCKET configuration");
+      throw new Error("Missing AWS_BUCKET_NAME configuration");
     }
 
     this.bucket = bucket;

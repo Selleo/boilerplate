@@ -19,7 +19,7 @@ jobs:
       AWS_ACCESS_KEY_ID: test
       AWS_SECRET_ACCESS_KEY: test
       FILE_STORAGE_ADAPTER: s3
-      S3_BUCKET: test-bucket
+      AWS_BUCKET_NAME: test-bucket
       BETTER_AUTH_SECRET: test-secret
       BETTER_AUTH_URL: http://localhost:3000
       GOOGLE_CLIENT_ID: test-client-id
@@ -60,6 +60,9 @@ jobs:
       - name: Build email
         run: pnpm run build-email
 
+      - name: Build shared
+        run: pnpm run build-shared
+
       - name: Install project deps
         run: pnpm install --frozen-lockfile
 
@@ -77,7 +80,7 @@ jobs:
         run: pnpm run typecheck:api
 
       - name: Build
-        run: pnpm run --filter=api build
+        run: pnpm run --filter=guidebook-api build
 
       - name: Run API tests
         run: pnpm test:api

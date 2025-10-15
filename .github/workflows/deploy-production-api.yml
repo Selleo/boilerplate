@@ -1,0 +1,138 @@
+name: Production - Deploy API
+
+on:
+  push:
+    branches:
+      - main
+      - deploy-production-api/**
+    paths:
+      - apps/api/**
+      - packages/email-templates/**
+      - .github/workflows/deploy-production-api.yml
+      - .github/tasks/api.json
+      - .github/tasks/api-migrate.json
+
+jobs:
+  deploy_api:
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2.0.1
+
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+          ECR_URL: ${{ steps.login-ecr.outputs.registry }}/guidebook/production/api
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN_API }}
+        run: |
+          docker build -f ./apps/api/Dockerfile \
+            --build-arg SENTRY_AUTH_TOKEN=$SENTRY_AUTH_TOKEN \
+            --build-arg VERSION=$IMAGE_TAG \
+            -t $ECR_URL:$IMAGE_TAG .
+          docker push $ECR_URL:$IMAGE_TAG
+          echo "IMAGE=$ECR_URL:$IMAGE_TAG" >> $GITHUB_ENV
+
+      - name: Render secrets for API
+        id: render-secrets-api
+        uses: Selleo/amazon-ecs-render-task-definition-secrets@v1.2.0
+        with:
+          region: ${{ secrets.AWS_REGION }}
+          task-definition: .github/tasks/api.json
+          envs: |
+            NODE_ENV
+            CORS_ORIGIN
+            EMAIL_ADAPTER
+
+            DATABASE_URL
+
+            AWS_REGION
+            AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY
+
+            FILE_STORAGE_ADAPTER
+            AWS_BUCKET_NAME
+
+            BETTER_AUTH_SECRET
+            BETTER_AUTH_URL
+
+          paths: |
+            /guidebook/production/api/terraform/
+            /guidebook/production/api/editable/
+
+      - name: Render secrets for MIGRATE
+        id: render-secrets-migrate
+        uses: Selleo/amazon-ecs-render-task-definition-secrets@v1.2.0
+        with:
+          region: ${{ secrets.AWS_REGION }}
+          task-definition: .github/tasks/api-migrate.json
+          envs: |
+            NODE_ENV
+            CORS_ORIGIN
+            EMAIL_ADAPTER
+
+            DATABASE_URL
+
+            AWS_REGION
+            AWS_ACCESS_KEY_ID
+            AWS_SECRET_ACCESS_KEY
+
+            FILE_STORAGE_ADAPTER
+            AWS_BUCKET_NAME
+
+            BETTER_AUTH_SECRET
+            BETTER_AUTH_URL
+
+          paths: |
+            /guidebook/production/api/terraform/
+            /guidebook/production/api/editable/
+
+      - name: Prepare final API task
+        id: task-def-api
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-secrets-api.outputs.task-definition }}
+          container-name: api
+          image: ${{ env.IMAGE }}
+
+      - name: Prepare final MIGRATE task
+        id: task-def-migrate
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-secrets-migrate.outputs.task-definition }}
+          container-name: api-migrate
+          image: ${{ env.IMAGE }}
+
+      - name: ECS Run migrations
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2.3.0
+        with:
+          task-definition: ${{ steps.task-def-migrate.outputs.task-definition }}
+          cluster: api-29846fa3
+          run-task: true
+          run-task-launch-type: EC2
+          wait-for-task-stopped: true
+
+      - name: ECS Deployment
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v2.3.0
+        with:
+          task-definition: ${{ steps.task-def-api.outputs.task-definition }}
+          service: api
+          cluster: api-29846fa3
+          wait-for-service-stability: true
+          wait-for-minutes: 10
+
