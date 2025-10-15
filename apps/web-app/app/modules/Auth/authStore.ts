@@ -10,10 +10,10 @@ export const useAuthStore = create<AuthStore>()(
   persist(
     (set) => ({
       isLoggedIn: false,
-      setLoggedIn: (value) => set({ isLoggedIn: value }),
+      setLoggedIn: (value) => set({ isLoggedIn: value })
     }),
     {
-      name: "auth-storage",
+      name: "auth-storage"
     }
   )
 );

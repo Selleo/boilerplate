@@ -43,7 +43,7 @@ export class FileStorageService {
     await this.markDeletedByKey(key);
   }
 
-  generateEntityRef(entityType: 'user', entityId: string) {
+  generateEntityRef(entityType: "user", entityId: string) {
     return `${entityType}:${entityId}`;
   }
 

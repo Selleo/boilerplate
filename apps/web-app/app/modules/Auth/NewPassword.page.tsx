@@ -12,7 +12,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -24,15 +24,13 @@ const createNewPasswordSchema = (t: TFunction) =>
       newPassword: z
         .string()
         .min(8, { message: t("newPassword.fields.newPassword.errors.minLength") }),
-      confirmPassword: z
-        .string()
-        .min(8, {
-          message: t("newPassword.fields.confirmPassword.errors.minLength"),
-        }),
+      confirmPassword: z.string().min(8, {
+        message: t("newPassword.fields.confirmPassword.errors.minLength")
+      })
     })
     .refine((values) => values.newPassword === values.confirmPassword, {
       message: t("newPassword.fields.confirmPassword.errors.mismatch"),
-      path: ["confirmPassword"],
+      path: ["confirmPassword"]
     });
 
 type NewPasswordFormValues = z.infer<ReturnType<typeof createNewPasswordSchema>>;
@@ -50,9 +48,9 @@ export default function NewPasswordPage() {
     handleSubmit,
     register,
     reset,
-    formState: { errors },
+    formState: { errors }
   } = useForm<NewPasswordFormValues>({
-    resolver,
+    resolver
   });
 
   const onSubmit = (values: NewPasswordFormValues) => {
@@ -63,13 +61,13 @@ export default function NewPasswordPage() {
 
     mutate(
       {
-        data: { newPassword: values.newPassword, token },
+        data: { newPassword: values.newPassword, token }
       },
       {
         onSuccess: () => {
           reset();
           navigate("/auth");
-        },
+        }
       }
     );
   };
@@ -78,7 +76,7 @@ export default function NewPasswordPage() {
   const disableForm = isPending || isTokenMissing || Boolean(tokenError);
 
   return (
-    <div className="bg-muted flex min-h-screen items-center justify-center px-4 py-16">
+    <div className="flex min-h-screen items-center justify-center bg-muted px-4 py-16">
       <Card className="w-full max-w-md border-none shadow-lg">
         <CardHeader>
           <CardTitle className="text-2xl">{t("newPassword.title")}</CardTitle>
@@ -87,7 +85,7 @@ export default function NewPasswordPage() {
         <CardContent>
           {isTokenMissing || tokenError ? (
             <div className="space-y-4">
-              <p className="text-muted-foreground text-sm">
+              <p className="text-sm text-muted-foreground">
                 {t("newPassword.messages.tokenIssue")}
               </p>
               <Button asChild className="w-full" variant="secondary">
@@ -97,16 +95,12 @@ export default function NewPasswordPage() {
           ) : (
             <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
               <div className="space-y-2">
-                <Label htmlFor="newPassword">{t("newPassword.fields.newPassword.label")}</Label>
-                <Input
-                  id="newPassword"
-                  type="password"
-                  {...register("newPassword")}
-                />
+                <Label htmlFor="newPassword">
+                  {t("newPassword.fields.newPassword.label")}
+                </Label>
+                <Input id="newPassword" type="password" {...register("newPassword")} />
                 {errors.newPassword ? (
-                  <p className="text-destructive text-sm">
-                    {errors.newPassword.message}
-                  </p>
+                  <p className="text-sm text-destructive">{errors.newPassword.message}</p>
                 ) : null}
               </div>
               <div className="space-y-2">
@@ -119,7 +113,7 @@ export default function NewPasswordPage() {
                   {...register("confirmPassword")}
                 />
                 {errors.confirmPassword ? (
-                  <p className="text-destructive text-sm">
+                  <p className="text-sm text-destructive">
                     {errors.confirmPassword.message}
                   </p>
                 ) : null}
@@ -131,9 +125,9 @@ export default function NewPasswordPage() {
               </Button>
             </form>
           )}
-          <p className="text-muted-foreground mt-6 text-center text-sm">
-            {t("newPassword.messages.backToLoginPrompt")} {" "}
-            <Link className="text-primary font-medium" to="/auth">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
+            {t("newPassword.messages.backToLoginPrompt")}{" "}
+            <Link className="font-medium text-primary" to="/auth">
               {t("newPassword.messages.backToLogin")}
             </Link>
           </p>

@@ -16,12 +16,12 @@ export function useChangePassword() {
     mutationFn: async (options: ChangePasswordOptions) => {
       const response = await authClient.changePassword({
         currentPassword: options.data.currentPassword,
-        newPassword: options.data.newPassword,
+        newPassword: options.data.newPassword
       });
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
       return response.data;
@@ -34,6 +34,6 @@ export function useChangePassword() {
         return toast.error(error.response?.data.message);
       }
       toast.error(error.message);
-    },
+    }
   });
 }

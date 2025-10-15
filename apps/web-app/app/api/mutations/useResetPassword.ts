@@ -14,12 +14,12 @@ export function useResetPassword() {
     mutationFn: async (options: ResetPasswordOptions) => {
       const response = await authClient.resetPassword({
         newPassword: options.data.newPassword,
-        token: options.data.token,
+        token: options.data.token
       });
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
 
@@ -30,6 +30,6 @@ export function useResetPassword() {
     },
     onError: (error) => {
       toast.error(error.message);
-    },
+    }
   });
 }

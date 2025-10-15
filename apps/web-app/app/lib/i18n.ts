@@ -5,16 +5,16 @@ import en from "~/locales/en.json";
 const options: InitOptions = {
   resources: {
     en: {
-      translation: en,
-    },
+      translation: en
+    }
   },
   lng: "en",
   fallbackLng: "en",
   defaultNS: "translation",
   interpolation: {
-    escapeValue: false,
+    escapeValue: false
   },
-  initImmediate: false,
+  initImmediate: false
 };
 
 if (!i18next.isInitialized) {

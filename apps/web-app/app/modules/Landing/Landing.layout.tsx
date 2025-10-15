@@ -7,7 +7,7 @@ const NAV_SECTIONS = [
   { key: "product", to: "#product" },
   { key: "features", to: "#features" },
   { key: "pricing", to: "#pricing" },
-  { key: "about", to: "/about" },
+  { key: "about", to: "/about" }
 ] as const;
 
 export default function LandingLayout() {
@@ -58,11 +58,7 @@ export default function LandingLayout() {
           </div>
           <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
             {NAV_SECTIONS.map(({ key, to }) => (
-              <Link
-                key={key}
-                to={to}
-                className="transition hover:text-foreground"
-              >
+              <Link key={key} to={to} className="transition hover:text-foreground">
                 {t(`landing.layout.footer.${key}`)}
               </Link>
             ))}

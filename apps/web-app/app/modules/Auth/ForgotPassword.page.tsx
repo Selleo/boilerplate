@@ -12,7 +12,7 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "~/components/ui/card";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
@@ -20,13 +20,11 @@ import { Label } from "~/components/ui/label";
 const createForgotPasswordSchema = (t: TFunction) =>
   z.object({
     email: z.email({
-      message: t("forgotPassword.fields.email.errors.invalid"),
-    }),
+      message: t("forgotPassword.fields.email.errors.invalid")
+    })
   });
 
-type ForgotPasswordFormValues = z.infer<
-  ReturnType<typeof createForgotPasswordSchema>
->;
+type ForgotPasswordFormValues = z.infer<ReturnType<typeof createForgotPasswordSchema>>;
 
 export default function ForgotPasswordPage() {
   const { t } = useTranslation();
@@ -37,44 +35,38 @@ export default function ForgotPasswordPage() {
     handleSubmit,
     register,
     reset,
-    formState: { errors },
+    formState: { errors }
   } = useForm<ForgotPasswordFormValues>({
-    resolver,
+    resolver
   });
 
   const onSubmit = (values: ForgotPasswordFormValues) => {
     mutate(
       {
-        data: { email: values.email },
+        data: { email: values.email }
       },
       {
         onSuccess: () => {
           reset();
-        },
+        }
       }
     );
   };
 
   return (
-    <div className="bg-muted flex min-h-screen items-center justify-center px-4 py-16">
+    <div className="flex min-h-screen items-center justify-center bg-muted px-4 py-16">
       <Card className="w-full max-w-md border-none shadow-lg">
         <CardHeader>
-          <CardTitle className="text-2xl">
-            {t("forgotPassword.title")}
-          </CardTitle>
+          <CardTitle className="text-2xl">{t("forgotPassword.title")}</CardTitle>
           <CardDescription>{t("forgotPassword.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
             <div className="space-y-2">
-              <Label htmlFor="email">
-                {t("forgotPassword.fields.email.label")}
-              </Label>
+              <Label htmlFor="email">{t("forgotPassword.fields.email.label")}</Label>
               <Input id="email" type="email" {...register("email")} />
               {errors.email ? (
-                <p className="text-destructive text-sm">
-                  {errors.email.message}
-                </p>
+                <p className="text-sm text-destructive">{errors.email.message}</p>
               ) : null}
             </div>
             <Button className="w-full" disabled={isPending} type="submit">
@@ -83,9 +75,9 @@ export default function ForgotPasswordPage() {
                 : t("forgotPassword.buttons.submit")}
             </Button>
           </form>
-          <p className="text-muted-foreground mt-6 text-center text-sm">
+          <p className="mt-6 text-center text-sm text-muted-foreground">
             {t("forgotPassword.links.remember")}{" "}
-            <Link className="text-primary font-medium" to="/auth">
+            <Link className="font-medium text-primary" to="/auth">
               {t("forgotPassword.links.backToLogin")}
             </Link>
           </p>

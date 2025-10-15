@@ -12,12 +12,12 @@ export function useLoginGoogle() {
     mutationFn: async () => {
       const response = await authClient.signIn.social({
         provider: "google",
-        callbackURL: `${window.location.origin}/dashboard`,
+        callbackURL: `${window.location.origin}/dashboard`
       });
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
 
@@ -29,6 +29,6 @@ export function useLoginGoogle() {
     },
     onError: (error) => {
       toast.error(error.message);
-    },
+    }
   });
 }

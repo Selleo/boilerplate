@@ -18,12 +18,12 @@ export function useLoginUser() {
     mutationFn: async (options: LoginUserOptions) => {
       const response = await authClient.signIn.email({
         email: options.data.email,
-        password: options.data.password,
+        password: options.data.password
       });
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
 
@@ -34,6 +34,6 @@ export function useLoginUser() {
     },
     onError: (error) => {
       toast.error(error.message);
-    },
+    }
   });
 }

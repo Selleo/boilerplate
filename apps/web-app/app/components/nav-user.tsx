@@ -4,7 +4,7 @@ import {
   ChevronsUpDown,
   CreditCard,
   LogOut,
-  Sparkles,
+  Sparkles
 } from "lucide-react";
 import { useLogoutUser } from "~/api/mutations/useLogoutUser";
 
@@ -16,17 +16,17 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  useSidebar,
+  useSidebar
 } from "~/components/ui/sidebar";
 
 export function NavUser({
-  user,
+  user
 }: {
   user: {
     name: string;

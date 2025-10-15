@@ -19,24 +19,20 @@ import { toast } from "sonner";
 const createLoginSchema = (t: TFunction) =>
   z.object({
     email: z.email({ message: t("auth.fields.email.errors.invalid") }),
-    password: z
-      .string()
-      .min(8, { message: t("auth.fields.password.errors.minLength") }),
+    password: z.string().min(8, { message: t("auth.fields.password.errors.minLength") })
   });
 
 const createRegisterSchema = (t: TFunction) =>
   createLoginSchema(t)
     .extend({
-      name: z
-        .string()
-        .min(3, { message: t("auth.fields.name.errors.minLength") }),
+      name: z.string().min(3, { message: t("auth.fields.name.errors.minLength") }),
       confirmPassword: z.string().min(8, {
-        message: t("auth.fields.confirmPassword.errors.minLength"),
-      }),
+        message: t("auth.fields.confirmPassword.errors.minLength")
+      })
     })
     .refine((val) => val.password === val.confirmPassword, {
       message: t("auth.fields.confirmPassword.errors.mismatch"),
-      path: ["confirmPassword"],
+      path: ["confirmPassword"]
     });
 
 type LoginFormValues = {
@@ -74,7 +70,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<LoginFormValues>({ resolver });
 
   const onSubmit = (data: LoginFormValues) => {
@@ -83,15 +79,13 @@ export default function LoginPage() {
         data: {
           email: data.email,
           password: data.password,
-          name: data.name ?? "",
-        },
+          name: data.name ?? ""
+        }
       });
     } else {
-      loginUser({ data: { email: data.email, password: data.password } }).then(
-        () => {
-          navigate("/dashboard");
-        }
-      );
+      loginUser({ data: { email: data.email, password: data.password } }).then(() => {
+        navigate("/dashboard");
+      });
     }
   };
 
@@ -101,10 +95,10 @@ export default function LoginPage() {
     if (verified === "true") {
       toast(t("auth.toast.verified.title"), {
         description: t("auth.toast.verified.description"),
-        position: "top-center",
+        position: "top-center"
       });
       navigate("/auth", {
-        replace: true,
+        replace: true
       });
     }
   }, [verified, navigate, t]);
@@ -119,7 +113,7 @@ export default function LoginPage() {
                 <h1 className="text-2xl font-bold">
                   {t(`auth.headings.${isSignUp ? "register" : "login"}`)}
                 </h1>
-                <p className="text-muted-foreground text-balance">
+                <p className="text-balance text-muted-foreground">
                   {t(`auth.subheadings.${isSignUp ? "register" : "login"}`)}
                 </p>
               </div>
@@ -135,9 +129,7 @@ export default function LoginPage() {
                     required
                   />
                   {errors.email?.message && (
-                    <p className="mt-0.5 text-xs text-red-500">
-                      {errors.email.message}
-                    </p>
+                    <p className="mt-0.5 text-xs text-red-500">{errors.email.message}</p>
                   )}
                 </div>
               </div>
@@ -154,18 +146,14 @@ export default function LoginPage() {
                       required={isSignUp}
                     />
                     {errors.name?.message && (
-                      <p className="mt-0.5 text-xs text-red-500">
-                        {errors.name.message}
-                      </p>
+                      <p className="mt-0.5 text-xs text-red-500">{errors.name.message}</p>
                     )}
                   </div>
                 </div>
               )}
               <div className="grid gap-2">
                 <div className="flex items-center">
-                  <Label htmlFor="password">
-                    {t("auth.fields.password.label")}
-                  </Label>
+                  <Label htmlFor="password">{t("auth.fields.password.label")}</Label>
                 </div>
                 <div>
                   <Input
@@ -192,7 +180,7 @@ export default function LoginPage() {
                       id="confirmPassword"
                       type="password"
                       className={cn({
-                        "border-red-500": errors.confirmPassword,
+                        "border-red-500": errors.confirmPassword
                       })}
                       {...register("confirmPassword")}
                       required={isSignUp}
@@ -214,8 +202,8 @@ export default function LoginPage() {
               >
                 {t("auth.links.forgotPassword")}
               </Link>
-              <div className="after:border-border relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t">
-                <span className="bg-card text-muted-foreground relative z-10 px-2">
+              <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
+                <span className="relative z-10 bg-card px-2 text-muted-foreground">
                   {t("auth.continueWith")}
                 </span>
               </div>
@@ -238,34 +226,10 @@ export default function LoginPage() {
                 </Button>
                 <Button variant="outline" type="button" className="w-full">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <rect
-                      x="1"
-                      y="1"
-                      width="10"
-                      height="10"
-                      fill="currentColor"
-                    />
-                    <rect
-                      x="13"
-                      y="1"
-                      width="10"
-                      height="10"
-                      fill="currentColor"
-                    />
-                    <rect
-                      x="1"
-                      y="13"
-                      width="10"
-                      height="10"
-                      fill="currentColor"
-                    />
-                    <rect
-                      x="13"
-                      y="13"
-                      width="10"
-                      height="10"
-                      fill="currentColor"
-                    />
+                    <rect x="1" y="1" width="10" height="10" fill="currentColor" />
+                    <rect x="13" y="1" width="10" height="10" fill="currentColor" />
+                    <rect x="1" y="13" width="10" height="10" fill="currentColor" />
+                    <rect x="13" y="13" width="10" height="10" fill="currentColor" />
                   </svg>
                   <span className="sr-only">{t("auth.buttons.microsoft")}</span>
                 </Button>
@@ -297,7 +261,7 @@ export default function LoginPage() {
               </div>
             </div>
           </form>
-          <div className="bg-muted relative hidden md:block">
+          <div className="relative hidden bg-muted md:block">
             <img
               src="/prezes.jpg"
               alt="Image"
@@ -306,10 +270,9 @@ export default function LoginPage() {
           </div>
         </CardContent>
       </Card>
-      <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+      <div className="text-center text-xs text-balance text-muted-foreground *:[a]:underline *:[a]:underline-offset-4 *:[a]:hover:text-primary">
         {t("auth.links.agreement.prefix")}{" "}
-        <a href="#">{t("auth.links.agreement.terms")}</a>{" "}
-        {t("auth.links.agreement.and")}{" "}
+        <a href="#">{t("auth.links.agreement.terms")}</a> {t("auth.links.agreement.and")}{" "}
         <a href="#">{t("auth.links.agreement.privacy")}</a>.
       </div>
     </div>

@@ -9,12 +9,7 @@ export type DashboardOutletContext = {
 };
 
 export default function DashboardLayout() {
-  const {
-    data: currentUser,
-    isLoading,
-    isError,
-    error,
-  } = useCurrentUser();
+  const { data: currentUser, isLoading, isError, error } = useCurrentUser();
 
   if (isLoading) {
     return (

@@ -55,7 +55,7 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
     BetterAuthModule.forRootAsync({
       imports: [EmailModule],
       inject: [ConfigService, EmailService, "DB"],
-      //@ts-expect-error yes
+      //@ts-expect-error types a wrong here
       useFactory: (
         configService: ConfigService,
         emailService: EmailService,

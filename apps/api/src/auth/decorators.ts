@@ -3,7 +3,8 @@ import type { CustomDecorator, ExecutionContext } from "@nestjs/common";
 import type { createAuthMiddleware } from "better-auth/api";
 import { AFTER_HOOK, BEFORE_HOOK, HOOK_CLASS } from "./tokens";
 
-export const Public = (): CustomDecorator<string> => SetMetadata("PUBLIC", true);
+export const Public = (): CustomDecorator<string> =>
+  SetMetadata("PUBLIC", true);
 
 export const Optional = (): CustomDecorator<string> =>
   SetMetadata("OPTIONAL", true);

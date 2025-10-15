@@ -10,8 +10,8 @@ export const meta: MetaFunction = () => {
     { title: i18next.t("landing.meta.title") },
     {
       name: "description",
-      content: i18next.t("landing.meta.description"),
-    },
+      content: i18next.t("landing.meta.description")
+    }
   ];
 };
 
@@ -22,16 +22,16 @@ export const clientLoader = async () => {
 const FEATURES = [
   {
     key: "authSecurity" as const,
-    icon: CheckCircle2,
+    icon: CheckCircle2
   },
   {
     key: "dashboardFoundation" as const,
-    icon: Gauge,
+    icon: Gauge
   },
   {
     key: "developerErgonomics" as const,
-    icon: Boxes,
-  },
+    icon: Boxes
+  }
 ];
 
 export default function LandingPage() {
@@ -44,16 +44,16 @@ export default function LandingPage() {
         id="product"
         className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-primary/5 via-background to-background"
       >
-        <div className="mx-auto flex w-full max-w-6xl flex-col-reverse items-center gap-12 px-4 pb-24 pt-20 md:flex-row md:gap-20 md:px-6 md:pt-24">
+        <div className="mx-auto flex w-full max-w-6xl flex-col-reverse items-center gap-12 px-4 pt-20 pb-24 md:flex-row md:gap-20 md:px-6 md:pt-24">
           <div className="flex-1 space-y-6 text-center md:text-left">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
               <Sparkles className="size-4" />
               {t("landing.hero.badge")}
             </span>
-            <h1 className="text-balance text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl md:text-6xl">
+            <h1 className="text-4xl leading-tight font-semibold tracking-tight text-balance text-foreground sm:text-5xl md:text-6xl">
               {t("landing.hero.title")}
             </h1>
-            <p className="text-pretty text-base text-muted-foreground sm:text-lg md:text-xl">
+            <p className="text-base text-pretty text-muted-foreground sm:text-lg md:text-xl">
               {t("landing.hero.description")}
             </p>
             <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-start">
@@ -88,7 +88,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section id="features" className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 md:px-6">
+      <section
+        id="features"
+        className="mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 md:px-6"
+      >
         <div className="space-y-4 text-center md:max-w-2xl md:self-center md:text-center">
           <h2 className="text-3xl font-semibold sm:text-4xl">
             {t("landing.features.title")}
@@ -119,10 +122,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      <section
-        id="pricing"
-        className="mx-auto w-full max-w-6xl px-4 md:px-6"
-      >
+      <section id="pricing" className="mx-auto w-full max-w-6xl px-4 md:px-6">
         <div className="flex flex-col gap-6 rounded-3xl border border-dashed border-primary/40 bg-primary/5 px-6 py-12 text-center shadow-sm sm:px-12">
           <h2 className="text-3xl font-semibold sm:text-4xl">
             {t("landing.pricing.title")}

@@ -40,9 +40,7 @@ export type BetterAuthModuleOptions = {
 
 export interface BetterAuthModuleAsyncOptions
   extends Pick<ModuleMetadata, "imports"> {
-  useFactory: (
-    ...args: unknown[]
-  ) =>
+  useFactory: (...args: unknown[]) =>
     | Promise<{
         auth: Auth;
         options?: BetterAuthModuleOptions;
@@ -84,9 +82,7 @@ const HOOK_METADATA = [
 @Module({
   imports: [DiscoveryModule],
 })
-export class BetterAuthModule
-  implements NestModule, OnModuleInit
-{
+export class BetterAuthModule implements NestModule, OnModuleInit {
   private readonly logger = new Logger(BetterAuthModule.name);
 
   constructor(
@@ -103,7 +99,9 @@ export class BetterAuthModule
 
     const providers = this.discoveryService
       .getProviders()
-      .filter(({ metatype }) => metatype && Reflect.getMetadata(HOOK_CLASS, metatype));
+      .filter(
+        ({ metatype }) => metatype && Reflect.getMetadata(HOOK_CLASS, metatype),
+      );
 
     for (const provider of providers) {
       const providerPrototype = Object.getPrototypeOf(provider.instance);
@@ -118,7 +116,8 @@ export class BetterAuthModule
 
   configure(consumer: MiddlewareConsumer): void {
     const trustedOrigins = this.auth.options.trustedOrigins;
-    const isArrayTrustedOrigins = trustedOrigins && Array.isArray(trustedOrigins);
+    const isArrayTrustedOrigins =
+      trustedOrigins && Array.isArray(trustedOrigins);
 
     if (!this.options.disableTrustedOriginsCors && isArrayTrustedOrigins) {
       this.adapter.httpAdapter.enableCors({
@@ -151,13 +150,17 @@ export class BetterAuthModule
     const handler = toNodeHandler(this.auth);
     this.adapter.httpAdapter
       .getInstance()
-      .use(`${basePath}/*path`, (req: Request, res: Response) => handler(req, res));
+      .use(`${basePath}/*path`, (req: Request, res: Response) =>
+        handler(req, res),
+      );
     this.logger.log(`BetterAuth mounted on '${basePath}/*'`);
   }
 
   private setupHooks(
     providerMethod: (...args: unknown[]) => unknown,
-    providerInstance: { new (...args: unknown[]): unknown } | Record<string, unknown>,
+    providerInstance:
+      | { new (...args: unknown[]): unknown }
+      | Record<string, unknown>,
   ) {
     if (!this.auth.options.hooks) return;
 
@@ -178,7 +181,10 @@ export class BetterAuthModule
     }
   }
 
-  static forRoot(auth: Auth, options: BetterAuthModuleOptions = {}): DynamicModule {
+  static forRoot(
+    auth: Auth,
+    options: BetterAuthModuleOptions = {},
+  ): DynamicModule {
     auth.options.hooks = {
       ...auth.options.hooks,
     };

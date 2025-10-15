@@ -7,14 +7,14 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
   BreadcrumbPage,
-  BreadcrumbSeparator,
+  BreadcrumbSeparator
 } from "~/components/ui/breadcrumb";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -33,9 +33,7 @@ const authMiddleware: Route.ClientMiddlewareFunction = async () => {
   }
 };
 
-export const clientMiddleware: Route.ClientMiddlewareFunction[] = [
-  authMiddleware,
-];
+export const clientMiddleware: Route.ClientMiddlewareFunction[] = [authMiddleware];
 
 type AdminUser = {
   id: string;
@@ -63,8 +61,8 @@ export default function AdminUsersPage() {
         const response = await authClient.admin.listUsers({
           query: {
             limit: 25,
-            offset: 0,
-          },
+            offset: 0
+          }
         });
 
         if (response.error) {
@@ -76,11 +74,11 @@ export default function AdminUsersPage() {
             users: [],
             total: 0,
             limit: 0,
-            offset: 0,
+            offset: 0
           }
         );
       },
-      enabled: isAdmin,
+      enabled: isAdmin
     });
 
   const pageCard = isAdmin ? (
@@ -109,9 +107,7 @@ export default function AdminUsersPage() {
     <Card className="border-destructive/30">
       <CardHeader>
         <CardTitle>Access denied</CardTitle>
-        <CardDescription>
-          You need admin permissions to manage users.
-        </CardDescription>
+        <CardDescription>You need admin permissions to manage users.</CardDescription>
       </CardHeader>
     </Card>
   );
@@ -132,9 +128,7 @@ export default function AdminUsersPage() {
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem className="hidden md:block">
-                <BreadcrumbLink href="/dashboard/admin/users">
-                  Admin
-                </BreadcrumbLink>
+                <BreadcrumbLink href="/dashboard/admin/users">Admin</BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbSeparator className="hidden md:block" />
               <BreadcrumbItem>
@@ -152,9 +146,7 @@ export default function AdminUsersPage() {
 function UsersList({ users, total }: { users: AdminUser[]; total: number }) {
   if (!users.length) {
     return (
-      <p className="text-sm text-muted-foreground">
-        No users found for this project.
-      </p>
+      <p className="text-sm text-muted-foreground">No users found for this project.</p>
     );
   }
 
@@ -207,7 +199,7 @@ function UsersSkeleton() {
 function UsersError({
   message,
   onRetry,
-  isRetrying,
+  isRetrying
 }: {
   message?: string;
   onRetry: () => void;
@@ -217,9 +209,7 @@ function UsersError({
     <div className="flex flex-col items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-destructive">
       <div>
         <p className="text-sm font-medium">We couldn't load users.</p>
-        <p className="text-xs opacity-80">
-          {message || "Try again in a moment."}
-        </p>
+        <p className="text-xs opacity-80">{message || "Try again in a moment."}</p>
       </div>
       <Button
         type="button"

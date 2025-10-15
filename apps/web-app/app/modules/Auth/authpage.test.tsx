@@ -14,8 +14,8 @@ describe("Auth Page", () => {
     [
       {
         path: "/auth",
-        Component: LoginPage,
-      },
+        Component: LoginPage
+      }
     ],
     {}
   );
@@ -49,16 +49,12 @@ describe("Auth Page", () => {
 
     await user.click(screen.getByRole("button", { name: "Sign up" }));
 
-    expect(
-      screen.getByRole("heading", { name: "Create your account" })
-    ).toBeDefined();
+    expect(screen.getByRole("heading", { name: "Create your account" })).toBeDefined();
     expect(screen.getByLabelText("Username")).toBeVisible();
     expect(screen.getByLabelText("Email")).toBeVisible();
     expect(screen.getByLabelText("Password")).toBeVisible();
     expect(screen.getByLabelText("Confirm password")).toBeVisible();
-    expect(
-      screen.getByRole("button", { name: "Create account" })
-    ).toBeVisible();
+    expect(screen.getByRole("button", { name: "Create account" })).toBeVisible();
 
     await user.type(screen.getByLabelText("Username"), "testuser");
     await user.type(screen.getByLabelText("Email"), "test@example.com");

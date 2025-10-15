@@ -8,7 +8,7 @@ import {
   Map,
   PieChart,
   Settings2,
-  SquareTerminal,
+  SquareTerminal
 } from "lucide-react";
 
 import { NavMain } from "~/components/nav-main";
@@ -21,7 +21,7 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
-  SidebarRail,
+  SidebarRail
 } from "~/components/ui/sidebar";
 import { useCurrentUser } from "~/api/queries/useCurrentUser";
 import { useLocation } from "react-router";
@@ -31,14 +31,14 @@ const data = {
   user: {
     name: "shadcn",
     email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: "/avatars/shadcn.jpg"
   },
   teams: [
     {
       name: "Selleo Labs sp. z o.o.",
       logo: () => <img src="/brand.svg" alt="Selleo Labs" />,
-      plan: "Enterprise",
-    },
+      plan: "Enterprise"
+    }
   ],
   navMain: [
     {
@@ -49,17 +49,17 @@ const data = {
       items: [
         {
           title: "History",
-          url: "#",
+          url: "#"
         },
         {
           title: "Starred",
-          url: "#",
+          url: "#"
         },
         {
           title: "Settings",
-          url: "#",
-        },
-      ],
+          url: "#"
+        }
+      ]
     },
     {
       title: "Models",
@@ -68,17 +68,17 @@ const data = {
       items: [
         {
           title: "Genesis",
-          url: "#",
+          url: "#"
         },
         {
           title: "Explorer",
-          url: "#",
+          url: "#"
         },
         {
           title: "Quantum",
-          url: "#",
-        },
-      ],
+          url: "#"
+        }
+      ]
     },
     {
       title: "Documentation",
@@ -87,21 +87,21 @@ const data = {
       items: [
         {
           title: "Introduction",
-          url: "#",
+          url: "#"
         },
         {
           title: "Get Started",
-          url: "#",
+          url: "#"
         },
         {
           title: "Tutorials",
-          url: "#",
+          url: "#"
         },
         {
           title: "Changelog",
-          url: "#",
-        },
-      ],
+          url: "#"
+        }
+      ]
     },
     {
       title: "Settings",
@@ -110,40 +110,40 @@ const data = {
       items: [
         {
           title: "General",
-          url: "#",
+          url: "#"
         },
         {
           title: "Team",
-          url: "#",
+          url: "#"
         },
         {
           title: "Billing",
-          url: "#",
+          url: "#"
         },
         {
           title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+          url: "#"
+        }
+      ]
+    }
   ],
   projects: [
     {
       name: "Design Engineering",
       url: "#",
-      icon: Frame,
+      icon: Frame
     },
     {
       name: "Sales & Marketing",
       url: "#",
-      icon: PieChart,
+      icon: PieChart
     },
     {
       name: "Travel",
       url: "#",
-      icon: Map,
-    },
-  ],
+      icon: Map
+    }
+  ]
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -165,7 +165,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           user={{
             email: user.data?.email || "",
             name: user.data?.name || "",
-            avatar: user.data?.image || "",
+            avatar: user.data?.image || ""
           }}
         />
       </SidebarFooter>

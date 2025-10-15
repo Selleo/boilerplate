@@ -8,10 +8,7 @@ type ThemeToggleProps = {
   className?: string;
 };
 
-export default function ThemeToggle({
-  className,
-  variant = "ghost",
-}: ThemeToggleProps) {
+export default function ThemeToggle({ className, variant = "ghost" }: ThemeToggleProps) {
   const { theme, toggleTheme } = useThemeStore();
 
   const ToggleIcon: React.FC<LucideProps> = (props) => {
@@ -27,7 +24,7 @@ export default function ThemeToggle({
 
   return (
     <Button variant={variant} className={className} onClick={toggleTheme}>
-      <ToggleIcon className="w-5 h-5" />
+      <ToggleIcon className="h-5 w-5" />
     </Button>
   );
 }

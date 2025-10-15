@@ -6,7 +6,7 @@ import { type UpdateUserBody } from "../generated-api";
 import { queryClient } from "../queryClient";
 import {
   currentUserQueryOptions,
-  useCurrentUserSuspense,
+  useCurrentUserSuspense
 } from "../queries/useCurrentUser";
 
 type UpdateUserOptions = {
@@ -34,6 +34,6 @@ export function useUpdateUser() {
         return toast.error(error.response?.data.message);
       }
       toast.error(error.message);
-    },
+    }
   });
 }

@@ -53,7 +53,9 @@ export class S3Adapter extends FileStorageAdapter {
   private createClient() {
     const region = this.configService.get<string>("aws.AWS_REGION");
     const accessKeyId = this.configService.get<string>("aws.AWS_ACCESS_KEY_ID");
-    const secretAccessKey = this.configService.get<string>("aws.AWS_SECRET_ACCESS_KEY");
+    const secretAccessKey = this.configService.get<string>(
+      "aws.AWS_SECRET_ACCESS_KEY",
+    );
     const endpoint = this.configService.get<string>("fileStorage.S3_ENDPOINT");
     const forcePathStyle = this.configService.get<boolean>(
       "fileStorage.S3_FORCE_PATH_STYLE",

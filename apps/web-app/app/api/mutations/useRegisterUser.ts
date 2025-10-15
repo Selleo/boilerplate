@@ -19,12 +19,12 @@ export function useRegisterUser() {
         email: options.data.email,
         password: options.data.password,
         name: options.data.name,
-        callbackURL: `${window.location.origin}/auth?verified=true`,
+        callbackURL: `${window.location.origin}/auth?verified=true`
       });
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
 
@@ -35,6 +35,6 @@ export function useRegisterUser() {
     },
     onError: (error) => {
       toast.error(error.message);
-    },
+    }
   });
 }

@@ -13,12 +13,12 @@ export function useRequestPasswordReset() {
     mutationFn: async (options: RequestPasswordResetOptions) => {
       const response = await authClient.requestPasswordReset({
         email: options.data.email,
-        redirectTo: `${window.location.origin}/new-password`,
+        redirectTo: `${window.location.origin}/new-password`
       });
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
 
@@ -29,6 +29,6 @@ export function useRequestPasswordReset() {
     },
     onError: (error) => {
       toast.error(error.message);
-    },
+    }
   });
 }

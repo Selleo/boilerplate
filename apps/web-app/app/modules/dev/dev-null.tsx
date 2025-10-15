@@ -1,4 +1,3 @@
-
 export default function DevNull() {
-  return null
+  return null;
 }

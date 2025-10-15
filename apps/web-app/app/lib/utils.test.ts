@@ -11,9 +11,7 @@ describe("cn", () => {
     expect(cn("btn", { "btn-primary": true, "btn-secondary": false })).toBe(
       "btn btn-primary"
     );
-    expect(cn({ "btn-primary": false, "btn-secondary": true })).toBe(
-      "btn-secondary"
-    );
+    expect(cn({ "btn-primary": false, "btn-secondary": true })).toBe("btn-secondary");
   });
 
   it("should merge Tailwind CSS classes correctly", () => {

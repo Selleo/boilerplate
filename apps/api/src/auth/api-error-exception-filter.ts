@@ -1,4 +1,8 @@
-import { Catch, type ArgumentsHost, type ExceptionFilter } from "@nestjs/common";
+import {
+  Catch,
+  type ArgumentsHost,
+  type ExceptionFilter,
+} from "@nestjs/common";
 import { APIError } from "better-auth/api";
 import type { Response } from "express";
 

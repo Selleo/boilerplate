@@ -8,11 +8,11 @@ export const currentUserQueryOptions = {
 
     if (response.error) {
       throw new Error(response.error.message, {
-        cause: response.error,
+        cause: response.error
       });
     }
     return response.data?.user;
-  },
+  }
 };
 
 export function useCurrentUser() {

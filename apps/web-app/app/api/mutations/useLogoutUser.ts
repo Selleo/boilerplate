@@ -15,7 +15,7 @@ export function useLogoutUser() {
 
       if (response.error) {
         throw new Error(response.error.message, {
-          cause: response.error,
+          cause: response.error
         });
       }
 
@@ -31,6 +31,6 @@ export function useLogoutUser() {
         return toast.error(error.response?.data.message);
       }
       toast.error(error.message);
-    },
+    }
   });
 }

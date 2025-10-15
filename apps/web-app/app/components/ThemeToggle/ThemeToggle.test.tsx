@@ -8,7 +8,7 @@ import userEvent from "@testing-library/user-event";
 describe("ThemeToggle", () => {
   it("renders without crashing", () => {
     renderWith({
-      withTheme: true,
+      withTheme: true
     }).render(<ThemeToggle />);
 
     expect(screen.getByRole("button")).toBeInTheDocument();
@@ -16,7 +16,7 @@ describe("ThemeToggle", () => {
 
   it("toggles theme", async () => {
     renderWith({
-      withTheme: true,
+      withTheme: true
     }).render(<ThemeToggle />);
 
     const button = screen.getByRole("button");

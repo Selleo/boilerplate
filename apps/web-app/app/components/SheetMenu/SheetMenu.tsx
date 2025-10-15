@@ -4,7 +4,7 @@ import {
   SheetHeader,
   SheetDescription,
   Sheet,
-  SheetTitle,
+  SheetTitle
 } from "../ui/sheet";
 
 type SheetMenuProps = {
@@ -21,16 +21,14 @@ export default function SheetMenu({
   sheetTitle,
   sheetDescription,
   side = "left",
-  children,
+  children
 }: PropsWithChildren<SheetMenuProps>) {
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetContent side={side}>
         <SheetHeader>
           {sheetTitle && <SheetTitle>{sheetTitle}</SheetTitle>}
-          {sheetDescription && (
-            <SheetDescription>{sheetDescription}</SheetDescription>
-          )}
+          {sheetDescription && <SheetDescription>{sheetDescription}</SheetDescription>}
         </SheetHeader>
         {children}
       </SheetContent>

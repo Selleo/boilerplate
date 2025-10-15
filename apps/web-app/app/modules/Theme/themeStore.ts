@@ -12,11 +12,11 @@ export const useThemeStore = create<ThemeStore>()(
       theme: "light",
       toggleTheme: () =>
         set((state) => ({
-          theme: state.theme === "light" ? "dark" : "light",
-        })),
+          theme: state.theme === "light" ? "dark" : "light"
+        }))
     }),
     {
-      name: "theme-storage",
+      name: "theme-storage"
     }
   )
 );
