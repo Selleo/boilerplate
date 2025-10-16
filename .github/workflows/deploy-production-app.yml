@@ -12,6 +12,7 @@ on:
 
 jobs:
   deploy_web:
+    if: false
     runs-on: ubuntu-latest
     environment:
       name: production
