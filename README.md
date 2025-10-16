@@ -1,4 +1,31 @@
-### Apps and Packages
+# Selleo Boilerplate
+
+That's a starting point of new apps. Consists of Frontend, Backend and necessary technologies to jump start a project.
+High level overview is as follows: Authentication, Authorization, Emails, design-system, API communication, OpenAPI, Tests, Github Actions
+- NestJS App with Typebox for Validation
+- React Router 7 (React 19) SPA
+- Better Auth for Authentication and Authorization
+- Admin and User roles - ability to add more
+- React Emails for Emails with adapters
+- Tailwind 4 with Shadcn Design System
+- OpenAPI and Frontend Client Generation
+- Tests Setup - FE & BE
+- GH Actions on PR
+- GH Actions for Deploy on our AWS stack
+- Shared packages build system
+
+Main Page
+<img width="1783" height="1005" alt="image" src="https://github.com/user-attachments/assets/3dc21a6b-5b60-44b0-b267-61631d9f2294" />
+
+Auth Page
+<img width="1790" height="999" alt="image" src="https://github.com/user-attachments/assets/c5da3660-c119-4875-8648-70fc77927969" />
+
+Dashboard
+<img width="1788" height="1004" alt="image" src="https://github.com/user-attachments/assets/e4586368-12f6-4f5f-85f5-16b0928d9145" />
+
+
+
+### Apps and Packages Structure
 
 - apps
   - `api`: a NestJS backend application working as API
@@ -8,6 +35,7 @@
   - `email-templates`: a package for email templates
   - `eslint-config`: a package for eslint configuration
   - `typescript-config`: a package for typescript configuration
+  - `shared`: a shared package for data
 
 ### Install
 
