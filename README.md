@@ -59,7 +59,7 @@ Modern full-stack starter kit combining a NestJS API, React Router 7 web app, an
 | **API**     | NestJS + TypeScript, schema validation via TypeBox, Better Auth for authentication/authorization, generated OpenAPI spec, role-based access control. |
 | **Web**     | React 19 SPA on React Router 7 and Vite, Tailwind CSS v4 with shadcn/ui primitives, generated API client for consistent typing. |
 | **Platform**| Local HTTPS with Caddy, shared packages for email templates and configurations, turborepo orchestration, pnpm monorepo layout. |
-| **Quality** | Jest-based unit and e2e setups for both API and web, GitHub Actions for lint/test on PRs, deploy workflow scaffolded for AWS. |
+| **Quality** | Vitest-based unit and e2e setups for both API and web, GitHub Actions for lint/test on PRs, deploy workflow scaffolded for AWS. |
 
 ---
 
@@ -137,7 +137,7 @@ You can also target individual workspaces:
 | Web App  | https://app.boilerplate.localhost |
 | API      | https://api.boilerplate.localhost |
 | Swagger  | https://api.boilerplate.localhost/api |
-| Mailhog  | https://mailbox.boilerplate.localhost (HTTP proxy) |
+| Mailhog  | https://mailbox.boilerplate.localhost |
 
 ---
 
