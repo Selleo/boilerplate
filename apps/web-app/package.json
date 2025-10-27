@@ -1,5 +1,6 @@
 {
   "name": "boilerplate-web-app",
+  "version": "1.5.0",
   "private": true,
   "type": "module",
   "scripts": {
