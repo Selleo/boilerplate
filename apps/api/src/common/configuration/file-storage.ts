@@ -3,7 +3,7 @@ import { Static, Type } from "@sinclair/typebox";
 import { configValidator } from "src/utils/configValidator";
 
 const schema = Type.Object({
-  FILE_STORAGE_ADAPTER: Type.Union([Type.Literal("s3"), Type.Literal("local")]),
+  FILE_STORAGE_ADAPTER: Type.Union([Type.Literal("s3")]),
   AWS_BUCKET_NAME: Type.Optional(Type.String()),
   S3_ENDPOINT: Type.Optional(Type.String()),
 });
