@@ -7,3 +7,4 @@
 - [ ] Add Queue implementation on Redis
 - [ ] Add stripe integration for subscriptions
 - [ ] Add official update guide
+- [ ] Add Expo - React Native app boilerplate
