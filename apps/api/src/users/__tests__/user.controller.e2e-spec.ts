@@ -53,10 +53,10 @@ describe("UsersController (e2e)", () => {
     await truncateTables(db, ["user"]);
   });
 
-  describe("GET /users", () => {
+  describe("GET /api/users", () => {
     it("should return all users", async () => {
       const response = await request(app.getHttpServer())
-        .get("/users")
+        .get("/api/users")
         .set("Cookie", cookies)
         .expect(200);
 
@@ -71,10 +71,10 @@ describe("UsersController (e2e)", () => {
     });
   });
 
-  describe("GET /users/:id", () => {
+  describe("GET /api/users/:id", () => {
     it("should return a user by id", async () => {
       const response = await request(app.getHttpServer())
-        .get(`/users/${testUser.id}`)
+        .get(`/api/users/${testUser.id}`)
         .set("Cookie", cookies)
         .expect(200);
 
@@ -92,7 +92,7 @@ describe("UsersController (e2e)", () => {
 
     it("should return 404 for non-existent user", async () => {
       await request(app.getHttpServer())
-        .get(`/users/${crypto.randomUUID()}`)
+        .get(`/api/users/${crypto.randomUUID()}`)
         .set("Cookie", cookies)
         .expect(404);
     });
