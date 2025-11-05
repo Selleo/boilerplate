@@ -15,6 +15,7 @@ jobs:
       CI: true
       DATABASE_URL: postgres://postgres:postgres@localhost:5432/boilerplate
       DATABASE_TEST_URL: postgres://postgres:postgres@localhost:5432/boilerplate_test
+      REDIS_URL: redis://localhost:6379
       AWS_REGION: eu-central-1
       AWS_ACCESS_KEY_ID: test
       AWS_SECRET_ACCESS_KEY: test
