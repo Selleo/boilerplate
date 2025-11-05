@@ -21,5 +21,6 @@ const db = drizzle({ client: queryClient, schema });
 export const auth = buildBetterAuthInstance({
   db,
   env,
-  emailSender: async () => {},
+  sendResetPasswordEmail: async () => {},
+  sendWelcomeVerifyEmail: async () => {},
 });

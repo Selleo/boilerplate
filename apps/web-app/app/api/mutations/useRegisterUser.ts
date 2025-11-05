@@ -31,7 +31,7 @@ export function useRegisterUser() {
       return response.data;
     },
     onSuccess: () => {
-      navigate("/dashboard");
+      toast.success("Registration successful! Please check your email to verify your account.");
     },
     onError: (error) => {
       toast.error(error.message);

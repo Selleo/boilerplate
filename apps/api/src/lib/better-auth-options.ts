@@ -19,13 +19,13 @@ export type EmailSender = (payload: EmailSenderPayload) => Promise<void>;
 export interface BuildBetterAuthOptionsParams {
   db: DatabasePg;
   env: EnvGetter;
-  emailSender: EmailSender;
   basePath?: string;
   plugins?: BetterAuthPlugin[];
   customize?: (options: BetterAuthOptions) => BetterAuthOptions;
   sendResetPasswordEmail: (
     to: string,
     data: {
+      email: string;
       url: string;
       name: string;
     },
@@ -43,7 +43,6 @@ export interface BuildBetterAuthOptionsParams {
 export const buildBetterAuthInstance = ({
   db,
   env,
-  emailSender,
   basePath,
   plugins,
   customize,
@@ -98,6 +97,7 @@ export const buildBetterAuthInstance = ({
         await sendResetPasswordEmail(data.user.email, {
           url: data.url,
           name: data.user.name || "User",
+          email: data.user.email,
         });
       },
     },

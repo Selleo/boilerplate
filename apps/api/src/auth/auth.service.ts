@@ -1,13 +1,41 @@
 import { WelcomeEmail, ResetPasswordEmail } from "@repo/email-templates";
+import { Injectable } from "@nestjs/common";
 import { EmailService } from "src/common/emails/emails.service";
 import {
   EMAIL_FROM,
   RESET_PASSWORD_EMAIL,
   WELCOME_VERIFY_EMAIL,
 } from "src/common/emails/email.consts";
+import { AuthEmailProducer } from "./auth-email.producer";
 
+@Injectable()
 export class AuthService {
-  constructor(private readonly emailService: EmailService) {}
+  constructor(
+    private readonly emailService: EmailService,
+    private readonly authEmailProducer: AuthEmailProducer,
+  ) {}
+
+  public async onWelcomeEmail(
+    to: string,
+    data: { email: string; name: string; url: string },
+  ) {
+    await this.authEmailProducer.newUserWelcomeMessageSent(to, {
+      email: data.email,
+      name: data.name,
+      url: data.url,
+    });
+  }
+
+  public async onResetPasswordEmail(
+    to: string,
+    data: { email: string; name: string; url: string },
+  ) {
+    await this.authEmailProducer.resetPasswordMessageSent(to, {
+      email: data.email,
+      name: data.name,
+      url: data.url,
+    });
+  }
 
   public async sendResetPassordEmail(
     to: string,

@@ -70,6 +70,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors }
   } = useForm<LoginFormValues>({ resolver });
 
@@ -81,6 +82,9 @@ export default function LoginPage() {
           password: data.password,
           name: data.name ?? ""
         }
+      }).then(() => {
+        reset();
+        setIsSignUp(false);
       });
     } else {
       loginUser({ data: { email: data.email, password: data.password } }).then(() => {

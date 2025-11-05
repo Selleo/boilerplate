@@ -18,9 +18,10 @@ import { BetterAuthModule, AuthGuard } from "./auth";
 import { AuthModule } from "./auth/auth.module";
 import { AuthService } from "./auth/auth.service";
 import { buildBetterAuthInstance } from "./lib/better-auth-options";
-import { EmailService } from "./common/emails/emails.service";
-import type { DatabasePg } from "./common";
 import { LoggerMiddleware } from "./logger/logger.middleware";
+import { QueueModule } from "./queue/queue.module";
+
+import type { DatabasePg } from "./common";
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
       },
       inject: [ConfigService],
     }),
+    QueueModule,
     JwtModule.registerAsync({
       useFactory(configService: ConfigService) {
         return {
@@ -57,20 +59,20 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
     AuthModule,
     BetterAuthModule.forRootAsync({
       imports: [EmailModule, AuthModule],
-      inject: [ConfigService, EmailService, AuthService, "DB"],
+      inject: [ConfigService, AuthService, "DB"],
       //@ts-expect-error types a wrong here
       useFactory: (
         configService: ConfigService,
-        emailService: EmailService,
         authService: AuthService,
         db: DatabasePg,
       ) => {
         const auth = buildBetterAuthInstance({
           db,
           env: (key) => configService.get<string>(key) ?? process.env[key],
-          emailSender: (email) => emailService.sendEmail(email),
-          sendResetPasswordEmail: authService.sendResetPassordEmail,
-          sendWelcomeVerifyEmail: authService.sendWelcomeVerifyEmail,
+          sendResetPasswordEmail: (to, data) =>
+            authService.onResetPasswordEmail(to, data),
+          sendWelcomeVerifyEmail: (to, data) =>
+            authService.onWelcomeEmail(to, data),
         });
 
         return { auth };
