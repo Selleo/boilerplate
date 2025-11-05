@@ -23,6 +23,21 @@ export interface BuildBetterAuthOptionsParams {
   basePath?: string;
   plugins?: BetterAuthPlugin[];
   customize?: (options: BetterAuthOptions) => BetterAuthOptions;
+  sendResetPasswordEmail: (
+    to: string,
+    data: {
+      url: string;
+      name: string;
+    },
+  ) => Promise<void>;
+  sendWelcomeVerifyEmail: (
+    to: string,
+    data: {
+      email: string;
+      name: string;
+      url: string;
+    },
+  ) => Promise<void>;
 }
 
 export const buildBetterAuthInstance = ({
@@ -32,6 +47,8 @@ export const buildBetterAuthInstance = ({
   basePath,
   plugins,
   customize,
+  sendResetPasswordEmail,
+  sendWelcomeVerifyEmail,
 }: BuildBetterAuthOptionsParams) => {
   const nodeEnv = env("NODE_ENV");
   const isDev = nodeEnv === "development";
@@ -78,16 +95,9 @@ export const buildBetterAuthInstance = ({
       enabled: true,
       requireEmailVerification: !isTest,
       async sendResetPassword(data) {
-        const email = await new ResetPasswordEmail({
-          name: data.user.name || "User",
+        await sendResetPasswordEmail(data.user.email, {
           url: data.url,
-        }).getHtml();
-
-        await emailSender({
-          from: "test@primetest.com",
-          to: data.user.email,
-          subject: "Reset your password",
-          html: email,
+          name: data.user.name || "User",
         });
       },
     },
@@ -95,17 +105,10 @@ export const buildBetterAuthInstance = ({
       sendOnSignUp: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
-        const email = await new WelcomeEmail({
-          email: user.email,
+        await sendWelcomeVerifyEmail(user.email, {
           name: user.name || "User",
-          redirectUrl: url,
-        }).getHtml();
-
-        await emailSender({
-          from: "boilerplate@selleo.com",
-          to: user.email,
-          subject: "Verify your email address",
-          html: email,
+          url,
+          email: user.email,
         });
       },
     },
