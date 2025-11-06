@@ -1,7 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { toast } from "sonner";
-import { useCurrentUserSuspense } from "../queries/useCurrentUser";
 import { authClient } from "~/modules/Auth/auth.client";
 
 type ChangePasswordOptions = {
@@ -16,7 +15,7 @@ export function useChangePassword() {
     mutationFn: async (options: ChangePasswordOptions) => {
       const response = await authClient.changePassword({
         currentPassword: options.data.currentPassword,
-        newPassword: options.data.newPassword
+        newPassword: options.data.newPassword,
       });
 
       if (response.error) {

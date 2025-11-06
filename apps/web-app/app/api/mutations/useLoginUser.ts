@@ -1,5 +1,4 @@
 import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
 import { toast } from "sonner";
 import { useAuthStore } from "~/modules/Auth/authStore";
 import { authClient } from "~/modules/Auth/auth.client";
