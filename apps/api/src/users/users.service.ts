@@ -9,13 +9,16 @@ import { DatabasePg } from "src/common";
 import { user } from "src/storage/schema";
 import { FileStorageService } from "src/file-storage";
 import { randomUUID } from "crypto";
-import type { Express } from "express";
+import { EmailService } from "src/common/emails/emails.service";
+import { UsersAlertProducer } from "./users-alert.producer";
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject("DB") private readonly db: DatabasePg,
     private readonly fileStorageService: FileStorageService,
+    private readonly emailService: EmailService,
+    private readonly usersAlertProducer: UsersAlertProducer,
   ) {}
 
   private async ensureUser(id: string) {
@@ -50,6 +53,20 @@ export class UsersService {
     }
 
     return existingUser;
+  }
+
+  public async scheduleAlertEmail(email: string) {
+    const jobId = `alert-email-${email}-${Date.now()}`;
+    await this.usersAlertProducer.sendAlertEmail(jobId, { email });
+  }
+
+  public async sendAlertEmail(email: string) {
+    return this.emailService.sendEmail({
+      to: email,
+      from: "test@test.com",
+      subject: "Alert Email",
+      text: `Hello ${email}, this is an alert email.`,
+    });
   }
 
   public async updateUser(id: string, data: { email?: string }) {

@@ -285,6 +285,20 @@ export class API<
      * No description
      *
      * @tags Users
+     * @name UsersControllerScheduleAlertEmail
+     * @request GET:/users/me/alert-email
+     */
+    usersControllerScheduleAlertEmail: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/users/me/alert-email`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Users
      * @name UsersControllerGetUsers
      * @request GET:/users
      */

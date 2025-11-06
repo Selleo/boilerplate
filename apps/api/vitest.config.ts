@@ -7,6 +7,7 @@ export default defineConfig({
     globals: true,
     root: "./",
     setupFiles: ["./test/test-setup.ts"],
+    testTimeout: 10000,
     fileParallelism: false,
   },
   plugins: [

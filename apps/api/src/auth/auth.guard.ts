@@ -8,7 +8,11 @@ import { AUTH_INSTANCE } from "./tokens";
 
 export type UserSession = NonNullable<
   Awaited<ReturnType<ReturnType<typeof getSession>>>
->;
+> & {
+  user: {
+    role: "admin" | "user" | undefined;
+  };
+};
 
 @Injectable()
 export class AuthGuard implements CanActivate {

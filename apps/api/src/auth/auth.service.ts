@@ -19,7 +19,8 @@ export class AuthService {
     to: string,
     data: { email: string; name: string; url: string },
   ) {
-    await this.authEmailProducer.newUserWelcomeMessageSent(to, {
+    const jobId = `welcome-email-${data.email}-${Date.now()}`;
+    await this.authEmailProducer.newUserWelcomeMessageSent(jobId, {
       email: data.email,
       name: data.name,
       url: data.url,
@@ -30,7 +31,8 @@ export class AuthService {
     to: string,
     data: { email: string; name: string; url: string },
   ) {
-    await this.authEmailProducer.resetPasswordMessageSent(to, {
+    const jobId = `reset-password-${data.email}-${Date.now()}`;
+    await this.authEmailProducer.resetPasswordMessageSent(jobId, {
       email: data.email,
       name: data.name,
       url: data.url,

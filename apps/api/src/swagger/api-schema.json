@@ -15,6 +15,20 @@
         ]
       }
     },
+    "/users/me/alert-email": {
+      "get": {
+        "operationId": "UsersController_scheduleAlertEmail",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "Users"
+        ]
+      }
+    },
     "/users": {
       "get": {
         "operationId": "UsersController_getUsers",

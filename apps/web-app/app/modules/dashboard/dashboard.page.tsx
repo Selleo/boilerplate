@@ -13,6 +13,8 @@ import { SidebarTrigger } from "~/components/ui/sidebar";
 
 import type { Route } from "./+types/dashboard.page";
 import { authClient } from "../Auth/auth.client";
+import { Button } from "~/components/ui/button";
+import { ApiClient } from "~/api/api-client";
 
 const authMiddleware: Route.ClientMiddlewareFunction = async () => {
   const session = await authClient.getSession();
@@ -53,6 +55,13 @@ export default function Page() {
           <div className="aspect-video rounded-xl bg-muted/50" />
           <div className="aspect-video rounded-xl bg-muted/50" />
         </div>
+        <Button
+          onClick={() => {
+            ApiClient.users.usersControllerScheduleAlertEmail();
+          }}
+        >
+          Click me
+        </Button>
         <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" />
       </div>
     </>
