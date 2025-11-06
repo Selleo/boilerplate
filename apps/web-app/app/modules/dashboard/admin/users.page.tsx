@@ -208,7 +208,7 @@ function UsersError({
   return (
     <div className="flex flex-col items-start gap-3 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-destructive">
       <div>
-        <p className="text-sm font-medium">We couldn't load users.</p>
+        <p className="text-sm font-medium">We couldn&apos;t load users.</p>
         <p className="text-xs opacity-80">{message || "Try again in a moment."}</p>
       </div>
       <Button

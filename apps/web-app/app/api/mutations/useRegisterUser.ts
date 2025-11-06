@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { authClient } from "~/modules/Auth/auth.client";
@@ -12,7 +11,6 @@ type RegisterUserOptions = {
 };
 
 export function useRegisterUser() {
-  const navigate = useNavigate();
   return useMutation({
     mutationFn: async (options: RegisterUserOptions) => {
       const response = await authClient.signUp.email({
@@ -31,7 +29,7 @@ export function useRegisterUser() {
       return response.data;
     },
     onSuccess: () => {
-      navigate("/dashboard");
+      toast.success("Registration successful! Please check your email to verify your account.");
     },
     onError: (error) => {
       toast.error(error.message);

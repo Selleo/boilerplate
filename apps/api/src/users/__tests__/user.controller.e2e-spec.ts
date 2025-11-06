@@ -13,6 +13,13 @@ import {
   it,
 } from "vitest";
 import { truncateTables } from "test/helpers/test-helpers";
+import { EmailService } from "src/common/emails/emails.service";
+import { Email } from "src/common/emails/email.interface";
+import { USER_ALERT_QUEUE } from "../users.queue";
+import {
+  createQueueTestHarness,
+  QueueTestHarness,
+} from "../../../test/helpers/bullmq-test-utils";
 
 describe("UsersController (e2e)", () => {
   let app: INestApplication;
@@ -21,15 +28,28 @@ describe("UsersController (e2e)", () => {
   const testPassword = "password123";
   let db: DatabasePg;
   let userFactory: ReturnType<typeof createUserFactory>;
+  let sentEmails: Email[] = [];
+  let queueHarness: QueueTestHarness;
 
   beforeAll(async () => {
-    const { app: testApp, db: testDb } = await createE2ETest();
+    const { app: testApp, db: testDb } = await createE2ETest([
+      {
+        provide: EmailService,
+        useValue: {
+          sendEmail: async (email: Email) => {
+            sentEmails.push(email);
+          },
+        },
+      },
+    ]);
     app = testApp;
     db = testDb;
     userFactory = createUserFactory(db);
+    queueHarness = await createQueueTestHarness(app, USER_ALERT_QUEUE.name);
   });
 
   afterAll(async () => {
+    await queueHarness?.dispose();
     await app?.close();
   });
 
@@ -50,6 +70,8 @@ describe("UsersController (e2e)", () => {
   });
 
   afterEach(async () => {
+    sentEmails = []
+    await queueHarness?.cleanQueue();
     await truncateTables(db, ["user"]);
   });
 
@@ -95,6 +117,29 @@ describe("UsersController (e2e)", () => {
         .get(`/users/${crypto.randomUUID()}`)
         .set("Cookie", cookies)
         .expect(404);
+    });
+  });
+
+  describe("GET /users/me/alert-email", () => {
+    it("should enqueue an alert email job and await its completion", async () => {
+      sentEmails = [];
+      const jobCompletedPromise = queueHarness.waitForJobCompletion();
+
+      await request(app.getHttpServer())
+        .get("/users/me/alert-email")
+        .set("Cookie", cookies)
+        .expect(200);
+
+      const { jobId } = await jobCompletedPromise;
+      const job = await queueHarness.queue.getJob(jobId);
+
+      expect(job?.data.email).toBe(testUser.email);
+      expect(sentEmails).toHaveLength(1);
+      expect(sentEmails[0]).toMatchObject({
+        to: testUser.email,
+        subject: "Alert Email",
+      });
+      expect(sentEmails[0].text).toContain("this is an alert email");
     });
   });
 });

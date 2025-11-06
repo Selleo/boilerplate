@@ -15,10 +15,13 @@ import { TestConfigModule } from "./test-config/test-config.module";
 import { StagingGuard } from "./common/guards/staging.guard";
 import { HealthModule } from "./health/health.module";
 import { BetterAuthModule, AuthGuard } from "./auth";
+import { AuthModule } from "./auth/auth.module";
+import { AuthService } from "./auth/auth.service";
 import { buildBetterAuthInstance } from "./lib/better-auth-options";
-import { EmailService } from "./common/emails/emails.service";
-import type { DatabasePg } from "./common";
 import { LoggerMiddleware } from "./logger/logger.middleware";
+import { QueueModule } from "./queue/queue.module";
+
+import type { DatabasePg } from "./common";
 
 @Module({
   imports: [
@@ -40,6 +43,7 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
       },
       inject: [ConfigService],
     }),
+    QueueModule,
     JwtModule.registerAsync({
       useFactory(configService: ConfigService) {
         return {
@@ -52,19 +56,22 @@ import { LoggerMiddleware } from "./logger/logger.middleware";
       inject: [ConfigService],
       global: true,
     }),
+    AuthModule,
     BetterAuthModule.forRootAsync({
-      imports: [EmailModule],
-      inject: [ConfigService, EmailService, "DB"],
+      imports: [EmailModule, AuthModule],
+      inject: [ConfigService, AuthService, "DB"],
       //@ts-expect-error types a wrong here
       useFactory: (
         configService: ConfigService,
-        emailService: EmailService,
+        authService: AuthService,
         db: DatabasePg,
       ) => {
         const auth = buildBetterAuthInstance({
           db,
           env: (key) => configService.get<string>(key) ?? process.env[key],
-          emailSender: (email) => emailService.sendEmail(email),
+          sendResetPasswordEmail: (data) =>
+            authService.onResetPasswordEmail(data),
+          sendWelcomeVerifyEmail: (data) => authService.onWelcomeEmail(data),
         });
 
         return { auth };

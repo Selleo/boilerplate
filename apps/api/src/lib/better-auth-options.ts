@@ -2,7 +2,6 @@ import { betterAuth, BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, createAuthMiddleware, openAPI } from "better-auth/plugins";
 import type { DatabasePg } from "src/common";
-import { WelcomeEmail, ResetPasswordEmail } from "@repo/email-templates";
 import * as schema from "../storage/schema";
 
 export type EnvGetter = (key: string) => string | undefined;
@@ -19,19 +18,29 @@ export type EmailSender = (payload: EmailSenderPayload) => Promise<void>;
 export interface BuildBetterAuthOptionsParams {
   db: DatabasePg;
   env: EnvGetter;
-  emailSender: EmailSender;
   basePath?: string;
   plugins?: BetterAuthPlugin[];
   customize?: (options: BetterAuthOptions) => BetterAuthOptions;
+  sendResetPasswordEmail: (data: {
+    email: string;
+    url: string;
+    name: string;
+  }) => Promise<void>;
+  sendWelcomeVerifyEmail: (data: {
+    email: string;
+    name: string;
+    url: string;
+  }) => Promise<void>;
 }
 
 export const buildBetterAuthInstance = ({
   db,
   env,
-  emailSender,
   basePath,
   plugins,
   customize,
+  sendResetPasswordEmail,
+  sendWelcomeVerifyEmail,
 }: BuildBetterAuthOptionsParams) => {
   const nodeEnv = env("NODE_ENV");
   const isDev = nodeEnv === "development";
@@ -78,16 +87,10 @@ export const buildBetterAuthInstance = ({
       enabled: true,
       requireEmailVerification: !isTest,
       async sendResetPassword(data) {
-        const email = await new ResetPasswordEmail({
-          name: data.user.name || "User",
+        await sendResetPasswordEmail({
           url: data.url,
-        }).getHtml();
-
-        await emailSender({
-          from: "test@primetest.com",
-          to: data.user.email,
-          subject: "Reset your password",
-          html: email,
+          name: data.user.name || "User",
+          email: data.user.email,
         });
       },
     },
@@ -95,17 +98,10 @@ export const buildBetterAuthInstance = ({
       sendOnSignUp: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
-        const email = await new WelcomeEmail({
-          email: user.email,
+        await sendWelcomeVerifyEmail({
           name: user.name || "User",
-          redirectUrl: url,
-        }).getHtml();
-
-        await emailSender({
-          from: "boilerplate@selleo.com",
-          to: user.email,
-          subject: "Verify your email address",
-          html: email,
+          url,
+          email: user.email,
         });
       },
     },

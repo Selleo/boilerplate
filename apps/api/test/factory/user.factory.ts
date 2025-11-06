@@ -21,7 +21,7 @@ export const createUserFactory = (db: DatabasePg) => {
       banExpires: Date | null;
       role: "user" | "admin" | null | string;
     },
-    {}
+    unknown
   >(({ onCreate }) => {
     onCreate(async (user) => {
       const [inserted] = await db.insert(userTable).values(user).returning();

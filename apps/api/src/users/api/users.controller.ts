@@ -43,6 +43,11 @@ export class UsersController {
     return session;
   }
 
+  @Get("me/alert-email")
+  async scheduleAlertEmail(@Session() session: UserSession) {
+    await this.usersService.scheduleAlertEmail(session.user.email);
+  }
+
   @Get()
   @Validate({
     response: baseResponse(allUsersSchema),

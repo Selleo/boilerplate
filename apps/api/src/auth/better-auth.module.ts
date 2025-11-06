@@ -22,7 +22,7 @@ import { toNodeHandler } from "better-auth/node";
 import { createAuthMiddleware } from "better-auth/plugins";
 import type { Request, Response } from "express";
 import { APIErrorExceptionFilter } from "./api-error-exception-filter";
-import { AuthService } from "./auth.service";
+import { BetterAuthService } from "./better-auth.service";
 import { SkipBodyParsingMiddleware } from "./skip-body-parsing.middleware";
 import {
   AFTER_HOOK,
@@ -192,7 +192,7 @@ export class BetterAuthModule implements NestModule, OnModuleInit {
     const providers: Provider[] = [
       { provide: AUTH_INSTANCE, useValue: auth },
       { provide: AUTH_MODULE_OPTIONS, useValue: options },
-      AuthService,
+      BetterAuthService,
     ];
 
     if (!options.disableExceptionFilter) {
@@ -209,7 +209,7 @@ export class BetterAuthModule implements NestModule, OnModuleInit {
       exports: [
         { provide: AUTH_INSTANCE, useValue: auth },
         { provide: AUTH_MODULE_OPTIONS, useValue: options },
-        AuthService,
+        BetterAuthService,
       ],
     };
   }
@@ -221,11 +221,11 @@ export class BetterAuthModule implements NestModule, OnModuleInit {
       global: true,
       module: BetterAuthModule,
       imports: options.imports ?? [],
-      providers: [...asyncProviders, AuthService],
+      providers: [...asyncProviders, BetterAuthService],
       exports: [
         { provide: AUTH_INSTANCE, useExisting: AUTH_INSTANCE },
         { provide: AUTH_MODULE_OPTIONS, useExisting: AUTH_MODULE_OPTIONS },
-        AuthService,
+        BetterAuthService,
       ],
     };
   }

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { screen, fireEvent } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 
 import ThemeToggle from "./ThemeToggle";
 import { renderWith } from "~/tests/test-renderers";

@@ -61,6 +61,7 @@ jobs:
             EMAIL_ADAPTER
 
             DATABASE_URL
+            REDIS_URL
 
             AWS_REGION
             AWS_ACCESS_KEY_ID
@@ -88,6 +89,7 @@ jobs:
             EMAIL_ADAPTER
 
             DATABASE_URL
+            REDIS_URL
 
             AWS_REGION
             AWS_ACCESS_KEY_ID
