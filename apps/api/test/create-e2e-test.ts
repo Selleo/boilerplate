@@ -6,9 +6,9 @@ import { setupTestDatabase } from "./test-database";
 type ProviderOverride = {
   provide: Parameters<TestingModuleBuilder["overrideProvider"]>[0];
   useValue?: unknown;
-  useClass?: new (...args: any[]) => any;
-  useFactory?: (...args: any[]) => any;
-  inject?: any[];
+  useClass?: new (...args: unknown[]) => unknown;
+  useFactory?: (...args: unknown[]) => unknown;
+  inject?: unknown[];
 };
 
 export async function createE2ETest(

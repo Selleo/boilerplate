@@ -1,4 +1,4 @@
-import { OnWorkerEvent, Processor, WorkerHost } from "@nestjs/bullmq";
+import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { AuthService } from "./auth.service";
 import { Job } from "bullmq";
 import {
@@ -13,7 +13,9 @@ export class AuthEmailConsumer extends WorkerHost {
     super();
   }
 
-  async process(job: Job<QueueEmailJobData, any, string>): Promise<any> {
+  async process(
+    job: Job<QueueEmailJobData, unknown, string>,
+  ): Promise<unknown> {
     switch (job.name) {
       case QUEUE_EMAIL.actions.SEND_WELCOME_EMAIL:
         return this.sendWelcomeEmail(

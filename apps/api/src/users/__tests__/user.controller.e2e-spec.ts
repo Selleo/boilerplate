@@ -70,7 +70,7 @@ describe("UsersController (e2e)", () => {
   });
 
   afterEach(async () => {
-    sentEmails.length = 0;
+    sentEmails = []
     await queueHarness?.cleanQueue();
     await truncateTables(db, ["user"]);
   });
@@ -122,7 +122,7 @@ describe("UsersController (e2e)", () => {
 
   describe("GET /users/me/alert-email", () => {
     it("should enqueue an alert email job and await its completion", async () => {
-      sentEmails.length = 0;
+      sentEmails = [];
       const jobCompletedPromise = queueHarness.waitForJobCompletion();
 
       await request(app.getHttpServer())

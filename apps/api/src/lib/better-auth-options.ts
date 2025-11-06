@@ -2,7 +2,6 @@ import { betterAuth, BetterAuthOptions, BetterAuthPlugin } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { admin, createAuthMiddleware, openAPI } from "better-auth/plugins";
 import type { DatabasePg } from "src/common";
-import { WelcomeEmail, ResetPasswordEmail } from "@repo/email-templates";
 import * as schema from "../storage/schema";
 
 export type EnvGetter = (key: string) => string | undefined;

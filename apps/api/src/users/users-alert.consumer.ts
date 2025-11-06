@@ -13,7 +13,7 @@ export class UsersAlertConsumer extends WorkerHost {
     super();
   }
 
-  async process(job: Job<QueueUserAlertJobData, any, string>): Promise<any> {
+  async process(job: Job<QueueUserAlertJobData, unknown, string>): Promise<unknown> {
     switch (job.name) {
       case QUEUE_USER_ALERT.actions.SEND_ALERT_EMAIL:
         return this.sendAlertEmail(
