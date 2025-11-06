@@ -1,13 +1,19 @@
 import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { AuthService } from "./auth.service";
 import { Job } from "bullmq";
-import {
-  EMAIL_QUEUE,
-  EmailQueueJobData,
-  EmailQueueJobPayloads,
-} from "./auth.queue";
+import { EMAIL_QUEUE, EmailQueueJobPayloads } from "./auth.queue";
 
-type QueueEmailJob = Job<EmailQueueJobData, unknown, string>;
+export type QueueEmailJob =
+  | Job<
+      EmailQueueJobPayloads["SEND_WELCOME_EMAIL"],
+      unknown,
+      typeof EMAIL_QUEUE.actions.SEND_WELCOME_EMAIL
+    >
+  | Job<
+      EmailQueueJobPayloads["SEND_RESET_PASSWORD_EMAIL"],
+      unknown,
+      typeof EMAIL_QUEUE.actions.SEND_RESET_PASSWORD_EMAIL
+    >;
 
 @Processor(EMAIL_QUEUE.name)
 export class AuthEmailConsumer extends WorkerHost {
@@ -16,7 +22,7 @@ export class AuthEmailConsumer extends WorkerHost {
   }
 
   async process(job: QueueEmailJob): Promise<unknown> {
-    switch (job.data.type) {
+    switch (job.name) {
       case EMAIL_QUEUE.actions.SEND_WELCOME_EMAIL:
         return this.sendWelcomeEmail(job.data);
 
@@ -24,6 +30,7 @@ export class AuthEmailConsumer extends WorkerHost {
         return this.sendResetPasswordEmail(job.data);
 
       default:
+        // @ts-expect-error for exhaustive check
         throw new Error(`Unknown job name: ${job.name}`);
     }
   }

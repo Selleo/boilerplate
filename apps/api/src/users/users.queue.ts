@@ -8,9 +8,5 @@ export const USER_ALERT_QUEUE = {
 export type UserAlertQueueJobPayloads = {
   SEND_ALERT_EMAIL: {
     email: string;
-    type: "SEND_ALERT_EMAIL";
   };
 };
-
-export type UserAlertQueueJobData =
-  UserAlertQueueJobPayloads["SEND_ALERT_EMAIL"];

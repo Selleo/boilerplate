@@ -8,19 +8,13 @@ export const EMAIL_QUEUE = {
 
 export type EmailQueueJobPayloads = {
   SEND_WELCOME_EMAIL: {
-    type: "SEND_WELCOME_EMAIL";
     url: string;
     name: string;
     email: string;
   };
   SEND_RESET_PASSWORD_EMAIL: {
-    type: "SEND_RESET_PASSWORD_EMAIL";
     url: string;
     name: string;
     email: string;
   };
 };
-
-export type EmailQueueJobData =
-  | EmailQueueJobPayloads["SEND_WELCOME_EMAIL"]
-  | EmailQueueJobPayloads["SEND_RESET_PASSWORD_EMAIL"];

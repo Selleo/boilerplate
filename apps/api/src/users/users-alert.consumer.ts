@@ -3,11 +3,14 @@ import { UsersService } from "./users.service";
 import { Job } from "bullmq";
 import {
   USER_ALERT_QUEUE,
-  UserAlertQueueJobData,
   UserAlertQueueJobPayloads,
 } from "./users.queue";
 
-type QueueUserAlertJob = Job<UserAlertQueueJobData, unknown, string>;
+type QueueUserAlertJob = Job<
+  UserAlertQueueJobPayloads["SEND_ALERT_EMAIL"],
+  unknown,
+  typeof USER_ALERT_QUEUE.actions.SEND_ALERT_EMAIL
+>;
 
 @Processor(USER_ALERT_QUEUE.name)
 export class UsersAlertConsumer extends WorkerHost {
@@ -16,8 +19,8 @@ export class UsersAlertConsumer extends WorkerHost {
   }
 
   async process(job: QueueUserAlertJob): Promise<unknown> {
-    switch (job.data.type) {
-      case "SEND_ALERT_EMAIL":
+    switch (job.name) {
+      case USER_ALERT_QUEUE.actions.SEND_ALERT_EMAIL:
         return this.sendAlertEmail(job.data);
       default:
         throw new Error(`Unknown job name: ${job.name}`);

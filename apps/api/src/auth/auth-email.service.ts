@@ -10,32 +10,21 @@ export class AuthEmailService {
   constructor(@InjectQueue(EMAIL_QUEUE.name) private readonly queue: Queue) {}
 
   public async sendWelcomeMessageEmailAsync(
-    payload: Omit<EmailQueueJobPayloads["SEND_WELCOME_EMAIL"], "type">,
+    payload: EmailQueueJobPayloads["SEND_WELCOME_EMAIL"],
   ) {
     const opts = { removeOnComplete: this.jobSettings };
-    const payloadWithType = {
-      ...payload,
-      type: EMAIL_QUEUE.actions.SEND_WELCOME_EMAIL,
-    };
-    await this.queue.add(
-      EMAIL_QUEUE.actions.SEND_WELCOME_EMAIL,
-      payloadWithType,
-      opts,
-    );
+
+    await this.queue.add(EMAIL_QUEUE.actions.SEND_WELCOME_EMAIL, payload, opts);
   }
 
   public async sendResetPasswordEmailAsync(
-    payload: Omit<EmailQueueJobPayloads["SEND_RESET_PASSWORD_EMAIL"], "type">,
+    payload: EmailQueueJobPayloads["SEND_RESET_PASSWORD_EMAIL"],
   ) {
     const opts = { removeOnComplete: this.jobSettings };
-    const payloadWithType = {
-      ...payload,
-      type: EMAIL_QUEUE.actions.SEND_RESET_PASSWORD_EMAIL,
-    };
 
     await this.queue.add(
       EMAIL_QUEUE.actions.SEND_RESET_PASSWORD_EMAIL,
-      payloadWithType,
+      payload,
       opts,
     );
   }
