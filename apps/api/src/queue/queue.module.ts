@@ -17,12 +17,16 @@ import basicAuth from "express-basic-auth";
         },
       }),
     }),
-    BullBoardModule.forRoot({
-      route: "/queues",
-      adapter: ExpressAdapter,
-      middleware: basicAuth({
-        challenge: true,
-        users: { admin: "passwordhere" },
+    BullBoardModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        route: "/queues",
+        adapter: ExpressAdapter,
+        middleware: basicAuth({
+          challenge: true,
+          users: { admin: configService.get<string>("BULLBOARD_PASSWORD")! },
+        }),
       }),
     }),
   ],

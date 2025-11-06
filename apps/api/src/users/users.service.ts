@@ -10,7 +10,7 @@ import { user } from "src/storage/schema";
 import { FileStorageService } from "src/file-storage";
 import { randomUUID } from "crypto";
 import { EmailService } from "src/common/emails/emails.service";
-import { UsersAlertProducer } from "./users-alert.producer";
+import { UsersAlertService } from "./users-alert.service";
 
 @Injectable()
 export class UsersService {
@@ -18,7 +18,7 @@ export class UsersService {
     @Inject("DB") private readonly db: DatabasePg,
     private readonly fileStorageService: FileStorageService,
     private readonly emailService: EmailService,
-    private readonly usersAlertProducer: UsersAlertProducer,
+    private readonly usersAlertProducer: UsersAlertService,
   ) {}
 
   private async ensureUser(id: string) {
@@ -56,8 +56,7 @@ export class UsersService {
   }
 
   public async scheduleAlertEmail(email: string) {
-    const jobId = `alert-email-${email}-${Date.now()}`;
-    await this.usersAlertProducer.sendAlertEmail(jobId, { email });
+    await this.usersAlertProducer.sendAlertEmailAsync({ email });
   }
 
   public async sendAlertEmail(email: string) {

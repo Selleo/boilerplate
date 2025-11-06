@@ -15,7 +15,7 @@ import {
 import { truncateTables } from "test/helpers/test-helpers";
 import { EmailService } from "src/common/emails/emails.service";
 import { Email } from "src/common/emails/email.interface";
-import { QUEUE_USER_ALERT } from "../users.queue";
+import { USER_ALERT_QUEUE } from "../users.queue";
 import {
   createQueueTestHarness,
   QueueTestHarness,
@@ -45,7 +45,7 @@ describe("UsersController (e2e)", () => {
     app = testApp;
     db = testDb;
     userFactory = createUserFactory(db);
-    queueHarness = await createQueueTestHarness(app, QUEUE_USER_ALERT.name);
+    queueHarness = await createQueueTestHarness(app, USER_ALERT_QUEUE.name);
   });
 
   afterAll(async () => {

@@ -2,33 +2,30 @@ import { Processor, WorkerHost } from "@nestjs/bullmq";
 import { UsersService } from "./users.service";
 import { Job } from "bullmq";
 import {
-  QUEUE_USER_ALERT,
-  QueueUserAlertJobData,
-  QueueUserAlertJobPayloads,
+  USER_ALERT_QUEUE,
+  UserAlertQueueJobData,
+  UserAlertQueueJobPayloads,
 } from "./users.queue";
 
-@Processor(QUEUE_USER_ALERT.name)
+type QueueUserAlertJob = Job<UserAlertQueueJobData, unknown, string>;
+
+@Processor(USER_ALERT_QUEUE.name)
 export class UsersAlertConsumer extends WorkerHost {
   constructor(private readonly usersService: UsersService) {
     super();
   }
 
-  async process(job: Job<QueueUserAlertJobData, unknown, string>): Promise<unknown> {
-    switch (job.name) {
-      case QUEUE_USER_ALERT.actions.SEND_ALERT_EMAIL:
-        return this.sendAlertEmail(
-          job as Job<QueueUserAlertJobPayloads["SEND_ALERT_EMAIL"]>,
-        );
+  async process(job: QueueUserAlertJob): Promise<unknown> {
+    switch (job.data.type) {
+      case "SEND_ALERT_EMAIL":
+        return this.sendAlertEmail(job.data);
       default:
         throw new Error(`Unknown job name: ${job.name}`);
     }
   }
 
-  async sendAlertEmail(
-    job: Job<QueueUserAlertJobPayloads["SEND_ALERT_EMAIL"]>,
-  ) {
-    console.log('processing job', job.id, job.data);
-    const { email } = job.data;
+  async sendAlertEmail(payload: UserAlertQueueJobPayloads["SEND_ALERT_EMAIL"]) {
+    const { email } = payload;
     return this.usersService.sendAlertEmail(email);
   }
 }

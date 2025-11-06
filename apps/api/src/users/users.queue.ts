@@ -1,15 +1,16 @@
-export const QUEUE_USER_ALERT = {
+export const USER_ALERT_QUEUE = {
   name: "user-alert-queue",
   actions: {
-    SEND_ALERT_EMAIL: "send-alert-email" as const,
+    SEND_ALERT_EMAIL: "SEND_ALERT_EMAIL" as const,
   },
 };
 
-export type QueueUserAlertJobPayloads = {
+export type UserAlertQueueJobPayloads = {
   SEND_ALERT_EMAIL: {
     email: string;
+    type: "SEND_ALERT_EMAIL";
   };
 };
 
-export type QueueUserAlertJobData =
-  QueueUserAlertJobPayloads["SEND_ALERT_EMAIL"];
+export type UserAlertQueueJobData =
+  UserAlertQueueJobPayloads["SEND_ALERT_EMAIL"];

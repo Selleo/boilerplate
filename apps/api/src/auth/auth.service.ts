@@ -6,33 +6,33 @@ import {
   RESET_PASSWORD_EMAIL,
   WELCOME_VERIFY_EMAIL,
 } from "src/common/emails/email.consts";
-import { AuthEmailProducer } from "./auth-email.producer";
+import { AuthEmailService } from "./auth-email.service";
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly emailService: EmailService,
-    private readonly authEmailProducer: AuthEmailProducer,
+    private readonly authEmailService: AuthEmailService,
   ) {}
 
-  public async onWelcomeEmail(
-    to: string,
-    data: { email: string; name: string; url: string },
-  ) {
-    const jobId = `welcome-email-${data.email}-${Date.now()}`;
-    await this.authEmailProducer.newUserWelcomeMessageSent(jobId, {
+  public async onWelcomeEmail(data: {
+    email: string;
+    name: string;
+    url: string;
+  }) {
+    await this.authEmailService.sendWelcomeMessageEmailAsync({
       email: data.email,
       name: data.name,
       url: data.url,
     });
   }
 
-  public async onResetPasswordEmail(
-    to: string,
-    data: { email: string; name: string; url: string },
-  ) {
-    const jobId = `reset-password-${data.email}-${Date.now()}`;
-    await this.authEmailProducer.resetPasswordMessageSent(jobId, {
+  public async onResetPasswordEmail(data: {
+    email: string;
+    name: string;
+    url: string;
+  }) {
+    await this.authEmailService.sendResetPasswordEmailAsync({
       email: data.email,
       name: data.name,
       url: data.url,

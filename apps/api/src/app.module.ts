@@ -69,10 +69,9 @@ import type { DatabasePg } from "./common";
         const auth = buildBetterAuthInstance({
           db,
           env: (key) => configService.get<string>(key) ?? process.env[key],
-          sendResetPasswordEmail: (to, data) =>
-            authService.onResetPasswordEmail(to, data),
-          sendWelcomeVerifyEmail: (to, data) =>
-            authService.onWelcomeEmail(to, data),
+          sendResetPasswordEmail: (data) =>
+            authService.onResetPasswordEmail(data),
+          sendWelcomeVerifyEmail: (data) => authService.onWelcomeEmail(data),
         });
 
         return { auth };

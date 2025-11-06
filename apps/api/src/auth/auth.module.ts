@@ -2,9 +2,9 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { AuthService } from "./auth.service";
 import { BullModule } from "@nestjs/bullmq";
-import { QUEUE_EMAIL } from "./auth.queue";
+import { EMAIL_QUEUE } from "./auth.queue";
 import { AuthEmailConsumer } from "./auth-email.consumer";
-import { AuthEmailProducer } from "./auth-email.producer";
+import { AuthEmailService } from "./auth-email.service";
 import { EmailModule } from "src/common/emails/emails.module";
 import { BullBoardModule } from "@bull-board/nestjs";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
@@ -13,15 +13,15 @@ import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
   imports: [
     ConfigModule,
     BullModule.registerQueue({
-      name: QUEUE_EMAIL.name,
+      name: EMAIL_QUEUE.name,
     }),
     BullBoardModule.forFeature({
-      name: QUEUE_EMAIL.name,
+      name: EMAIL_QUEUE.name,
       adapter: BullMQAdapter,
     }),
     EmailModule,
   ],
-  providers: [AuthService, AuthEmailConsumer, AuthEmailProducer],
-  exports: [AuthService, AuthEmailProducer],
+  providers: [AuthService, AuthEmailConsumer, AuthEmailService],
+  exports: [AuthService, AuthEmailService],
 })
 export class AuthModule {}

@@ -21,22 +21,16 @@ export interface BuildBetterAuthOptionsParams {
   basePath?: string;
   plugins?: BetterAuthPlugin[];
   customize?: (options: BetterAuthOptions) => BetterAuthOptions;
-  sendResetPasswordEmail: (
-    to: string,
-    data: {
-      email: string;
-      url: string;
-      name: string;
-    },
-  ) => Promise<void>;
-  sendWelcomeVerifyEmail: (
-    to: string,
-    data: {
-      email: string;
-      name: string;
-      url: string;
-    },
-  ) => Promise<void>;
+  sendResetPasswordEmail: (data: {
+    email: string;
+    url: string;
+    name: string;
+  }) => Promise<void>;
+  sendWelcomeVerifyEmail: (data: {
+    email: string;
+    name: string;
+    url: string;
+  }) => Promise<void>;
 }
 
 export const buildBetterAuthInstance = ({
@@ -93,7 +87,7 @@ export const buildBetterAuthInstance = ({
       enabled: true,
       requireEmailVerification: !isTest,
       async sendResetPassword(data) {
-        await sendResetPasswordEmail(data.user.email, {
+        await sendResetPasswordEmail({
           url: data.url,
           name: data.user.name || "User",
           email: data.user.email,
@@ -104,7 +98,7 @@ export const buildBetterAuthInstance = ({
       sendOnSignUp: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
-        await sendWelcomeVerifyEmail(user.email, {
+        await sendWelcomeVerifyEmail({
           name: user.name || "User",
           url,
           email: user.email,
