@@ -18,8 +18,9 @@ Modern full-stack starter kit combining a NestJS API, React Router 7 web app, an
 8. [Infrastructure Notes](#infrastructure-notes)
 9. [CI & Deployment](#ci--deployment)
 10. [Maintenance Tips](#maintenance-tips)
-11. [Screenshots](#screenshots)
-12. [Legal Notice](#legal-notice)
+11. [Updating Existing Apps](#updating-existing-apps)
+12. [Screenshots](#screenshots)
+13. [Legal Notice](#legal-notice)
 
 ---
 
@@ -196,6 +197,16 @@ You can also target individual workspaces:
 - Regenerate the Swagger client (`pnpm generate:client`) whenever API DTOs change.
 - Keep migrations in sync with feature branches to avoid drift; run `pnpm db:migrate` after each pull.
 - Update shared configs (`packages/config-eslint`, `packages/typescript-config`) centrally to propagate standards across workspaces.
+
+---
+
+## Updating Existing Apps
+
+Use the curated update prompts and diffs in `/updates` whenever you need to bring an older project onto the newest boilerplate release:
+
+- **Take the prompt**: Open `updates/prompt.md`, adjust any metadata (e.g., repo URL, version), and copy the whole instruction block—this is what you paste into Codex/Cursor/Claude Code to describe the upgrade workflow.
+- **Copy the newest update diff**: Grab the latest file under `updates/<version>/<version>-update-diff.md` (right now `updates/1.6.0/1.6.0-update-diff.md`) so the assistant sees every code change required for the release.
+- **Apply it via your AI helper**: Feed both the prompt and the diff into Codex, Cursor, or Claude Code, let it apply the patch set, then review, run tests, and commit once everything passes.
 
 ---
 
