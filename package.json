@@ -1,5 +1,6 @@
 {
-  "name": "common_nestjs_remix",
+  "name": "boilerplate",
+  "version": "1.6.0",
   "private": true,
   "scripts": {
     "build": "turbo build",

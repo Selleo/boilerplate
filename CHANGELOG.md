@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.6.0
+Feat:
+- Add Jobs system via Redis and BullMQ
+- Move auth emails to Jobs
+
+Fix:
+- Fix mising deployment migrate script
+
+Chore:
+- Add CHANGELOG.MD and ROADMAP.md files
+- Remove unused Local File Adapter (will be brought back better)
+
 ## v1.5.0
 
 This version is a bit of revamp and attempt to better structure the apps allowing for easier update paths later on.
