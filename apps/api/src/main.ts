@@ -31,6 +31,8 @@ async function bootstrap() {
 
   app.use(cookieParser());
 
+  app.setGlobalPrefix("api");
+
   app.enableCors({
     origin: [
       "http://localhost:5173",
@@ -47,7 +49,7 @@ async function bootstrap() {
     .setVersion("1.0")
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("api", app, document);
+  SwaggerModule.setup("api-docs", app, document);
   exportSchemaToFile(document);
 
   await app.listen(3000);
