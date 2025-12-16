@@ -3,7 +3,17 @@ import { defineConfig } from "vitest/config";
 import { resolve } from "path";
 
 export default defineConfig({
+  build: {
+    lib: {
+      entry: 'apps/api/src/main.ts',
+      formats: ['es'],
+    },
+    rollupOptions: {
+      external: ['vitest'],
+    },
+  },
   test: {
+    include: ['**/*.spec.ts'],
     globals: true,
     root: "./",
     setupFiles: ["./test/test-setup.ts"],

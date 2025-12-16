@@ -1,11 +1,11 @@
 import { user } from "../../storage/schema";
 import { DatabasePg } from "src/common";
-import { TestContext, createUnitTest } from "test/create-unit-test";
-import { UsersService } from "../users.service";
-import { createUserFactory } from "test/factory/user.factory";
-import { truncateTables } from "test/helpers/test-helpers";
-import { NotFoundException } from "@nestjs/common";
+ import { UsersService } from "../users.service";
+ import { NotFoundException } from "@nestjs/common";
 import { afterAll, afterEach, beforeAll, describe, expect, it } from "vitest";
+import { createUnitTest, TestContext } from "../../../test/create-unit-test";
+import { createUserFactory } from "../../../test/factory/user.factory";
+import { truncateTables } from "../../../test/helpers/test-helpers";
 
 describe("UsersService", () => {
   let testContext: TestContext;

@@ -202,7 +202,7 @@ export default function LoginPage() {
               </Button>
               <Link
                 to="/forgot-password"
-                className="text-center text-sm underline-offset-2 hover:underline"
+                className="text-center text-sm underline-offset-2 hover:underline w-fit mx-auto"
               >
                 {t("auth.links.forgotPassword")}
               </Link>

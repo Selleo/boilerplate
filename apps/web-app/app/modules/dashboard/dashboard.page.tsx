@@ -57,7 +57,7 @@ export default function Page() {
         </div>
         <Button
           onClick={() => {
-            ApiClient.users.usersControllerScheduleAlertEmail();
+            ApiClient.api.usersControllerScheduleAlertEmailV1();
           }}
         >
           Click me
