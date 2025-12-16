@@ -7,7 +7,10 @@ import {
 import { Public } from "src/common/decorators/public.decorator";
 import { DrizzleOrmHealthIndicator } from "./indicator/database/drizzleorm.health";
 
-@Controller("health")
+@Controller({
+  path: "health",
+  version: '1'
+})
 export class HealthController {
   private readonly logger = new Logger(HealthController.name);
   constructor(

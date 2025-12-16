@@ -4,7 +4,7 @@ import database from "./common/configuration/database";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as schema from "./storage/schema";
 import { UsersModule } from "./users/users.module";
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import emailConfig from "./common/configuration/email";
 import awsConfig from "./common/configuration/aws";
 import fileStorageConfig from "./common/configuration/file-storage";
@@ -45,11 +45,11 @@ import type { DatabasePg } from "./common";
     }),
     QueueModule,
     JwtModule.registerAsync({
-      useFactory(configService: ConfigService) {
+      useFactory(configService: ConfigService): JwtModuleOptions {
         return {
           secret: configService.get<string>("jwt.secret")!,
           signOptions: {
-            expiresIn: configService.get<string>("jwt.expirationTime"),
+            expiresIn:  configService.get<number>("jwt.expirationTime"),
           },
         };
       },
@@ -60,8 +60,7 @@ import type { DatabasePg } from "./common";
     BetterAuthModule.forRootAsync({
       imports: [EmailModule, AuthModule],
       inject: [ConfigService, AuthService, "DB"],
-      //@ts-expect-error types a wrong here
-      useFactory: (
+       useFactory: (
         configService: ConfigService,
         authService: AuthService,
         db: DatabasePg,
