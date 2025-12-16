@@ -34,7 +34,10 @@ import { Session, UserSession } from "src/auth";
 import { memoryStorage } from "multer";
 import type { Express } from "express";
 
-@Controller("users")
+@Controller({
+  path: "users",
+  version: '1'
+})
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

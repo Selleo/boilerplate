@@ -19,3 +19,8 @@ onlyBuiltDependencies:
   - sharp
   - ssh2
   - unrs-resolver
+
+overrides:
+  esbuild@<=0.24.2: '>=0.25.0'
+  next@>=15.5.0-canary.0 <15.5.7: '>=15.5.7'
+  next@>=15.5.1-canary.0 <15.5.8: '>=15.5.8'

@@ -3,7 +3,10 @@ import { TestConfigService } from "../test-config.service";
 import { OnlyStaging } from "src/common/decorators/staging.decorator";
 import { Public } from "src/common/decorators/public.decorator";
 
-@Controller("test-config")
+@Controller({
+  path: "test-config",
+  version: '1'
+})
 export class TestConfigController {
   constructor(private testConfigService: TestConfigService) {}
 

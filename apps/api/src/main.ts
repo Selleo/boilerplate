@@ -1,4 +1,5 @@
 import { NestFactory } from "@nestjs/core";
+import { VersioningType } from "@nestjs/common";
 import { AppModule } from "./app.module";
 import { configureNestJsTypebox } from "nestjs-typebox";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
@@ -40,6 +41,12 @@ async function bootstrap() {
     ],
     credentials: true,
   });
+
+  app.setGlobalPrefix("api");
+  app.enableVersioning({
+    type: VersioningType.URI,
+    defaultVersion: '1'
+  })
 
   const config = new DocumentBuilder()
     .setTitle("Boilerplate API")

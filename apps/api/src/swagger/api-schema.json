@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.0",
   "paths": {
-    "/users/me": {
+    "/api/v1/users/me": {
       "get": {
-        "operationId": "UsersController_getProfile",
+        "operationId": "UsersController_getProfile_v1",
         "parameters": [],
         "responses": {
           "200": {
@@ -15,9 +15,9 @@
         ]
       }
     },
-    "/users/me/alert-email": {
+    "/api/v1/users/me/alert-email": {
       "get": {
-        "operationId": "UsersController_scheduleAlertEmail",
+        "operationId": "UsersController_scheduleAlertEmail_v1",
         "parameters": [],
         "responses": {
           "200": {
@@ -29,9 +29,9 @@
         ]
       }
     },
-    "/users": {
+    "/api/v1/users": {
       "get": {
-        "operationId": "UsersController_getUsers",
+        "operationId": "UsersController_getUsers_v1",
         "parameters": [],
         "responses": {
           "200": {
@@ -49,9 +49,9 @@
         ]
       }
     },
-    "/users/{id}": {
+    "/api/v1/users/{id}": {
       "get": {
-        "operationId": "UsersController_getUserById",
+        "operationId": "UsersController_getUserById_v1",
         "parameters": [
           {
             "name": "id",
@@ -78,7 +78,7 @@
         ]
       },
       "patch": {
-        "operationId": "UsersController_updateUser",
+        "operationId": "UsersController_updateUser_v1",
         "parameters": [
           {
             "name": "id",
@@ -116,7 +116,7 @@
         ]
       },
       "delete": {
-        "operationId": "UsersController_deleteUser",
+        "operationId": "UsersController_deleteUser_v1",
         "parameters": [
           {
             "name": "id",
@@ -144,9 +144,9 @@
         ]
       }
     },
-    "/users/{id}/image": {
+    "/api/v1/users/{id}/image": {
       "post": {
-        "operationId": "UsersController_uploadUserImage",
+        "operationId": "UsersController_uploadUserImage_v1",
         "parameters": [
           {
             "name": "id",
@@ -173,9 +173,9 @@
         ]
       }
     },
-    "/test-config/setup": {
+    "/api/v1/test-config/setup": {
       "post": {
-        "operationId": "TestConfigController_setup",
+        "operationId": "TestConfigController_setup_v1",
         "parameters": [],
         "responses": {
           "201": {
@@ -187,9 +187,9 @@
         ]
       }
     },
-    "/test-config/teardown": {
+    "/api/v1/test-config/teardown": {
       "post": {
-        "operationId": "TestConfigController_teardown",
+        "operationId": "TestConfigController_teardown_v1",
         "parameters": [],
         "responses": {
           "201": {
@@ -201,7 +201,7 @@
         ]
       }
     },
-    "/health": {
+    "/api/health": {
       "get": {
         "operationId": "HealthController_check",
         "parameters": [],

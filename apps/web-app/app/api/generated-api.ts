@@ -266,17 +266,17 @@ export class HttpClient<SecurityDataType = unknown> {
 export class API<
   SecurityDataType extends unknown,
 > extends HttpClient<SecurityDataType> {
-  users = {
+  api = {
     /**
      * No description
      *
      * @tags Users
-     * @name UsersControllerGetProfile
-     * @request GET:/users/me
+     * @name UsersControllerGetProfileV1
+     * @request GET:/api/v1/users/me
      */
-    usersControllerGetProfile: (params: RequestParams = {}) =>
+    usersControllerGetProfileV1: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/users/me`,
+        path: `/api/v1/users/me`,
         method: "GET",
         ...params,
       }),
@@ -285,12 +285,12 @@ export class API<
      * No description
      *
      * @tags Users
-     * @name UsersControllerScheduleAlertEmail
-     * @request GET:/users/me/alert-email
+     * @name UsersControllerScheduleAlertEmailV1
+     * @request GET:/api/v1/users/me/alert-email
      */
-    usersControllerScheduleAlertEmail: (params: RequestParams = {}) =>
+    usersControllerScheduleAlertEmailV1: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/users/me/alert-email`,
+        path: `/api/v1/users/me/alert-email`,
         method: "GET",
         ...params,
       }),
@@ -299,12 +299,12 @@ export class API<
      * No description
      *
      * @tags Users
-     * @name UsersControllerGetUsers
-     * @request GET:/users
+     * @name UsersControllerGetUsersV1
+     * @request GET:/api/v1/users
      */
-    usersControllerGetUsers: (params: RequestParams = {}) =>
+    usersControllerGetUsersV1: (params: RequestParams = {}) =>
       this.request<GetUsersResponse, any>({
-        path: `/users`,
+        path: `/api/v1/users`,
         method: "GET",
         format: "json",
         ...params,
@@ -314,12 +314,12 @@ export class API<
      * No description
      *
      * @tags Users
-     * @name UsersControllerGetUserById
-     * @request GET:/users/{id}
+     * @name UsersControllerGetUserByIdV1
+     * @request GET:/api/v1/users/{id}
      */
-    usersControllerGetUserById: (id: string, params: RequestParams = {}) =>
+    usersControllerGetUserByIdV1: (id: string, params: RequestParams = {}) =>
       this.request<GetUserByIdResponse, any>({
-        path: `/users/${id}`,
+        path: `/api/v1/users/${id}`,
         method: "GET",
         format: "json",
         ...params,
@@ -329,16 +329,16 @@ export class API<
      * No description
      *
      * @tags Users
-     * @name UsersControllerUpdateUser
-     * @request PATCH:/users/{id}
+     * @name UsersControllerUpdateUserV1
+     * @request PATCH:/api/v1/users/{id}
      */
-    usersControllerUpdateUser: (
+    usersControllerUpdateUserV1: (
       id: string,
       data: UpdateUserBody,
       params: RequestParams = {},
     ) =>
       this.request<UpdateUserResponse, any>({
-        path: `/users/${id}`,
+        path: `/api/v1/users/${id}`,
         method: "PATCH",
         body: data,
         type: ContentType.Json,
@@ -350,12 +350,12 @@ export class API<
      * No description
      *
      * @tags Users
-     * @name UsersControllerDeleteUser
-     * @request DELETE:/users/{id}
+     * @name UsersControllerDeleteUserV1
+     * @request DELETE:/api/v1/users/{id}
      */
-    usersControllerDeleteUser: (id: string, params: RequestParams = {}) =>
+    usersControllerDeleteUserV1: (id: string, params: RequestParams = {}) =>
       this.request<DeleteUserResponse, any>({
-        path: `/users/${id}`,
+        path: `/api/v1/users/${id}`,
         method: "DELETE",
         format: "json",
         ...params,
@@ -365,28 +365,30 @@ export class API<
      * No description
      *
      * @tags Users
-     * @name UsersControllerUploadUserImage
-     * @request POST:/users/{id}/image
+     * @name UsersControllerUploadUserImageV1
+     * @request POST:/api/v1/users/{id}/image
      */
-    usersControllerUploadUserImage: (id: string, params: RequestParams = {}) =>
+    usersControllerUploadUserImageV1: (
+      id: string,
+      params: RequestParams = {},
+    ) =>
       this.request<UploadUserImageResponse, any>({
-        path: `/users/${id}/image`,
+        path: `/api/v1/users/${id}/image`,
         method: "POST",
         format: "json",
         ...params,
       }),
-  };
-  testConfig = {
+
     /**
      * No description
      *
      * @tags TestConfig
-     * @name TestConfigControllerSetup
-     * @request POST:/test-config/setup
+     * @name TestConfigControllerSetupV1
+     * @request POST:/api/v1/test-config/setup
      */
-    testConfigControllerSetup: (params: RequestParams = {}) =>
+    testConfigControllerSetupV1: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/test-config/setup`,
+        path: `/api/v1/test-config/setup`,
         method: "POST",
         ...params,
       }),
@@ -395,23 +397,22 @@ export class API<
      * No description
      *
      * @tags TestConfig
-     * @name TestConfigControllerTeardown
-     * @request POST:/test-config/teardown
+     * @name TestConfigControllerTeardownV1
+     * @request POST:/api/v1/test-config/teardown
      */
-    testConfigControllerTeardown: (params: RequestParams = {}) =>
+    testConfigControllerTeardownV1: (params: RequestParams = {}) =>
       this.request<void, any>({
-        path: `/test-config/teardown`,
+        path: `/api/v1/test-config/teardown`,
         method: "POST",
         ...params,
       }),
-  };
-  health = {
+
     /**
      * No description
      *
      * @tags Health
      * @name HealthControllerCheck
-     * @request GET:/health
+     * @request GET:/api/health
      */
     healthControllerCheck: (params: RequestParams = {}) =>
       this.request<
@@ -472,7 +473,7 @@ export class API<
           >;
         }
       >({
-        path: `/health`,
+        path: `/api/health`,
         method: "GET",
         format: "json",
         ...params,
