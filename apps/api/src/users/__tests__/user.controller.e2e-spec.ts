@@ -21,7 +21,7 @@ import {
 } from "../../../test/helpers/bullmq-test-utils";
 import { truncateTables } from "../../../test/helpers/test-helpers";
 
-describe.skip("UsersController (e2e)", () => {
+describe("UsersController (e2e)", () => {
   let app: INestApplication;
   let testUser: User;
   let cookies: string;
@@ -57,7 +57,7 @@ describe.skip("UsersController (e2e)", () => {
     testUser = userFactory.build();
 
     const registerResponse = await request(app.getHttpServer())
-      .post("/api/v1/auth/sign-up/email")
+      .post("/api/auth/sign-up/email")
       .send({
         email: testUser.email,
         password: testPassword,
@@ -78,7 +78,7 @@ describe.skip("UsersController (e2e)", () => {
   describe("GET /users", () => {
     it("should return all users", async () => {
       const response = await request(app.getHttpServer())
-        .get("api/v1/users")
+        .get("/users")
         .set("Cookie", cookies)
         .expect(200);
 
@@ -96,7 +96,7 @@ describe.skip("UsersController (e2e)", () => {
   describe("GET /users/:id", () => {
     it("should return a user by id", async () => {
       const response = await request(app.getHttpServer())
-        .get(`api/v1/users/${testUser.id}`)
+        .get(`/users/${testUser.id}`)
         .set("Cookie", cookies)
         .expect(200);
 
@@ -114,7 +114,7 @@ describe.skip("UsersController (e2e)", () => {
 
     it("should return 404 for non-existent user", async () => {
       await request(app.getHttpServer())
-        .get(`api/v1/users/${crypto.randomUUID()}`)
+        .get(`/users/${crypto.randomUUID()}`)
         .set("Cookie", cookies)
         .expect(404);
     });
@@ -126,7 +126,7 @@ describe.skip("UsersController (e2e)", () => {
       const jobCompletedPromise = queueHarness.waitForJobCompletion();
 
       await request(app.getHttpServer())
-        .get("api/v1/users/me/alert-email")
+        .get("/users/me/alert-email")
         .set("Cookie", cookies)
         .expect(200);
 
