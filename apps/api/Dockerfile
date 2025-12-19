@@ -5,27 +5,19 @@ RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 WORKDIR /app
 
 COPY package*.json pnpm-workspace.yaml pnpm-lock.yaml turbo.json ./
-COPY apps/api/package*.json /app/apps/api/
+COPY apps/api/package*.json apps/api/
+COPY packages/*/package*.json packages/
 
-COPY packages/email-templates/package*.json /app/packages/email-templates/
-COPY packages/config-eslint/package*.json /app/packages/config-eslint/
-COPY packages/typescript-config/package*.json /app/packages/typescript-config/
-COPY packages/shared/package*.json /app/packages/shared/
-
-
-RUN pnpm install
+RUN pnpm install --frozen-lockfile
 
 COPY apps/api /app/apps/api
+COPY packages packages
 
-COPY packages/email-templates /app/packages/email-templates
-COPY packages/config-eslint /app/packages/config-eslint
-COPY packages/typescript-config /app/packages/typescript-config/
-COPY packages/shared /app/packages/shared
+RUN pnpm install --frozen-lockfile
 
-RUN pnpm build-email --filter=@repo/email-templates
-RUN pnpm build-shared --filter=@repo/shared
-RUN pnpm install
-RUN pnpm build --filter=boilerplate-api
+RUN pnpm build-email --filter=@repo/email-templates \
+ && pnpm build-shared --filter=@repo/shared \
+ && pnpm build --filter=boilerplate-api
 
 FROM node:24-alpine AS production
 
@@ -36,25 +28,21 @@ RUN corepack enable && corepack prepare pnpm@10.15.1 --activate
 WORKDIR /app
 
 COPY package*.json pnpm-workspace.yaml pnpm-lock.yaml turbo.json ./
-COPY apps/api/package*.json /app/apps/api/
+COPY apps/api/package*.json apps/api/
+COPY packages/*/package*.json packages/
 
-COPY packages/email-templates/package*.json /app/packages/email-templates/
-COPY packages/config-eslint/package*.json /app/packages/config-eslint/
-COPY packages/typescript-config/package*.json /app/packages/typescript-config/
-COPY packages/shared/package*.json /app/packages/shared/
+COPY --from=build /app/packages/email-templates /app/packages/email-templates
+COPY --from=build /app/packages/shared /app/packages/shared
 
-# Copy pre-built email-templates
-COPY --from=build /app/packages/email-templates/dist /app/packages/email-templates/dist
-
-COPY --from=build /app/packages/shared/dist /app/packages/shared/dist
-
-RUN pnpm install
+RUN pnpm install --prod --frozen-lockfile \
+    && pnpm store prune \
+    && rm -rf /root/.cache
 
 WORKDIR /app/apps/api
 
 COPY --from=build /app/apps/api/dist .
 COPY --from=build /app/apps/api/src/storage/migrations ./src/storage/migrations
 
-ADD --chmod=755 apps/api/entrypoint.sh .
+COPY --chmod=755 apps/api/entrypoint.sh .
 
 ENTRYPOINT [ "./entrypoint.sh" ]

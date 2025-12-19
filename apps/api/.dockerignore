@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/src
+**/*.ts
+**/*.map
+**/.turbo
+**/.cache
+**/.pnpm-store
+.git
+Dockerfile
+README.md
