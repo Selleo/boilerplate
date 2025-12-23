@@ -1,0 +1,13 @@
+**/node_modules
+**/dist
+**/.turbo
+**/.cache
+**/.pnpm-store
+**/.next
+**/coverage
+**/*.log
+**/*.tsbuildinfo
+.git
+.DS_Store
+.env
+.env.*
