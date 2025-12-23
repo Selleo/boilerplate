@@ -411,10 +411,10 @@ export class API<
      * No description
      *
      * @tags Health
-     * @name HealthControllerCheckV1
-     * @request GET:/api/v1/health
+     * @name HealthControllerCheck
+     * @request GET:/api/health
      */
-    healthControllerCheckV1: (params: RequestParams = {}) =>
+    healthControllerCheck: (params: RequestParams = {}) =>
       this.request<
         {
           /** @example "ok" */
@@ -473,7 +473,7 @@ export class API<
           >;
         }
       >({
-        path: `/api/v1/health`,
+        path: `/api/health`,
         method: "GET",
         format: "json",
         ...params,

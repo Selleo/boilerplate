@@ -1,4 +1,4 @@
-import { Controller, Get, Logger } from "@nestjs/common";
+import { Controller, Get, Logger, VERSION_NEUTRAL } from "@nestjs/common";
 import {
   HealthCheckService,
   HttpHealthIndicator,
@@ -9,7 +9,7 @@ import { DrizzleOrmHealthIndicator } from "./indicator/database/drizzleorm.healt
 
 @Controller({
   path: "health",
-  version: '1'
+  version: VERSION_NEUTRAL,
 })
 export class HealthController {
   private readonly logger = new Logger(HealthController.name);

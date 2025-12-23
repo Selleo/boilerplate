@@ -201,9 +201,9 @@
         ]
       }
     },
-    "/api/v1/health": {
+    "/api/health": {
       "get": {
-        "operationId": "HealthController_check_v1",
+        "operationId": "HealthController_check",
         "parameters": [],
         "responses": {
           "200": {
