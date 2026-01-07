@@ -1,6 +1,7 @@
 packages:
   - apps/api
   - apps/web-app
+  - apps/mobile
   - apps/reverse-proxy
   - packages/config-eslint
   - packages/email-templates
