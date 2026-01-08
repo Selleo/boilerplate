@@ -7,6 +7,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useUniwind } from "uniwind";
+import { PortalHost } from "@rn-primitives/portal";
 
 import "react-native-reanimated";
 
@@ -30,6 +31,7 @@ export default function RootLayout() {
           />
         </Stack>
         <StatusBar style="auto" />
+        <PortalHost />
       </ThemeProvider>
     </GestureHandlerRootView>
   );
