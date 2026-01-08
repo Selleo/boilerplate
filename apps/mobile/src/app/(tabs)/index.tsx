@@ -14,11 +14,11 @@ export default function HomeScreen() {
       headerImage={
         <Image
           source={require('@/assets/images/partial-react-logo.png')}
-          className="h-[178px] w-[290px] absolute bottom-0 left-0"
+          className="h-44.5 w-72.5 absolute bottom-0 left-0"
         />
       }>
       <ThemedView className="flex-row items-center gap-2">
-        <ThemedText type="title">Welcome!</ThemedText>
+        <ThemedText className='text-red-600 dark:text-red-500' type="title">Welcome!</ThemedText>
         <HelloWave />
       </ThemedView>
       <ThemedView className="gap-2 mb-2">
