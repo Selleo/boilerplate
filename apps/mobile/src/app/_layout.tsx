@@ -3,18 +3,18 @@ import {
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useUniwind } from "uniwind";
 import { PortalHost } from "@rn-primitives/portal";
 
+import { queryClient } from "@/api/query-client";
+
 import "react-native-reanimated";
 
 import "../global.css";
-
-const queryClient = new QueryClient();
 
 export const unstable_settings = {
   anchor: "(tabs)",
