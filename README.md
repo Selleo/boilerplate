@@ -1,6 +1,6 @@
 # Selleo Boilerplate
 
-Modern full-stack starter kit combining a NestJS API, React Router 7 web app, and shared tooling (emails, lint rules, TypeScript configs) in a single pnpm workspace. Use it to launch new projects quickly with local HTTPS, auth, testing, and CI already wired in.
+Modern full-stack starter kit combining a NestJS API, React Router 7 web app, Expo mobile application and shared tooling (emails, lint rules, TypeScript configs) in a single pnpm workspace. Use it to launch new projects quickly with local HTTPS, auth, testing, and CI already wired in.
 
 <img width="1783" height="1005" alt="Main page screenshot" src="https://github.com/user-attachments/assets/3dc21a6b-5b60-44b0-b267-61631d9f2294" />
 
@@ -35,6 +35,7 @@ Modern full-stack starter kit combining a NestJS API, React Router 7 web app, an
    ```sh
    cp apps/api/.env.example apps/api/.env
    cp apps/web-app/.env.example apps/web-app/.env
+   cp apps/mobile/.env.example apps/web-app/.env
    ```
 4. Start infrastructure services:
    ```sh
@@ -59,6 +60,7 @@ Modern full-stack starter kit combining a NestJS API, React Router 7 web app, an
 | ----------- | ---------- |
 | **API**     | NestJS + TypeScript, schema validation via TypeBox, Better Auth for authentication/authorization, generated OpenAPI spec, role-based access control. |
 | **Web**     | React 19 SPA on React Router 7 and Vite, Tailwind CSS v4 with shadcn/ui primitives, generated API client for consistent typing. |
+| **Mobile**  | Expo with React Native, Better Auth, Uniwind (Tailwind for React Native) with React Native Reusables UI components, file-based routing via Expo Router. |
 | **Platform**| Local HTTPS with Caddy, shared packages for email templates and configurations, turborepo orchestration, pnpm monorepo layout. |
 | **Quality** | Vitest-based unit and e2e setups for both API and web, GitHub Actions for lint/test on PRs, deploy workflow scaffolded for AWS. |
 
@@ -70,6 +72,7 @@ Modern full-stack starter kit combining a NestJS API, React Router 7 web app, an
 | --------------------- | ----------- |
 | `apps/api`            | NestJS backend (package name: `boilerplate-api`). |
 | `apps/web-app`        | React Router SPA on Vite (`boilerplate-web-app`). |
+| `apps/mobile`         | Expo React Native app (`mobile`). |
 | `apps/reverse-proxy`  | Caddy configuration enabling local HTTPS domains. |
 | `packages/email-templates` | React email templates compiled for transactional emails. |
 | `packages/config-eslint`   | Shared ESLint configuration (`@repo/eslint-config`). |
@@ -87,13 +90,14 @@ Verify/install the tooling below before running the stack:
 - Docker Desktop or Docker Engine + Docker Compose V2.
 - Caddy (for local HTTPS certificates). macOS users can `brew install caddy`; Linux/WSL users should follow the [official guide](https://caddyserver.com/docs/install).
 - Optional but recommended: Mailhog UI available once Docker is running (`localhost:8025`).
+- For mobile development: Expo Go app on your device or iOS Simulator / Android Emulator.
 
 ---
 
 ## Environment Setup
 
 1. **Environment variables**
-   - Copy `.env.example` files for both API and web as shown in the [Quickstart](#quickstart).
+   - Copy `.env.example` files for API, web and Mobile as shown in the [Quickstart](#quickstart).
    - Adjust secrets (JWT keys, SMTP, etc.) as needed.
 
 2. **Database & Mailhog**
@@ -129,6 +133,7 @@ You can also target individual workspaces:
 
 - API only: `pnpm --filter boilerplate-api dev`
 - Web only: `pnpm --filter boilerplate-web-app dev`
+- Mobile only: `pnpm --filter mobile dev`
 - Reverse proxy reload: `pnpm --filter reverse-proxy dev`
 
 **Local URLs**
@@ -139,6 +144,7 @@ You can also target individual workspaces:
 | API      | https://api.boilerplate.localhost |
 | Swagger  | https://api.boilerplate.localhost/api |
 | Mailhog  | https://mailbox.boilerplate.localhost |
+| Mobile   | Expo Go app or simulator (see terminal for QR code) |
 
 ---
 
@@ -149,7 +155,8 @@ You can also target individual workspaces:
 - Run migrations: `pnpm db:migrate`
 
 **Client Generation**
-- Update the typed API client: `pnpm generate:client`
+- Update the typed API client (web): `pnpm generate:client`
+- Update the typed API client (mobile): `pnpm --filter mobile generate:client`
 
 **Emails**
 - Manual rebuild (normally handled by turborepo):  

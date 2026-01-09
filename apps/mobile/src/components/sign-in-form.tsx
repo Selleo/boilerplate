@@ -16,6 +16,7 @@ import { Text } from '@/components/ui/text';
 import { AlertCircle } from 'lucide-react-native';
 import * as React from 'react';
 import { ActivityIndicator, Pressable, type TextInput, View } from 'react-native';
+import { Image } from './ui/image';
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
@@ -42,6 +43,13 @@ export function SignInForm() {
 
   return (
     <View className="gap-6">
+      <View className="items-center w-full aspect-video">
+        <Image
+          source={require('../assets/images/prezes.jpg')}
+          className='w-full h-full'
+          contentFit="cover"
+        />
+      </View>
       <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-left">Sign in to your app</CardTitle>
