@@ -1,4 +1,6 @@
+import { useLoginUser } from '@/api/mutations/useLoginUser';
 import { SocialConnections } from '@/components/social-connections';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -11,19 +13,32 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Text } from '@/components/ui/text';
+import { AlertCircle } from 'lucide-react-native';
 import * as React from 'react';
-import { Pressable, type TextInput, View } from 'react-native';
+import { ActivityIndicator, Pressable, type TextInput, View } from 'react-native';
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
+  const loginMutation = useLoginUser();
+
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
 
   function onEmailSubmitEditing() {
     passwordInputRef.current?.focus();
   }
 
   function onSubmit() {
-    // TODO: Submit form and navigate to protected screen if successful
+    if (!email || !password) {
+      loginMutation.reset();
+      return;
+    }
+
+    loginMutation.mutate({ data: { email, password } });
   }
+
+  const error = loginMutation.error?.message;
+  const isLoading = loginMutation.isPending;
 
   return (
     <View className="gap-6">
@@ -35,6 +50,12 @@ export function SignInForm() {
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
+          {error && (
+            <Alert variant="destructive" icon={AlertCircle}>
+              <AlertTitle>Error</AlertTitle>
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
           <View className="gap-6">
             <View className="gap-1.5">
               <Label htmlFor="email">Email</Label>
@@ -47,6 +68,9 @@ export function SignInForm() {
                 onSubmitEditing={onEmailSubmitEditing}
                 returnKeyType="next"
                 submitBehavior="submit"
+                value={email}
+                onChangeText={setEmail}
+                editable={!isLoading}
               />
             </View>
             <View className="gap-1.5">
@@ -68,10 +92,17 @@ export function SignInForm() {
                 secureTextEntry
                 returnKeyType="send"
                 onSubmitEditing={onSubmit}
+                value={password}
+                onChangeText={setPassword}
+                editable={!isLoading}
               />
             </View>
-            <Button className="w-full" onPress={onSubmit}>
-              <Text>Continue</Text>
+            <Button className="w-full" onPress={onSubmit} disabled={isLoading}>
+              {isLoading ? (
+                <ActivityIndicator size="small" color="white" />
+              ) : (
+                <Text>Continue</Text>
+              )}
             </Button>
           </View>
           <Text className="text-center text-sm">

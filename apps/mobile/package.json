@@ -9,7 +9,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "generate:client": "swagger-typescript-api generate -p ../api/src/swagger/api-schema.json -o ./src/api --axios --name generated-api.ts --api-class-name API"
   },
   "dependencies": {
     "@better-auth/expo": "^1.4.10",
@@ -35,6 +36,8 @@
     "@rn-primitives/tabs": "^1.2.0",
     "@rn-primitives/toggle": "^1.2.0",
     "@rn-primitives/toggle-group": "^1.2.0",
+    "@tanstack/react-query": "^5.90.12",
+    "axios": "^1.13.2",
     "better-auth": "^1.4.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -44,6 +47,7 @@
     "expo-haptics": "~15.0.8",
     "expo-image": "~3.0.11",
     "expo-linking": "~8.0.11",
+    "expo-network": "~8.0.8",
     "expo-router": "~6.0.21",
     "expo-secure-store": "^15.0.8",
     "expo-splash-screen": "~31.0.13",
@@ -74,6 +78,7 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~10.0.0",
     "prettier-plugin-tailwindcss": "^0.7.2",
+    "swagger-typescript-api": "^13.2.16",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.2"
   },

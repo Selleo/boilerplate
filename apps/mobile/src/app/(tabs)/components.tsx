@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { ScrollView, View } from 'react-native';
+import { useState } from "react";
+import { ScrollView, View } from "react-native";
 
 import {
   AlertDialog,
@@ -11,9 +11,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+} from "@/components/ui/alert-dialog";
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
@@ -22,7 +22,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
+} from "@/components/ui/dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -31,34 +31,40 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+} from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Switch } from '@/components/ui/switch';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Text } from '@/components/ui/text';
-import { Textarea } from '@/components/ui/textarea';
-import { Toggle, ToggleIcon } from '@/components/ui/toggle';
-import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
-import { Bold, Italic, Underline } from 'lucide-react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from "@/components/ui/select";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Text } from "@/components/ui/text";
+import { Textarea } from "@/components/ui/textarea";
+import { Toggle, ToggleIcon } from "@/components/ui/toggle";
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { Bold, Italic, Underline } from "lucide-react-native";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function ComponentsScreen() {
-  const [inputValue, setInputValue] = useState('');
-  const [textareaValue, setTextareaValue] = useState('');
+  const [inputValue, setInputValue] = useState("");
+  const [textareaValue, setTextareaValue] = useState("");
   const [checkbox1, setCheckbox1] = useState(false);
   const [checkbox2, setCheckbox2] = useState(true);
-  const [radioValue, setRadioValue] = useState('option1');
-  const [selectValue, setSelectValue] = useState<{ value: string; label: string } | undefined>();
+  const [radioValue, setRadioValue] = useState("option1");
+  const [selectValue, setSelectValue] = useState<
+    { value: string; label: string } | undefined
+  >();
   const [switch1, setSwitch1] = useState(false);
   const [switch2, setSwitch2] = useState(true);
   const [toggleBold, setToggleBold] = useState(false);
@@ -68,13 +74,19 @@ export default function ComponentsScreen() {
   const [toggleSm, setToggleSm] = useState(false);
   const [toggleDefault, setToggleDefault] = useState(false);
   const [toggleLg, setToggleLg] = useState(false);
-  const [toggleGroupValue, setToggleGroupValue] = useState<string[]>(['bold']);
-  const [toggleGroupSingleValue, setToggleGroupSingleValue] = useState<string | undefined>('center');
-  const [tabValue, setTabValue] = useState('account');
+  const [toggleGroupValue, setToggleGroupValue] = useState<string[]>(["bold"]);
+  const [toggleGroupSingleValue, setToggleGroupSingleValue] = useState<
+    string | undefined
+  >("center");
+  const [tabValue, setTabValue] = useState("account");
+  const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   const insets = useSafeAreaInsets();
 
   return (
-    <ScrollView className="flex-1 bg-background" contentContainerStyle={{ paddingTop: insets.top }}>
+    <ScrollView
+      className="flex-1 bg-background"
+      contentContainerStyle={{ paddingTop: insets.top }}
+    >
       <View className="gap-8 px-4">
         {/* Text Component */}
         <View className="gap-4">
@@ -85,15 +97,19 @@ export default function ComponentsScreen() {
             <Text variant="h3">Heading 3</Text>
             <Text variant="h4">Heading 4</Text>
             <Text variant="p">
-              This is a paragraph of text. It demonstrates the default paragraph styling with proper
-              line height and spacing.
+              This is a paragraph of text. It demonstrates the default paragraph
+              styling with proper line height and spacing.
             </Text>
-            <Text variant="lead">This is lead text, slightly larger and muted.</Text>
+            <Text variant="lead">
+              This is lead text, slightly larger and muted.
+            </Text>
             <Text variant="large">This is large text.</Text>
             <Text variant="small">This is small text.</Text>
             <Text variant="muted">This is muted text.</Text>
             <Text variant="code">const code = &quot;inline&quot;;</Text>
-            <Text variant="blockquote">This is a blockquote with styled border.</Text>
+            <Text variant="blockquote">
+              This is a blockquote with styled border.
+            </Text>
           </View>
         </View>
 
@@ -111,7 +127,11 @@ export default function ComponentsScreen() {
             </View>
             <View className="gap-1">
               <Text variant="small">Disabled Input</Text>
-              <Input placeholder="Disabled input" editable={false} value="Cannot edit this" />
+              <Input
+                placeholder="Disabled input"
+                editable={false}
+                value="Cannot edit this"
+              />
             </View>
           </View>
         </View>
@@ -177,8 +197,8 @@ export default function ComponentsScreen() {
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your account and
-                    remove your data from our servers.
+                    This action cannot be undone. This will permanently delete
+                    your account and remove your data from our servers.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -207,11 +227,11 @@ export default function ComponentsScreen() {
               <Text>Checked by default</Text>
             </View>
             <View className="flex-row items-center gap-3">
-              <Checkbox checked={true} onCheckedChange={() =>{}} disabled />
+              <Checkbox checked={true} onCheckedChange={() => {}} disabled />
               <Text variant="muted">Disabled checked</Text>
             </View>
             <View className="flex-row items-center gap-3">
-              <Checkbox checked={false} onCheckedChange={() =>{}} disabled />
+              <Checkbox checked={false} onCheckedChange={() => {}} disabled />
               <Text variant="muted">Disabled unchecked</Text>
             </View>
           </View>
@@ -232,7 +252,8 @@ export default function ComponentsScreen() {
                 <DialogHeader>
                   <DialogTitle>Edit Profile</DialogTitle>
                   <DialogDescription>
-                    Make changes to your profile here. Click save when you&apos;re done.
+                    Make changes to your profile here. Click save when
+                    you&apos;re done.
                   </DialogDescription>
                 </DialogHeader>
                 <View className="gap-4 py-4">
@@ -362,7 +383,9 @@ export default function ComponentsScreen() {
                 </SelectItem>
               </SelectContent>
             </Select>
-            {selectValue && <Text variant="muted">Selected: {selectValue.label}</Text>}
+            {selectValue && (
+              <Text variant="muted">Selected: {selectValue.label}</Text>
+            )}
           </View>
         </View>
 
@@ -403,7 +426,7 @@ export default function ComponentsScreen() {
             </View>
             <View className="flex-row items-center justify-between">
               <Text variant="muted">Disabled</Text>
-              <Switch checked={false} onCheckedChange={() =>{}} disabled />
+              <Switch checked={false} onCheckedChange={() => {}} disabled />
             </View>
           </View>
         </View>
@@ -428,7 +451,8 @@ export default function ComponentsScreen() {
                 <View className="gap-2 pt-4">
                   <Text variant="large">Account</Text>
                   <Text variant="muted">
-                    Make changes to your account here. Click save when you&apos;re done.
+                    Make changes to your account here. Click save when
+                    you&apos;re done.
                   </Text>
                 </View>
               </TabsContent>
@@ -436,14 +460,17 @@ export default function ComponentsScreen() {
                 <View className="gap-2 pt-4">
                   <Text variant="large">Password</Text>
                   <Text variant="muted">
-                    Change your password here. After saving, you&apos;ll be logged out.
+                    Change your password here. After saving, you&apos;ll be
+                    logged out.
                   </Text>
                 </View>
               </TabsContent>
               <TabsContent value="settings">
                 <View className="gap-2 pt-4">
                   <Text variant="large">Settings</Text>
-                  <Text variant="muted">Manage your application settings and preferences.</Text>
+                  <Text variant="muted">
+                    Manage your application settings and preferences.
+                  </Text>
                 </View>
               </TabsContent>
             </Tabs>
@@ -487,22 +514,45 @@ export default function ComponentsScreen() {
             </View>
             <Text variant="small">Outline variant</Text>
             <View className="flex-row gap-2">
-              <Toggle variant="outline" pressed={toggleOutlineBold} onPressedChange={setToggleOutlineBold}>
+              <Toggle
+                variant="outline"
+                pressed={toggleOutlineBold}
+                onPressedChange={setToggleOutlineBold}
+              >
                 <ToggleIcon as={Bold} />
               </Toggle>
-              <Toggle variant="outline" pressed={toggleOutlineItalic} onPressedChange={setToggleOutlineItalic}>
+              <Toggle
+                variant="outline"
+                pressed={toggleOutlineItalic}
+                onPressedChange={setToggleOutlineItalic}
+              >
                 <ToggleIcon as={Italic} />
               </Toggle>
             </View>
             <Text variant="small">Sizes</Text>
             <View className="flex-row items-center gap-2">
-              <Toggle size="sm" variant="outline" pressed={toggleSm} onPressedChange={setToggleSm}>
+              <Toggle
+                size="sm"
+                variant="outline"
+                pressed={toggleSm}
+                onPressedChange={setToggleSm}
+              >
                 <ToggleIcon as={Bold} />
               </Toggle>
-              <Toggle size="default" variant="outline" pressed={toggleDefault} onPressedChange={setToggleDefault}>
+              <Toggle
+                size="default"
+                variant="outline"
+                pressed={toggleDefault}
+                onPressedChange={setToggleDefault}
+              >
                 <ToggleIcon as={Bold} />
               </Toggle>
-              <Toggle size="lg" variant="outline" pressed={toggleLg} onPressedChange={setToggleLg}>
+              <Toggle
+                size="lg"
+                variant="outline"
+                pressed={toggleLg}
+                onPressedChange={setToggleLg}
+              >
                 <ToggleIcon as={Bold} />
               </Toggle>
             </View>
@@ -510,7 +560,7 @@ export default function ComponentsScreen() {
         </View>
 
         {/* Toggle Group Component */}
-        <View className="gap-4 pb-8">
+        <View className="gap-4">
           <Text variant="h2">Toggle Group</Text>
           <View className="gap-3 rounded-lg border border-border bg-card p-4">
             <Text variant="small">Multiple selection</Text>
@@ -518,7 +568,8 @@ export default function ComponentsScreen() {
               type="multiple"
               value={toggleGroupValue}
               onValueChange={setToggleGroupValue}
-              variant="outline">
+              variant="outline"
+            >
               <ToggleGroupItem value="bold" isFirst>
                 <ToggleIcon as={Bold} />
               </ToggleGroupItem>
@@ -529,14 +580,17 @@ export default function ComponentsScreen() {
                 <ToggleIcon as={Underline} />
               </ToggleGroupItem>
             </ToggleGroup>
-            <Text variant="muted">Selected: {toggleGroupValue.join(', ') || 'none'}</Text>
+            <Text variant="muted">
+              Selected: {toggleGroupValue.join(", ") || "none"}
+            </Text>
 
             <Text variant="small">Single selection</Text>
             <ToggleGroup
               type="single"
               value={toggleGroupSingleValue}
               onValueChange={setToggleGroupSingleValue}
-              variant="outline">
+              variant="outline"
+            >
               <ToggleGroupItem value="left" isFirst>
                 <Text>Left</Text>
               </ToggleGroupItem>
@@ -547,7 +601,9 @@ export default function ComponentsScreen() {
                 <Text>Right</Text>
               </ToggleGroupItem>
             </ToggleGroup>
-            <Text variant="muted">Selected: {toggleGroupSingleValue || 'none'}</Text>
+            <Text variant="muted">
+              Selected: {toggleGroupSingleValue || "none"}
+            </Text>
           </View>
         </View>
       </View>
