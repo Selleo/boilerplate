@@ -79,7 +79,6 @@ export default function ComponentsScreen() {
     string | undefined
   >("center");
   const [tabValue, setTabValue] = useState("account");
-  const [bottomSheetOpen, setBottomSheetOpen] = useState(false);
   const insets = useSafeAreaInsets();
 
   return (

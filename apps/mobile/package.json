@@ -10,6 +10,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "lint": "expo lint",
+    "typecheck": "tsc --noEmit",
     "generate:client": "swagger-typescript-api generate -p ../api/src/swagger/api-schema.json -o ./src/api --axios --name generated-api.ts --api-class-name API"
   },
   "dependencies": {
