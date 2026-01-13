@@ -1,0 +1,61 @@
+{
+  "home": {
+    "welcomeBack": "Welcome back!",
+    "signedInAs": "You are signed in as {{email}}",
+    "signOut": "Sign out"
+  },
+  "auth": {
+    "headings": {
+      "signIn": "Sign in to your app",
+      "signUp": "Create an account"
+    },
+    "subheadings": {
+      "signIn": "Welcome back! Please sign in to continue",
+      "signUp": "Enter your details below to create your account"
+    },
+    "fields": {
+      "email": {
+        "label": "Email",
+        "placeholder": "m@example.com",
+        "errors": {
+          "required": "Email is required",
+          "invalid": "Invalid email address"
+        }
+      },
+      "name": {
+        "label": "Name",
+        "placeholder": "John Doe",
+        "errors": {
+          "required": "Name is required"
+        }
+      },
+      "password": {
+        "label": "Password",
+        "errors": {
+          "required": "Password is required",
+          "minLength": "Password must be at least 8 characters"
+        }
+      },
+      "confirmPassword": {
+        "label": "Confirm Password",
+        "errors": {
+          "required": "Please confirm your password",
+          "mismatch": "Passwords do not match"
+        }
+      }
+    },
+    "buttons": {
+      "signIn": "Continue",
+      "signUp": "Sign up",
+      "forgotPassword": "Forgot your password?"
+    },
+    "links": {
+      "hasAccount": "Already have an account?",
+      "noAccount": "Don't have an account?",
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    },
+    "divider": "or",
+    "error": "Error"
+  }
+}

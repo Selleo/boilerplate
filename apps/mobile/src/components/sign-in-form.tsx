@@ -24,44 +24,59 @@ import {
   type TextInput,
   View,
 } from "react-native";
+import { useTranslation } from "react-i18next";
 import { z } from "zod";
 import { Image } from "./ui/image";
 
-const signInSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Invalid email address"),
-  password: z.string().min(1, "Password is required"),
-});
+import type { TFunction } from "i18next";
 
-const signUpSchema = z
-  .object({
+const createSignInSchema = (t: TFunction) =>
+  z.object({
     email: z
       .string()
-      .min(1, "Email is required")
-      .email("Invalid email address"),
-    name: z.string().min(1, "Name is required"),
-    password: z
-      .string()
-      .min(1, "Password is required")
-      .min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string().min(1, "Please confirm your password"),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match",
-    path: ["confirmPassword"],
+      .min(1, t("auth.fields.email.errors.required"))
+      .email(t("auth.fields.email.errors.invalid")),
+    password: z.string().min(1, t("auth.fields.password.errors.required")),
   });
 
-type SignInFormData = z.infer<typeof signInSchema>;
-type SignUpFormData = z.infer<typeof signUpSchema>;
+const createSignUpSchema = (t: TFunction) =>
+  z
+    .object({
+      email: z
+        .string()
+        .min(1, t("auth.fields.email.errors.required"))
+        .email(t("auth.fields.email.errors.invalid")),
+      name: z.string().min(1, t("auth.fields.name.errors.required")),
+      password: z
+        .string()
+        .min(1, t("auth.fields.password.errors.required"))
+        .min(8, t("auth.fields.password.errors.minLength")),
+      confirmPassword: z
+        .string()
+        .min(1, t("auth.fields.confirmPassword.errors.required")),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: t("auth.fields.confirmPassword.errors.mismatch"),
+      path: ["confirmPassword"],
+    });
+
+type SignInFormData = z.infer<ReturnType<typeof createSignInSchema>>;
+type SignUpFormData = z.infer<ReturnType<typeof createSignUpSchema>>;
 
 export function SignInForm() {
   const passwordInputRef = React.useRef<TextInput>(null);
   const confirmPasswordInputRef = React.useRef<TextInput>(null);
   const nameInputRef = React.useRef<TextInput>(null);
 
+  const { t } = useTranslation();
+
   const loginMutation = useLoginUser();
   const registerMutation = useRegisterUser();
 
   const [isSignUp, setIsSignUp] = React.useState(false);
+
+  const signInSchema = React.useMemo(() => createSignInSchema(t), [t]);
+  const signUpSchema = React.useMemo(() => createSignUpSchema(t), [t]);
 
   const signInForm = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
@@ -147,18 +162,18 @@ export function SignInForm() {
       <Card className="border-border/0 sm:border-border shadow-none sm:shadow-sm sm:shadow-black/5">
         <CardHeader>
           <CardTitle className="text-center text-xl sm:text-left">
-            {isSignUp ? "Create an account" : "Sign in to your app"}
+            {isSignUp ? t("auth.headings.signUp") : t("auth.headings.signIn")}
           </CardTitle>
           <CardDescription className="text-center sm:text-left">
             {isSignUp
-              ? "Enter your details below to create your account"
-              : "Welcome back! Please sign in to continue"}
+              ? t("auth.subheadings.signUp")
+              : t("auth.subheadings.signIn")}
           </CardDescription>
         </CardHeader>
         <CardContent className="gap-6">
           {apiError && (
             <Alert variant="destructive" icon={AlertCircle}>
-              <AlertTitle>Error</AlertTitle>
+              <AlertTitle>{t("auth.error")}</AlertTitle>
               <AlertDescription>{apiError}</AlertDescription>
             </Alert>
           )}
@@ -172,10 +187,12 @@ export function SignInForm() {
                   fieldState: { error },
                 }) => (
                   <View className="gap-1.5">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">
+                      {t("auth.fields.email.label")}
+                    </Label>
                     <Input
                       id="email"
-                      placeholder="m@example.com"
+                      placeholder={t("auth.fields.email.placeholder")}
                       keyboardType="email-address"
                       autoComplete="email"
                       autoCapitalize="none"
@@ -203,11 +220,11 @@ export function SignInForm() {
                   fieldState: { error },
                 }) => (
                   <View className="gap-1.5">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">{t("auth.fields.name.label")}</Label>
                     <Input
                       ref={nameInputRef}
                       id="name"
-                      placeholder="John Doe"
+                      placeholder={t("auth.fields.name.placeholder")}
                       autoComplete="name"
                       autoCapitalize="words"
                       onSubmitEditing={onNameSubmitEditing}
@@ -233,7 +250,9 @@ export function SignInForm() {
                   fieldState: { error },
                 }) => (
                   <View className="gap-1.5">
-                    <Label htmlFor="password">Password</Label>
+                    <Label htmlFor="password">
+                      {t("auth.fields.password.label")}
+                    </Label>
                     <Input
                       ref={passwordInputRef}
                       id="password"
@@ -261,7 +280,9 @@ export function SignInForm() {
                   fieldState: { error },
                 }) => (
                   <View className="gap-1.5">
-                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Label htmlFor="confirmPassword">
+                      {t("auth.fields.confirmPassword.label")}
+                    </Label>
                     <Input
                       ref={confirmPasswordInputRef}
                       id="confirmPassword"
@@ -289,7 +310,7 @@ export function SignInForm() {
                 {isLoading ? (
                   <ActivityIndicator size="small" color="white" />
                 ) : (
-                  <Text>Sign up</Text>
+                  <Text>{t("auth.buttons.signUp")}</Text>
                 )}
               </Button>
             </View>
@@ -303,10 +324,12 @@ export function SignInForm() {
                   fieldState: { error },
                 }) => (
                   <View className="gap-1.5">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email">
+                      {t("auth.fields.email.label")}
+                    </Label>
                     <Input
                       id="email"
-                      placeholder="m@example.com"
+                      placeholder={t("auth.fields.email.placeholder")}
                       keyboardType="email-address"
                       autoComplete="email"
                       autoCapitalize="none"
@@ -335,7 +358,9 @@ export function SignInForm() {
                 }) => (
                   <View className="gap-1.5">
                     <View className="flex-row items-center">
-                      <Label htmlFor="password">Password</Label>
+                      <Label htmlFor="password">
+                        {t("auth.fields.password.label")}
+                      </Label>
                       <Button
                         variant="link"
                         size="sm"
@@ -345,7 +370,7 @@ export function SignInForm() {
                         }}
                       >
                         <Text className="font-normal leading-4">
-                          Forgot your password?
+                          {t("auth.buttons.forgotPassword")}
                         </Text>
                       </Button>
                     </View>
@@ -376,7 +401,7 @@ export function SignInForm() {
                 {isLoading ? (
                   <ActivityIndicator size="small" color="white" />
                 ) : (
-                  <Text>Continue</Text>
+                  <Text>{t("auth.buttons.signIn")}</Text>
                 )}
               </Button>
             </View>
@@ -384,18 +409,20 @@ export function SignInForm() {
           <View className="text-center text-sm flex-row justify-center items-center">
             <Text>
               {isSignUp
-                ? "Already have an account? "
-                : "Don't have an account? "}
+                ? t("auth.links.hasAccount") + " "
+                : t("auth.links.noAccount") + " "}
             </Text>
             <Pressable onPress={toggleMode}>
               <Text className="text-sm underline underline-offset-4">
-                {isSignUp ? "Sign in" : "Sign up"}
+                {isSignUp ? t("auth.links.signIn") : t("auth.links.signUp")}
               </Text>
             </Pressable>
           </View>
           <View className="flex-row items-center">
             <Separator className="flex-1" />
-            <Text className="text-muted-foreground px-4 text-sm">or</Text>
+            <Text className="text-muted-foreground px-4 text-sm">
+              {t("auth.divider")}
+            </Text>
             <Separator className="flex-1" />
           </View>
           <SocialConnections />

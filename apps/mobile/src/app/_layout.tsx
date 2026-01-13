@@ -15,6 +15,7 @@ import { queryClient } from "@/api/query-client";
 import "react-native-reanimated";
 
 import "../global.css";
+import "@/lib/i18n";
 
 export const unstable_settings = {
   anchor: "(tabs)",

@@ -8,11 +8,13 @@ import { ThemedView } from "@/components/themed-view";
 import { ActivityIndicator, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
   const { data: user, isLoading } = useCurrentUser();
   const logoutMutation = useLogoutUser();
+  const { t } = useTranslation();
 
   function handleSignOut() {
     logoutMutation.mutate();
@@ -33,9 +35,9 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingTop: insets.top }}
       >
         <ThemedView className="flex-1 items-center justify-center gap-6 p-6">
-          <ThemedText type="title">Welcome back!</ThemedText>
+          <ThemedText type="title">{t("home.welcomeBack")}</ThemedText>
           <ThemedText className="text-center">
-            You are signed in as {user.email}
+            {t("home.signedInAs", { email: user.email })}
           </ThemedText>
           <Button
             onPress={handleSignOut}
@@ -46,7 +48,7 @@ export default function HomeScreen() {
             {logoutMutation.isPending ? (
               <ActivityIndicator size="small" color="white" />
             ) : (
-              <Text>Sign out</Text>
+              <Text>{t("home.signOut")}</Text>
             )}
           </Button>
         </ThemedView>
