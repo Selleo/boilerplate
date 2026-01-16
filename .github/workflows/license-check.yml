@@ -1,0 +1,44 @@
+name: License Check
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+    
+jobs:
+  check-licenses:
+    permissions:
+      contents: read
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.8.0
+          cache: pnpm
+
+      - uses: oven-sh/setup-bun@v2
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+
+      - name: Check licenses
+        timeout-minutes: 5
+        run: |
+          set -euo pipefail
+
+          # 1) Generate JSON grouped by license
+          pnpm licenses list --json > /tmp/licenses.json
+
+          echo "All used licenses (groupBy=license):"
+          jq -r 'keys[]' /tmp/licenses.json | sort -u
+          echo
+
+          # 2) Find disallowed license expressions (supports AND/OR combos)
+          bun run scripts/check-licenses.bun.ts

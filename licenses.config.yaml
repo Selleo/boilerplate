@@ -1,0 +1,22 @@
+allowedLicenses:
+  - MIT
+  - MIT-0
+  - MIT/X11
+  - ISC
+  - Apache
+  - Apache-2.0
+  - Apache License 2.0
+  - BlueOak-1.0.0
+  - BSD
+  - BSD-2-Clause
+  - BSD-3-Clause
+  - 0BSD
+  - Python-2.0
+  - Zlib
+  - MPL-2.0
+  - Unlicense
+  - CC0-1.0
+allowedPackages:
+  - "@img/sharp-libvips-linux-x64@1.1.0" # LGPL-3.0-or-later - sublib of sharp - not modified - not embedded in software
+  - "@img/sharp-libvips-linuxmusl-x64@1.1.0" # LGPL-3.0-or-later - sublib of sharp - not modified itself - not embedded in software
+  - caniuse-lite@1.0.30001760 # CC-BY-4.0
