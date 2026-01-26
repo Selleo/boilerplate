@@ -118,12 +118,21 @@ export const buildBetterAuthInstance = ({
             enabled: true,
             domain: "boilerplate.localhost",
           },
+          disableOriginCheck: isDev ? true : false,
         },
     trustedOrigins: [
       "http://localhost:5173",
       "http://localhost:5174",
       "http://localhost:3000",
       "https://app.boilerplate.localhost",
+      "mobile://",
+      "mobile://**",
+      ...(process.env.NODE_ENV === "development"
+        ? [
+            "exp://", // Trust all Expo URLs (prefix matching)
+            "exp://**", // Trust all Expo URLs (wildcard matching)
+          ]
+        : []),
     ],
     logger: {
       level: "debug",
