@@ -19,4 +19,10 @@ allowedLicenses:
 allowedPackages:
   - "@img/sharp-libvips-linux-x64@1.1.0" # LGPL-3.0-or-later - sublib of sharp - not modified - not embedded in software
   - "@img/sharp-libvips-linuxmusl-x64@1.1.0" # LGPL-3.0-or-later - sublib of sharp - not modified itself - not embedded in software
+  - "@img/sharp-libvips-linux-x64@1.2.4" # LGPL-3.0-or-later - sublib of sharp - not modified - not embedded in software
+  - "@img/sharp-libvips-linuxmusl-x64@1.2.4" # LGPL-3.0-or-later - sublib of sharp - not modified itself - not embedded in software
   - caniuse-lite@1.0.30001760 # CC-BY-4.0
+  - pause@0.0.1 # MIT
+  - spamc@0.0.5 # no license but dev deps only
+
+
