@@ -8,18 +8,16 @@ import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import emailConfig from "./common/configuration/email";
 import awsConfig from "./common/configuration/aws";
 import fileStorageConfig from "./common/configuration/file-storage";
-import { APP_GUARD } from "@nestjs/core";
 import { EmailModule } from "./common/emails/emails.module";
 import { FileStorageModule } from "./file-storage";
 import { TestConfigModule } from "./test-config/test-config.module";
-import { StagingGuard } from "./common/guards/staging.guard";
 import { HealthModule } from "./health/health.module";
-import { BetterAuthModule, AuthGuard } from "./auth";
 import { AuthModule } from "./auth/auth.module";
 import { AuthService } from "./auth/auth.service";
 import { buildBetterAuthInstance } from "./lib/better-auth-options";
 import { LoggerMiddleware } from "./logger/logger.middleware";
 import { QueueModule } from "./queue/queue.module";
+import { AuthModule as BetterModule } from "@thallesp/nestjs-better-auth";
 
 import type { DatabasePg } from "./common";
 
@@ -49,7 +47,7 @@ import type { DatabasePg } from "./common";
         return {
           secret: configService.get<string>("jwt.secret")!,
           signOptions: {
-            expiresIn:  configService.get<number>("jwt.expirationTime"),
+            expiresIn: configService.get<number>("jwt.expirationTime"),
           },
         };
       },
@@ -57,10 +55,10 @@ import type { DatabasePg } from "./common";
       global: true,
     }),
     AuthModule,
-    BetterAuthModule.forRootAsync({
+    BetterModule.forRootAsync({
       imports: [EmailModule, AuthModule],
       inject: [ConfigService, AuthService, "DB"],
-       useFactory: (
+      useFactory: (
         configService: ConfigService,
         authService: AuthService,
         db: DatabasePg,
@@ -83,16 +81,7 @@ import type { DatabasePg } from "./common";
     HealthModule,
   ],
   controllers: [],
-  providers: [
-    {
-      provide: APP_GUARD,
-      useClass: AuthGuard,
-    },
-    {
-      provide: APP_GUARD,
-      useClass: StagingGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {

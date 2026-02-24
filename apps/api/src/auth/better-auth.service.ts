@@ -1,17 +1,4 @@
-import { Inject } from "@nestjs/common";
-import type { Auth } from "better-auth";
-import { AUTH_INSTANCE } from "./tokens";
+import { AuthService } from "@thallesp/nestjs-better-auth";
+import { buildBetterAuthInstance } from "src/lib/better-auth-options";
 
-export class BetterAuthService<T extends { api: T["api"] } = Auth> {
-  constructor(
-    @Inject(AUTH_INSTANCE) private readonly auth: T,
-  ) {}
 
-  get api(): T["api"] {
-    return this.auth.api;
-  }
-
-  get instance(): T {
-    return this.auth;
-  }
-}
