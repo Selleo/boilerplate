@@ -184,6 +184,22 @@
       "renderedAt": "Last rendered at {{date}}"
     }
   },
+  "common": {
+    "languages": {
+      "english": "English",
+      "polish": "Polski"
+    }
+  },
+  "dashboard": {
+    "navUser": {
+      "upgradeToPro": "Upgrade to Pro",
+      "account": "Account",
+      "billing": "Billing",
+      "notifications": "Notifications",
+      "language": "Language",
+      "logout": "Log out"
+    }
+  },
   "about": {
     "metaTitle": "About page",
     "heading": "About page"

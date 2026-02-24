@@ -1,0 +1,207 @@
+{
+  "auth": {
+    "headings": {
+      "login": "Witaj ponownie",
+      "register": "Utwórz konto"
+    },
+    "subheadings": {
+      "login": "Zaloguj się do konta Boilerplate",
+      "register": "Wpisz swoje dane, aby zacząć"
+    },
+    "fields": {
+      "email": {
+        "label": "E-mail",
+        "placeholder": "m@example.com",
+        "errors": {
+          "invalid": "Nieprawidłowy adres e-mail"
+        }
+      },
+      "password": {
+        "label": "Hasło",
+        "errors": {
+          "minLength": "Hasło musi mieć co najmniej 8 znaków"
+        }
+      },
+      "name": {
+        "label": "Nazwa użytkownika",
+        "placeholder": "twoja_nazwa",
+        "errors": {
+          "minLength": "Nazwa użytkownika musi mieć co najmniej 3 znaki"
+        }
+      },
+      "confirmPassword": {
+        "label": "Potwierdź hasło",
+        "errors": {
+          "minLength": "Hasło musi mieć co najmniej 8 znaków",
+          "mismatch": "Hasła nie są takie same"
+        }
+      }
+    },
+    "buttons": {
+      "primary": {
+        "login": "Zaloguj się",
+        "register": "Utwórz konto"
+      },
+      "google": "Zaloguj przez Google",
+      "microsoft": "Zaloguj przez Microsoft"
+    },
+    "links": {
+      "forgotPassword": "Nie pamiętasz hasła?",
+      "toggle": {
+        "hasAccount": "Masz już konto?",
+        "noAccount": "Nie masz konta?",
+        "signIn": "Zaloguj się",
+        "signUp": "Zarejestruj się"
+      },
+      "agreement": {
+        "prefix": "Klikając kontynuuj, akceptujesz nasze",
+        "terms": "Warunki korzystania",
+        "and": "oraz",
+        "privacy": "Politykę prywatności"
+      }
+    },
+    "continueWith": "Lub kontynuuj przez",
+    "toast": {
+      "verified": {
+        "title": "Twój e-mail został zweryfikowany",
+        "description": "Możesz teraz zalogować się do swojego konta"
+      }
+    }
+  },
+  "forgotPassword": {
+    "title": "Odzyskaj dostęp",
+    "description": "Podaj adres email powiązany z Twoim kontem. Jeśli konto istnieje, wyślemy instrukcję resetu hasła.",
+    "fields": {
+      "email": {
+        "label": "Email",
+        "errors": {
+          "invalid": "Nieprawidłowy adres email"
+        }
+      }
+    },
+    "buttons": {
+      "submit": "Wyślij link resetujący",
+      "submitting": "Wysyłanie..."
+    },
+    "links": {
+      "remember": "Pamiętasz hasło?",
+      "backToLogin": "Wróć do logowania"
+    }
+  },
+  "newPassword": {
+    "title": "Ustaw nowe hasło",
+    "description": "Wpisz nowe hasło do konta, aby odzyskać dostęp. Hasło powinno mieć co najmniej 8 znaków.",
+    "fields": {
+      "newPassword": {
+        "label": "Nowe hasło",
+        "errors": {
+          "minLength": "Hasło musi mieć co najmniej 8 znaków"
+        }
+      },
+      "confirmPassword": {
+        "label": "Powtórz hasło",
+        "errors": {
+          "minLength": "Hasło musi mieć co najmniej 8 znaków",
+          "mismatch": "Hasła muszą być takie same"
+        }
+      }
+    },
+    "buttons": {
+      "submit": "Zapisz nowe hasło",
+      "submitting": "Zapisywanie...",
+      "backToForgot": "Wróć do resetu hasła"
+    },
+    "messages": {
+      "invalidLink": "Link do resetu hasła wygasł lub jest nieprawidłowy.",
+      "tokenIssue": "Link resetujący jest nieprawidłowy lub wygasł. Poproś o nowy link.",
+      "backToLoginPrompt": "Wróć do logowania?",
+      "backToLogin": "Zaloguj się"
+    }
+  },
+  "landing": {
+    "meta": {
+      "title": "Boilerplate | Starter React + NestJS",
+      "description": "Uruchom szybciej kolejny produkt SaaS dzięki gotowemu starterowi React + NestJS od Selleo."
+    },
+    "layout": {
+      "nav": {
+        "product": "Produkt",
+        "features": "Funkcje",
+        "pricing": "Cennik",
+        "about": "O nas"
+      },
+      "cta": {
+        "signIn": "Zaloguj się",
+        "dashboard": "Otwórz panel"
+      },
+      "footer": {
+        "madeWith": "Stworzone z ❤️ przez zespół Selleo.",
+        "product": "Produkt",
+        "features": "Funkcje",
+        "pricing": "Cennik",
+        "about": "O nas"
+      }
+    },
+    "hero": {
+      "badge": "Startuj szybciej i pewniej",
+      "title": "Gotowy produkcyjnie szablon fullstack od Selleo",
+      "description": "Boilerplate daje Twojemu zespołowi nowoczesny frontend, bezpieczny backend i sprawdzone wzorce, dzięki którym skupisz się na produkcie, a nie na konfiguracji.",
+      "primaryCta": "Utwórz konto",
+      "secondaryCta": "Zobacz demo",
+      "highlights": {
+        "auth": "Gotowe auth, dashboard i CLI",
+        "stack": "Typesafe stack React + NestJS"
+      }
+    },
+    "features": {
+      "title": "Wszystko, czego zespół potrzebuje do szybkiego startu",
+      "description": "Buduj na skalowalnym stacku. Podejmujemy kluczowe decyzje produkcyjne, aby Twój zespół mógł skupić się na wartości dla klientów od pierwszego dnia.",
+      "items": {
+        "authSecurity": {
+          "title": "Gotowe auth i bezpieczeństwo",
+          "description": "Logowanie e-mail, passwordless, Google OAuth, role i uprawnienia już skonfigurowane."
+        },
+        "dashboardFoundation": {
+          "title": "Fundament dashboardu",
+          "description": "Responsywny layout, wzorce pobierania danych i zestaw UI gotowe od pierwszego dnia."
+        },
+        "developerErgonomics": {
+          "title": "Ergonomia pracy dewelopera",
+          "description": "Czysta architektura, typowane API, konfiguracja testów i ulepszenia DX w pakiecie."
+        }
+      }
+    },
+    "pricing": {
+      "title": "Prosty cennik na start",
+      "description": "Szablon startowy jest open source. Hostuj samodzielnie za darmo lub współpracuj z Selleo przy wdrożeniu, funkcjach niestandardowych i strategii produktu.",
+      "amount": "$0",
+      "amountNote": "za szablon",
+      "additional": "Potrzebujesz dedykowanego zespołu? Skontaktuj się z nami, aby dopasować stack do Twojego produktu.",
+      "contactCta": "Porozmawiaj z Selleo",
+      "codebaseCta": "Przejrzyj repozytorium"
+    },
+    "footer": {
+      "renderedAt": "Ostatnio wyrenderowano: {{date}}"
+    }
+  },
+  "common": {
+    "languages": {
+      "english": "English",
+      "polish": "Polski"
+    }
+  },
+  "dashboard": {
+    "navUser": {
+      "upgradeToPro": "Przejdź na Pro",
+      "account": "Konto",
+      "billing": "Rozliczenia",
+      "notifications": "Powiadomienia",
+      "language": "Język",
+      "logout": "Wyloguj się"
+    }
+  },
+  "about": {
+    "metaTitle": "Strona o nas",
+    "heading": "Strona o nas"
+  }
+}
