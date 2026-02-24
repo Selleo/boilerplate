@@ -3,9 +3,11 @@ import {
   Bell,
   ChevronsUpDown,
   CreditCard,
+  Languages,
   LogOut,
   Sparkles
 } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { useLogoutUser } from "~/api/mutations/useLogoutUser";
 
 import { Avatar, AvatarFallback, AvatarImage } from "~/components/ui/avatar";
@@ -15,7 +17,12 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger
 } from "~/components/ui/dropdown-menu";
 import {
@@ -24,6 +31,7 @@ import {
   SidebarMenuItem,
   useSidebar
 } from "~/components/ui/sidebar";
+import { isSupportedLanguage, setLanguage } from "~/lib/i18n";
 
 export function NavUser({
   user
@@ -36,6 +44,18 @@ export function NavUser({
 }) {
   const { isMobile } = useSidebar();
   const { mutate: logout } = useLogoutUser();
+  const { t, i18n } = useTranslation();
+  const currentLanguage = isSupportedLanguage(i18n.resolvedLanguage ?? "")
+    ? i18n.resolvedLanguage
+    : "en";
+
+  const handleLanguageChange = (language: string) => {
+    if (!isSupportedLanguage(language)) {
+      return;
+    }
+
+    setLanguage(language);
+  };
 
   return (
     <SidebarMenu>
@@ -79,28 +99,47 @@ export function NavUser({
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <Sparkles />
-                Upgrade to Pro
+                {t("dashboard.navUser.upgradeToPro")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Languages />
+                  {t("dashboard.navUser.language")}
+                </DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  <DropdownMenuRadioGroup
+                    value={currentLanguage}
+                    onValueChange={handleLanguageChange}
+                  >
+                    <DropdownMenuRadioItem value="en">
+                      {t("common.languages.english")}
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="pl">
+                      {t("common.languages.polish")}
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
               <DropdownMenuItem>
                 <BadgeCheck />
-                Account
+                {t("dashboard.navUser.account")}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <CreditCard />
-                Billing
+                {t("dashboard.navUser.billing")}
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <Bell />
-                Notifications
+                {t("dashboard.navUser.notifications")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem role="button" onClick={() => logout()}>
               <LogOut />
-              Log out
+              {t("dashboard.navUser.logout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
