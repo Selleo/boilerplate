@@ -78,7 +78,10 @@ export const buildBetterAuthInstance = ({
         console.log(`[Auth][${ctx.method}] Incoming request: ${ctx.path}`);
 
         if (isDev && logLevel === "debug") {
-          console.log(`[Auth][${ctx.method}] Headers:`, ctx.headers);
+          // Uncomment if you want to log whole request in dev mode.
+          if (false) {
+            console.log(`[Auth][${ctx.method}] Headers:`, ctx.headers);
+          }
           if (ctx.method !== "GET") {
             console.log(
               `[Auth][${ctx.method}] Body:`,
