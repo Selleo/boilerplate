@@ -13,14 +13,14 @@
     "export": "email export --dir ./src/templates"
   },
   "devDependencies": {
-    "@react-email/preview-server": "4.2.11",
+    "@react-email/preview-server": "5.2.8",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
-    "react-email": "4.2.11",
+    "react-email": "5.2.8",
     "tsup": "^8.5.0"
   },
   "dependencies": {
-    "@react-email/components": "0.5.3",
+    "@react-email/components": "1.0.8",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   }

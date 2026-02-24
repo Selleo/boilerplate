@@ -17,7 +17,8 @@
     "test:api": "pnpm run --filter=boilerplate-api test",
     "test:web:e2e": "pnpm run --filter=boilerplate-web-app test:e2e",
     "test:api:e2e": "pnpm run --filter=boilerplate-api test:e2e",
-    "typecheck:api": "pnpm run --filter=boilerplate-api typecheck"
+    "typecheck:api": "pnpm run --filter=boilerplate-api typecheck",
+    "clean-modules": "rm -rf node_modules && cd packages/email-templates && rm -rf node_modules"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
