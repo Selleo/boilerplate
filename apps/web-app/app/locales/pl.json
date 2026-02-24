@@ -184,6 +184,23 @@
       "renderedAt": "Ostatnio wyrenderowano: {{date}}"
     }
   },
+  "errors": {
+    "actions": {
+      "home": "Przejdź na stronę główną",
+      "dashboard": "Otwórz panel",
+      "backToDashboard": "Wróć do panelu"
+    },
+    "global": {
+      "code": "Błąd 404",
+      "title": "Nie znaleźliśmy tej strony",
+      "description": "Adres może być nieaktualny albo strona została przeniesiona."
+    },
+    "dashboard": {
+      "code": "Błąd 404",
+      "title": "Ta strona panelu nie istnieje",
+      "description": "Sprawdź adres URL lub wróć do strony głównej panelu."
+    }
+  },
   "common": {
     "languages": {
       "english": "English",

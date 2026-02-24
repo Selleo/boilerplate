@@ -184,6 +184,23 @@
       "renderedAt": "Last rendered at {{date}}"
     }
   },
+  "errors": {
+    "actions": {
+      "home": "Go to home page",
+      "dashboard": "Open dashboard",
+      "backToDashboard": "Back to dashboard"
+    },
+    "global": {
+      "code": "Error 404",
+      "title": "We couldn't find that page",
+      "description": "The address may be outdated or the page has been moved."
+    },
+    "dashboard": {
+      "code": "Error 404",
+      "title": "This dashboard page doesn't exist",
+      "description": "Check the URL or go back to the dashboard home."
+    }
+  },
   "common": {
     "languages": {
       "english": "English",

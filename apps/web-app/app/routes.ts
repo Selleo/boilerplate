@@ -12,7 +12,9 @@ export default [
   ]),
   layout("modules/dashboard/dashboard.layout.tsx", [
     route("dashboard", "modules/dashboard/dashboard.page.tsx", { index: true }),
-    route("dashboard/admin/users", "modules/dashboard/admin/users.page.tsx")
+    route("dashboard/admin/users", "modules/dashboard/admin/users.page.tsx"),
+    route("dashboard/*", "modules/dashboard/dashboard-not-found.page.tsx")
   ]),
-  route("/.well-known/appspecific/com.chrome.devtools.json", "modules/dev/dev-null.tsx")
+  route("/.well-known/appspecific/com.chrome.devtools.json", "modules/dev/dev-null.tsx"),
+  route("*", "modules/error/not-found.page.tsx")
 ] satisfies RouteConfig;
