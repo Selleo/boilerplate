@@ -1,17 +1,18 @@
 import { useThemeStore } from "~/modules/Theme/themeStore";
-import { Button, type ButtonProps } from "../ui/button";
+import { Button } from "../ui/button";
+import type { ComponentProps } from "react";
 
 import { type LucideProps, Moon, Sun } from "lucide-react";
 
 type ThemeToggleProps = {
-  variant?: ButtonProps["variant"];
+  variant?: ComponentProps<typeof Button>["variant"];
   className?: string;
 };
 
 export default function ThemeToggle({ className, variant = "ghost" }: ThemeToggleProps) {
   const { theme, toggleTheme } = useThemeStore();
 
-  const ToggleIcon: React.FC<LucideProps> = (props) => {
+  const ToggleIcon = (props: LucideProps) => {
     switch (theme) {
       case "light":
         return <Sun aria-label="Switch to lightmode" {...props} />;
