@@ -8,7 +8,8 @@ export default defineConfig({
   plugins: [tsconfigPaths()],
   resolve: {
     alias: {
-      "~": path.resolve(__dirname, "./app")
+      "~": path.resolve(__dirname, "./app"),
+      zod: path.resolve(__dirname, "./node_modules/zod")
     }
   },
   test: {
@@ -16,6 +17,11 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
     include: ["./app/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}"],
+    server: {
+      deps: {
+        inline: ["@hookform/resolvers"]
+      }
+    },
     coverage: {
       exclude: ["**/browser.ts", "**/handler.ts"]
     }
