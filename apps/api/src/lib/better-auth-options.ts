@@ -43,6 +43,7 @@ export const buildBetterAuthInstance = ({
   sendWelcomeVerifyEmail,
 }: BuildBetterAuthOptionsParams) => {
   const nodeEnv = env("NODE_ENV");
+  const isProd = nodeEnv === "production";
   const isDev = nodeEnv === "development";
   const isTest = nodeEnv === "test";
 
@@ -59,6 +60,14 @@ export const buildBetterAuthInstance = ({
 
   const logLevel = env("LOG_LEVEL");
   const devSocial = env("DEV_SOCIAL") === "true";
+
+  const trustedOrigins = isProd
+    ? [env("CORS_ORIGIN")!]
+    : ["http://localhost:5173", "https://app.boilerplate.localhost"];
+
+  const crossSubDomainCookiesDomain = isProd
+    ? env("COOKIE_DOMAIN")
+    : "boilerplate.localhost";
 
   const defaultPlugins: BetterAuthPlugin[] = plugins ?? [openAPI(), admin()];
 
@@ -116,15 +125,10 @@ export const buildBetterAuthInstance = ({
       : {
           crossSubDomainCookies: {
             enabled: true,
-            domain: "boilerplate.localhost",
+            domain: crossSubDomainCookiesDomain,
           },
         },
-    trustedOrigins: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-      "http://localhost:3000",
-      "https://app.boilerplate.localhost",
-    ],
+    trustedOrigins: trustedOrigins,
     logger: {
       level: "debug",
       log(level, message, ...args) {
