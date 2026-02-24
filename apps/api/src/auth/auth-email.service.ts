@@ -2,12 +2,19 @@ import { InjectQueue } from "@nestjs/bullmq";
 import { Injectable } from "@nestjs/common";
 import { Queue } from "bullmq";
 import { EMAIL_QUEUE, EmailQueueJobPayloads } from "./auth.queue";
+import { AuthService } from "@thallesp/nestjs-better-auth";
+import { buildBetterAuthInstance } from "src/lib/better-auth-options";
 
 @Injectable()
 export class AuthEmailService {
   private readonly jobSettings = { age: 3600 };
 
-  constructor(@InjectQueue(EMAIL_QUEUE.name) private readonly queue: Queue) {}
+  constructor(
+    @InjectQueue(EMAIL_QUEUE.name) private readonly queue: Queue,
+    private authService: AuthService<
+      ReturnType<typeof buildBetterAuthInstance>
+    >,
+  ) {}
 
   public async sendWelcomeMessageEmailAsync(
     payload: EmailQueueJobPayloads["SEND_WELCOME_EMAIL"],
