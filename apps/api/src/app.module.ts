@@ -4,7 +4,6 @@ import database from "./common/configuration/database";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import * as schema from "./storage/schema";
 import { UsersModule } from "./users/users.module";
-import { JwtModule, JwtModuleOptions } from "@nestjs/jwt";
 import emailConfig from "./common/configuration/email";
 import awsConfig from "./common/configuration/aws";
 import fileStorageConfig from "./common/configuration/file-storage";
@@ -42,18 +41,6 @@ import type { DatabasePg } from "./common";
       inject: [ConfigService],
     }),
     QueueModule,
-    JwtModule.registerAsync({
-      useFactory(configService: ConfigService): JwtModuleOptions {
-        return {
-          secret: configService.get<string>("jwt.secret")!,
-          signOptions: {
-            expiresIn: configService.get<number>("jwt.expirationTime"),
-          },
-        };
-      },
-      inject: [ConfigService],
-      global: true,
-    }),
     AuthModule,
     BetterModule.forRootAsync({
       imports: [EmailModule, AuthModule],

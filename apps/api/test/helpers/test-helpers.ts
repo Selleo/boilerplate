@@ -1,5 +1,4 @@
 import { DatabasePg } from "../../src/common";
-import { JwtService } from "@nestjs/jwt";
 import { sql } from "drizzle-orm";
 import { vi } from "vitest";
 
@@ -23,10 +22,6 @@ export function environmentVariablesFactory() {
       }
     }),
   };
-}
-
-export function signInAs(userId: string, jwtService: JwtService): string {
-  return jwtService.sign({ sub: userId });
 }
 
 export async function truncateAllTables(connection: DatabasePg): Promise<void> {
