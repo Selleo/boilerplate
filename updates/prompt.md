@@ -6,5 +6,5 @@ Your job is to apply those updates into the existing project taking into the acc
 could have some of the things already implemented or deleted. Adjust accordingly
 </job>
 <data>
-The diff file is in @1.6.0-update-diff.md (change accordingly)
+The diff file is in @1.7.0-update.diff (change accordingly)
 </data>

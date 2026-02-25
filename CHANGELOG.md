@@ -1,5 +1,24 @@
 # Changelog
 
+## v1.7.0
+Feat:
+- Add RustFS - a local S3 Provider 🦀
+- Add all remaining Shadcn components
+- Implement language switcher
+- Add MailPit for development mail viewer
+- Add License Checker action
+
+Fix:
+- less verbose loggin in better auth requests in dev
+
+Chore:
+- Update Better Auth and remove better-auth custom implementation in favor of package
+- Update all Shadcn components
+- Improve domain handling in Better Auth options 
+- Remove unused JWT logic
+- Updated README.md license mention
+- Dockerfile optimizations
+
 ## v1.6.0
 Feat:
 - Add Jobs system via Redis and BullMQ
