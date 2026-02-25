@@ -10,8 +10,8 @@ services:
       - ./database-init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
       - 5432:5432
-  mailhog:
-    image: mailhog/mailhog
+  mailpit:
+    image: axllent/mailpit
     ports:
       - 1025:1025
       - 8025:8025
