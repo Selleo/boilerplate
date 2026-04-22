@@ -1,0 +1,15 @@
+{
+  "name": "boilerplate-web-dev",
+  "compatibility_date": "2026-03-17", // Update to the day you deploy
+  "assets": {
+    "directory": "./apps/web-app/build/client",
+    "not_found_handling": "single-page-application"
+  },
+  "build":{
+    "command": "VITE_API_URL=https://boilerplate-app-dev.fly.dev pnpm run build --filter boilerplate-web-app" // Update the API URL to match your backend app
+  },
+  "vars": {
+    "VITE_API_URL": "https://boilerplate-app-dev.fly.dev"
+  },
+  "account_id": "" // Add your Cloudflare account ID here
+}
