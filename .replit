@@ -25,13 +25,13 @@ modules = ["web", "bash", "nodejs-24"]
   [[workflows.workflow.tasks]]
   task = "shell.exec"
   args = "pnpm --filter boilerplate-web-app dev"
-  waitForPort = 5000
+  waitForPort = 5173
 
   [workflows.workflow.metadata]
   outputType = "webview"
 
   [[ports]]
-  localPort = 5000
+  localPort = 5173
   externalPort = 80
 
   [deployment]
