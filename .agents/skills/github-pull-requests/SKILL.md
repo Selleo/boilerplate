@@ -5,6 +5,8 @@ description: Push branches and open pull requests on GitHub from this Replit env
 
 # GitHub Pull Requests
 
+> **Scope:** This skill should only be used by the Replit Agent running inside a Replit environment. It depends on Replit-specific primitives (`listConnections`, the `code_execution` sandbox, the bash tool's output redactor, and the destructive-git guardrails) and will not work for other agents or outside Replit.
+
 The bare `git push` command in this environment hangs (no interactive credential helper, no stored GitHub login) and the bash tool will time out. Use the GitHub connector access token to push and to create the PR via the REST API instead.
 
 ## Prerequisites
