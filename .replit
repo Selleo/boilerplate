@@ -30,9 +30,9 @@ modules = ["web", "bash", "nodejs-24"]
   [workflows.workflow.metadata]
   outputType = "webview"
 
-  [[ports]]
-  localPort = 5173
-  externalPort = 80
+[[ports]]
+localPort = 5173
+externalPort = 80
 
   [deployment]
   deploymentTarget = "static"
