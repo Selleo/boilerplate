@@ -10,3 +10,9 @@ After installation with `pnpm install` you can use `pnpm --filter boilerplate-we
 
 It should be accessible via localhost:5173. You might need to add some hosts to 
 `vite.config.ts` to be able to run it in replit.
+
+# Git 
+
+When creating commits - remember to use conventional commits
+
+When creating pull requests - make sure to look at `github-pull-requests` skill.
