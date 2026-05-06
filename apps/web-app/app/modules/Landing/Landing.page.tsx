@@ -44,8 +44,18 @@ export default function LandingPage() {
         id="product"
         className="relative overflow-hidden border-b border-border/60 bg-gradient-to-b from-primary/5 via-background to-background"
       >
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-4 pt-16 pb-24 text-center md:flex-row md:items-center md:gap-16 md:px-6 md:pt-20 md:text-left">
-          <div className="space-y-6 md:flex-1">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-10 px-4 pt-16 pb-24 text-center md:gap-12 md:px-6 md:pt-20">
+          <div className="relative flex h-48 w-48 shrink-0 items-center justify-center md:h-72 md:w-72">
+            <div className="absolute inset-0 scale-105 rounded-3xl bg-gradient-to-tr from-primary/10 via-primary/40 to-primary/10 opacity-60 blur-3xl" />
+            <div className="relative flex size-40 items-center justify-center rounded-3xl border border-primary/30 bg-background/80 shadow-2xl backdrop-blur md:size-64">
+              <img
+                src="/brand.svg"
+                alt="Boilerplate brand"
+                className="h-20 w-20 md:h-32 md:w-32"
+              />
+            </div>
+          </div>
+          <div className="space-y-6">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-1 text-sm font-medium text-primary">
               <Sparkles className="size-4" />
               {t("landing.hero.badge")}
@@ -56,7 +66,7 @@ export default function LandingPage() {
             <p className="text-base text-pretty text-muted-foreground sm:text-lg md:text-xl">
               {t("landing.hero.description")}
             </p>
-            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center md:justify-start">
+            <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Button size="lg" asChild>
                 <Link to="/auth">{t("landing.hero.primaryCta")}</Link>
               </Button>
@@ -64,7 +74,7 @@ export default function LandingPage() {
                 <Link to="/dashboard">{t("landing.hero.secondaryCta")}</Link>
               </Button>
             </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground md:justify-start">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
               <span className="flex items-center gap-2">
                 <CheckCircle2 className="size-4 text-primary" />
                 {t("landing.hero.highlights.auth")}
@@ -73,16 +83,6 @@ export default function LandingPage() {
                 <CheckCircle2 className="size-4 text-primary" />
                 {t("landing.hero.highlights.stack")}
               </span>
-            </div>
-          </div>
-          <div className="relative flex h-48 w-48 shrink-0 items-center justify-center md:h-72 md:w-72">
-            <div className="absolute inset-0 scale-105 rounded-3xl bg-gradient-to-tr from-primary/10 via-primary/40 to-primary/10 opacity-60 blur-3xl" />
-            <div className="relative flex size-40 items-center justify-center rounded-3xl border border-primary/30 bg-background/80 shadow-2xl backdrop-blur md:size-64">
-              <img
-                src="/brand.svg"
-                alt="Boilerplate brand"
-                className="h-20 w-20 md:h-32 md:w-32"
-              />
             </div>
           </div>
         </div>
