@@ -1,0 +1,115 @@
+service: boilerplate-api
+
+image: boilerplate-api
+
+builder:
+  arch: amd64
+  context: .
+  dockerfile: apps/api/Dockerfile
+
+registry:
+  server: localhost:5555
+
+deploy_timeout: 60
+
+servers:
+  web:
+    - 49.12.77.196
+
+ssh:
+  user: app
+  port: 2137
+  keys: ["~/.config/gms/keys/selleo-boilerplate"]
+
+proxy:
+  hosts:
+    - api.boilerplate.selleo.dev
+  ssl: true
+  app_port: 3000
+  healthcheck:
+    path: /api/health
+    interval: 10
+    timeout: 3
+
+env:
+  clear:
+    NODE_ENV: production
+    LOG_LEVEL: info
+    EMAIL_ADAPTER: ses
+    FILE_STORAGE_ADAPTER: s3
+    AWS_REGION: eu-central-1
+    AWS_BUCKET_NAME: boilerplate-production-assets
+    S3_ENDPOINT: http://boilerplate-api-rustfs:9000
+    S3_FORCE_PATH_STYLE: "true"
+    BETTER_AUTH_URL: https://app.boilerplate.selleo.dev
+    GOOGLE_CLIENT_ID: your-google-client-id
+    CORS_ORIGIN: https://app.boilerplate.selleo.dev
+    COOKIE_DOMAIN: boilerplate.selleo.dev
+    REDIS_URL: redis://boilerplate-api-redis:6379/0
+  secret:
+    - DATABASE_URL
+    - BULLBOARD_PASSWORD
+    - BETTER_AUTH_SECRET
+    - GOOGLE_CLIENT_SECRET
+    - AWS_ACCESS_KEY_ID
+    - AWS_SECRET_ACCESS_KEY
+
+accessories:
+  postgres:
+    image: postgres:16-alpine
+    host: 49.12.77.196
+    port: 5432
+    env:
+      clear:
+        POSTGRES_DB: boilerplate
+        POSTGRES_USER: postgres
+      secret:
+        - POSTGRES_PASSWORD
+    directories:
+      - /data/boilerplate-api/postgres-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7.4.7-alpine
+    host: 49.12.77.196
+    port: 6379
+    cmd: redis-server --appendonly yes
+    directories:
+      - /data/boilerplate-api/redis-data:/data
+
+  rustfs:
+    image: rustfs/rustfs:latest
+    host: 49.12.77.196
+    port: 9000
+    env:
+      clear:
+        RUSTFS_VOLUMES: /data/rustfs0
+        RUSTFS_ADDRESS: 0.0.0.0:9000
+        RUSTFS_CONSOLE_ENABLE: "false"
+        RUSTFS_REGION: eu-central-1
+        RUSTFS_OBS_LOGGER_LEVEL: info
+        RUSTFS_OBJECT_CACHE_ENABLE: "true"
+        RUSTFS_OBJECT_CACHE_TTL_SECS: "300"
+      secret:
+        - RUSTFS_ACCESS_KEY
+        - RUSTFS_SECRET_KEY
+    directories:
+      - /data/boilerplate-api/rustfs-data:/data/rustfs0
+
+  # db_backup:
+  #   image: eeshugerman/postgres-backup-s3:16
+  #   host: 49.12.77.196
+  #   env:
+  #     clear:
+  #       SCHEDULE: "@daily"
+  #       BACKUP_KEEP_DAYS: 7
+  #       S3_REGION: nbg1
+  #       S3_ENDPOINT: https://nbg1.your-objectstorage.com
+  #       S3_BUCKET: bare-metal
+  #       S3_PREFIX: boilerplate-api
+  #       POSTGRES_HOST: boilerplate-api-postgres
+  #       POSTGRES_DATABASE: boilerplate
+  #       POSTGRES_USER: postgres
+  #     secret:
+  #       - POSTGRES_PASSWORD
+  #       - BACKUP_S3_ACCESS_KEY_ID
+  #       - BACKUP_S3_SECRET_ACCESS_KEY

@@ -39,3 +39,4 @@ yarn-error.log*
 
 # IDE files
 .idea/
+.kamal/secrets

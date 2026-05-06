@@ -1,0 +1,18 @@
+{
+  "name": "selleo-boilerplate",
+  "server_id": 129271225,
+  "ip": "49.12.77.196",
+  "ipv6": "2a01:4f8:c014:6cec::/64",
+  "ssh_port": 2137,
+  "user": "app",
+  "key_path": "~/.config/gms/keys/selleo-boilerplate",
+  "ssh_key_id": 111869374,
+  "firewall_id": 10934050,
+  "firewall_owned": true,
+  "hetzner": {
+    "type": "cx23",
+    "location": "fsn1",
+    "image": "ubuntu-24.04"
+  },
+  "created_at": "2026-05-05T19:08:26Z"
+}
